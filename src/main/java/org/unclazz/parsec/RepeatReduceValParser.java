@@ -1,0 +1,136 @@
+package org.unclazz.parsec;
+
+import java.io.IOException;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+class RepeatReduceValParser<T,U,V> extends ValParser<V> {
+	private final ValParser<T> _original;
+	private final RepeatConfig _repConf;
+	private final ReduceConfig<T,U,V> _redConf;
+	private final boolean _noSeed;
+
+	 RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
+		super("RepeatReduce");
+		_original = original;
+		_repConf = repConf;
+		_redConf = redConf;
+		_noSeed = redConf.seedFactory == null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	protected ValResultCore<V> doParse(Context ctx) throws IOException {
+		final TextReader src = ctx.source();
+		U acc = _noSeed ? null : _redConf.seedFactory.get();
+		
+        // 予め指定された回数のパースを試みる
+		for (int i = 1; i < _repConf.maximum; i++) {
+            // min ＜ ループ回数 ならリセットのための準備
+            if (_repConf.breakable && _repConf.minimal < i) src.mark();
+			
+            // ループが2回目 かつ セパレーターのパーサーが指定されている場合
+            if (1 < i && _repConf.separator != null) {
+                // セパレーターのトークンのパース
+                final Result sepResult = _repConf.separator.parse(ctx);
+                if (!sepResult.isSuccessful()) {
+                    if (_repConf.breakable && _repConf.minimal < i) {
+                        // min ＜ ループ回数 なら失敗とせずリセットしてループを抜ける
+                        src.reset(true);
+                        break;
+                    }
+                    return failure(sepResult.message());
+                }
+            }
+
+            final ValResult<T> mainResult = _original.parse(ctx);
+            if (!mainResult.isSuccessful()) {
+                if (_repConf.breakable && _repConf.minimal < i) {
+                    // min ＜ ループ回数 なら失敗とせずリセットしてループを抜ける
+                    src.reset(true);
+                    break;
+                }
+                return failure(mainResult.message());
+            }
+
+            // ループ回数のシードの有無を確認
+            acc = (i == 1 && _noSeed) 
+                // ループ1回目 かつ シードなし の場合、初回キャプチャをそのままアキュームレート
+                ? (U)mainResult.value()
+                // それ以外の場合、
+                : _redConf.accumulator.apply(acc, mainResult.value());
+
+            // min ＜ ループ回数 ならリセットのための準備を解除
+            if (_repConf.breakable && _repConf.minimal < i) src.unmark();
+		}
+		
+		return success(_redConf.resultSelector.apply(acc));
+	}
+	public RepeatReduceValParser<T,T,T> reReduce(BiFunction<T, T, T> accumulator){
+		return new RepeatReduceValParser<>(_original, 
+				_repConf, new ReduceConfig<>(null, accumulator, a -> a));
+	}
+	public<U2> RepeatReduceValParser<T,U2,U2> reReduce(Supplier<U2> seedFactory,BiFunction<U2, T, U2> accumulator){
+		return new RepeatReduceValParser<>(_original, 
+				_repConf, new ReduceConfig<>(seedFactory, accumulator, a -> a));
+	}
+	public<U2, V2> RepeatReduceValParser<T,U2,V2> reReduce(Supplier<U2> seedFactory,
+			BiFunction<U2, T, U2> accumulator, Function<U2, V2> resultSelector){
+		return new RepeatReduceValParser<>(_original, 
+				_repConf, new ReduceConfig<>(seedFactory, accumulator, resultSelector));
+	}
+}
+final class RepeatConfig{
+	public static RepeatConfig exactly(int v, Parser sep) {
+		return new RepeatConfig(0, -1, v, sep);
+	}
+	public static RepeatConfig minimal(int v, Parser sep) {
+		return new RepeatConfig(v, -1, -1, sep);
+	}
+	public static RepeatConfig maximum(int v, Parser sep) {
+		return new RepeatConfig(0, v, -1, sep);
+	}
+	public static RepeatConfig range(int min, int max, Parser sep) {
+		return new RepeatConfig(min, max, -1, sep);
+	}
+	
+	public final int minimal;
+	public final int maximum;
+	public final boolean breakable;
+	public final Parser separator;
+	
+	private RepeatConfig(int min, int max, int exactly, Parser sep){
+		if (exactly == -1) {
+			max = max == -1 ? Integer.MAX_VALUE : max;
+			min = min == -1 ? 0 : min;
+			
+            if (max < 1) throw new IllegalArgumentException();
+            if (min < 0) throw new IllegalArgumentException();
+            if (max < min) throw new IllegalArgumentException();
+            
+            minimal = min;
+            maximum = max;
+            breakable = min != max;
+		}else {
+			if (exactly <= 1)  throw new IllegalArgumentException();
+			minimal = min;
+			maximum = max;
+			breakable = false;
+		}
+		separator = sep;
+	}
+}
+final class ReduceConfig<T,U,V>{
+	public final Supplier<U> seedFactory;
+	public final BiFunction<U, T, U> accumulator;
+	public final Function<U, V> resultSelector;
+	ReduceConfig(Supplier<U> seedFactory, BiFunction<U, T, U> accumulator, Function<U, V> resultSelector) {
+		ParsecUtility.mustNotBeNull("accumulator", accumulator);
+		ParsecUtility.mustNotBeNull("resultSelector", resultSelector);
+		
+		this.seedFactory = seedFactory;
+		this.accumulator = accumulator;
+		this.resultSelector = resultSelector;
+	}
+}
