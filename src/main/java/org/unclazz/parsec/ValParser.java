@@ -147,6 +147,14 @@ public abstract class ValParser<T> extends ParserSupport {
 		return new MapValParser<>(this, func);
 	}
 	/**
+	 * パース結果の値を元に動的にパーサーを構築するパーサーを返します。
+	 * @param func
+	 * @return
+	 */
+	public<U> ValParser<U> flatMap(Function<T, ValParser<U>> func){
+		return new FlatMapValParser<>(this, func);
+	}
+	/**
 	 * オプションのトークンにマッチするパーサーを返します。
 	 * @return
 	 */
