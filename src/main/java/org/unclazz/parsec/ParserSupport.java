@@ -47,6 +47,20 @@ abstract class ParserSupport{
 	}
 	
 	/**
+	 * EOFにマッチするパーサーを返します。
+	 * @return
+	 */
+	protected Parser eof() {
+		return new EofParser();
+	}
+	/**
+	 * BOFにマッチするパーサーを返します。
+	 * @return
+	 */
+	protected Parser bof() {
+		return new BofParser();
+	}
+	/**
 	 * 引数で指定した文字にマッチするパーサーを返します。
 	 * @param ch 文字
 	 * @return
