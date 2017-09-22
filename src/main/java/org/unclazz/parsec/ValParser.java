@@ -109,6 +109,36 @@ public abstract class ValParser<T> extends ParserSupport {
 	}
 	
 	/**
+	 * パーサーのキャプチャ内容を破棄します。
+	 * @return
+	 */
+	public Parser unval() {
+		return new UncaptureParser<>(this);
+	}
+	/**
+	 * このパーサーのパースが成功すると直近の{@link #or(ValParser)}を起点とするバックトラックが無効になります。
+	 * @return
+	 */
+	public ValParser<T> cut(){
+		return new CutValParser<>(this);
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param other
+	 * @return
+	 */
+	public ValParser<T> or(ValParser<T> other){
+		return new OrValParser<>(this, other);
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param other
+	 * @return
+	 */
+	public Parser or(Parser other){
+		return new OrParser(this.unval(), other);
+	}
+	/**
 	 * キャプチャ結果に関数を適用するパーサーを返します。
 	 * @param func
 	 * @return

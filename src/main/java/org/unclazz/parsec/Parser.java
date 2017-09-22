@@ -130,6 +130,29 @@ public abstract class Parser extends ParserSupport {
 		return new OptParser(this);
 	}
 	/**
+	 * このパーサーのパースが成功すると直近の{@link #or(ValParser)}を起点とするバックトラックが無効になります。
+	 * @return
+	 */
+	public Parser cut() {
+		return new CutParser(this);
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param other
+	 * @return
+	 */
+	public Parser or(Parser other) {
+		return new OrParser(this, other);
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param other
+	 * @return
+	 */
+	public<T> Parser or(ValParser<T> other){
+		return new OrParser(this, other.unval());
+	}
+	/**
 	 * シーケンスを読み取るパーサーを返します。
 	 * @param other 次のトークンを読み取るパーサー
 	 * @return
