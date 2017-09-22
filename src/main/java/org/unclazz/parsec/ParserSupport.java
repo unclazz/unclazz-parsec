@@ -32,7 +32,7 @@ abstract class ParserSupport{
 	 */
 	protected ParserSupport(final String name) {
 		if (name == null) {
-			_name = _classSuffix.matcher(this.getClass().getName()).replaceAll("");
+			_name = _classSuffix.matcher(this.getClass().getSimpleName()).replaceAll("");
 		}else {
 			_name = name;
 		}
@@ -109,7 +109,7 @@ abstract class ParserSupport{
 	 * @return
 	 */
 	protected<T> ValParser<T> product(Supplier<T> func) {
-		return new ProductParser<>(func);
+		return new ProduceParser<>(func);
 	}
 	/**
 	 * パーサーが実際に必要になったときにこれを生成してパースを行う遅延初期化パーサーを返します。
