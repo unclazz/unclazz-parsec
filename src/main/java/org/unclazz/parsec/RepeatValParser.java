@@ -31,4 +31,7 @@ public final class RepeatValParser<T> extends ValParser<Seq<T>> {
 	public<U,R> ValParser<R> reduce(Supplier<U> seed, BiFunction<U, T, U> accumulator, Function<U, R> resultSelector){
 		return _inner.reReduce(seed, accumulator, resultSelector);
 	}
+	public ValParser<Integer> count() {
+		return _inner.reReduce(() -> 0, (a, b) -> a + 1);
+	}
 }
