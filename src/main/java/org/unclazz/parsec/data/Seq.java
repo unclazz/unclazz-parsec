@@ -77,6 +77,15 @@ public final class Seq<T> implements Iterable<T> {
 	public Stream<T> stream(){
 		return Arrays.stream(_items);
 	}
+	@Override
+	public String toString() {
+		final StringBuilder buf = new StringBuilder().append('[');
+		for (int i = 0; i < _items.length; i++) {
+			if (i > 0) buf.append(", ");
+			buf.append(_items[i]);
+		}
+		return buf.append(']').toString();
+	}
 	
 	static final class SeqIterator<T> implements Iterator<T>{
 		private int _index;
