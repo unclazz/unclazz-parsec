@@ -2,6 +2,7 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * パーサーを表す抽象クラスです。
@@ -143,5 +144,89 @@ public abstract class Parser extends ParserSupport {
 	 */
 	public<T> ValParser<T> then(ValParser<T> other){
 		return new ThenTakeRightParser<>(this, other);
+	}
+	/**
+	 * パース成功時に指定した値を返すパーサーを返します。
+	 * @param value
+	 * @return
+	 */
+	public<T> ValParser<T> means(T value){
+		return new MeansValParser<>(this, () -> value);
+	}
+	/**
+	 * パース成功時に指定した値を返すパーサーを返します。
+	 * @param func
+	 * @return
+	 */
+	public<T> ValParser<T> means(Supplier<T> func){
+		return new MeansValParser<>(this, func);
+	}
+	/**
+	 * パターンの0回以上上限なしの繰返しにマッチするパーサーを返します。
+	 * @return
+	 */
+	public RepeatParser rep() {
+		return new RepeatParser(this, 0, -1, -1, null);
+	}
+	/**
+	 * パターンの0回以上上限なしの繰返しにマッチするパーサーを返します。
+	 * @param sep
+	 * @return
+	 */
+	public RepeatParser rep(Parser sep) {
+		return new RepeatParser(this, 0, -1, -1, sep);
+	}
+	/**
+	 * パターンの{@code min}回以上上限なしの繰返しにマッチするパーサーを返します。
+	 * @param min
+	 * @return
+	 */
+	public RepeatParser repMin(int min) {
+		return new RepeatParser(this, min, -1, -1, null);
+	}
+	/**
+	 * パターンの{@code min}回以上上限なしの繰返しにマッチするパーサーを返します。
+	 * @param min
+	 * @param sep
+	 * @return
+	 */
+	public RepeatParser repMin(int min, Parser sep) {
+		return new RepeatParser(this, min, -1, -1, sep);
+	}
+	/**
+	 * パターンの{@code min}回以上{@code max}回以下の繰返しにマッチするパーサーを返します。
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public RepeatParser rep(int min, int max) {
+		return new RepeatParser(this, min, max, -1, null);
+	}
+	/**
+	 * パターンの{@code min}回以上{@code max}回以下の繰返しにマッチするパーサーを返します。
+	 * @param min
+	 * @param max
+	 * @param sep
+	 * @return
+	 */
+	public RepeatParser rep(int min, int max, Parser sep) {
+		return new RepeatParser(this, min, max, -1, sep);
+	}
+	/**
+	 * パターンの{@code exactly}回の繰返しにマッチするパーサーを返します。
+	 * @param exactly
+	 * @return
+	 */
+	public RepeatParser rep(int exactly) {
+		return new RepeatParser(this, -1, -1, exactly, null);
+	}
+	/**
+	 * パターンの{@code exactly}回の繰返しにマッチするパーサーを返します。
+	 * @param exactly
+	 * @param sep
+	 * @return
+	 */
+	public RepeatParser rep(int exactly, Parser sep) {
+		return new RepeatParser(this, -1, -1, exactly, sep);
 	}
 }
