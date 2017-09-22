@@ -1,14 +1,13 @@
 package org.unclazz.parsec.data;
 
 /**
-/**
- * 要素数2のタプルです。
+ * 要素数3のタプルです。
  *
  * @param <T1> 要素1の型
  * @param <T2> 要素2の型
  * @param <T3> 要素3の型
  */
-public final class Triple<T1,T2, T3> implements Tuple {
+public final class Tuple3<T1,T2, T3> implements Tuple {
 	/**
 	/**
 	 * タプルのインスタンスを返します。
@@ -17,15 +16,15 @@ public final class Triple<T1,T2, T3> implements Tuple {
 	 * @param item3 要素3の値
 	 * @return
 	 */
-	public static<T1, T2, T3> Triple<T1, T2, T3> of(T1 item1, T2 item2, T3 item3){
-		return new Triple<>(item1, item2, item3);
+	public static<T1, T2, T3> Tuple3<T1, T2, T3> of(T1 item1, T2 item2, T3 item3){
+		return new Tuple3<>(item1, item2, item3);
 	}
 	
 	private final T1 _item1;
 	private final T2 _item2;
 	private final T3 _item3;
 	
-	private Triple(T1 item1, T2 item2, T3 item3) {
+	private Tuple3(T1 item1, T2 item2, T3 item3) {
 		_item1 = item1;
 		_item2 = item2;
 		_item3 = item3;
