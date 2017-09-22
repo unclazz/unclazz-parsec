@@ -13,7 +13,9 @@ final class KeywordParser extends Parser {
 			final char expected = _keyword.charAt(i);
 			final int actual = ctx.source().read();
 			if (expected != actual) {
-				return failure("%s expected but %s found.", expected, actual);
+				return failure("%s expected but %s found.", 
+						ParsecUtility.charToString(expected),
+						ParsecUtility.charToString(actual));
 			}
 		}
 		return success();
