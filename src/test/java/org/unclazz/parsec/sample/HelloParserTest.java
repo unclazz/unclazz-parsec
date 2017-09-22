@@ -29,8 +29,6 @@ final class HelloParser extends ValParser<String>{
 	protected ValResultCore<String> doParse(Context ctx) throws IOException {
 		ctx = ctx.configure(a -> a.setLogAppender(System.out::println));
 		final ValResult<String> r = keyword("hello").val().parse(ctx);
-		System.out.println(r.isSuccessful());
-		System.out.println(r.value());
 		return r;
 	}
 }
