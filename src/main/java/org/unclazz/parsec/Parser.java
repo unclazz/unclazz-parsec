@@ -125,7 +125,7 @@ public abstract class Parser extends ParserSupport {
 	 * オプションのトークンにマッチするパーサーを返します。
 	 * @return
 	 */
-	public Parser orNot() {
+	public Parser opt() {
 		return new OptParser(this);
 	}
 	/**

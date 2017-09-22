@@ -5,7 +5,6 @@ import java.io.IOException;
 final class ExactCharParser extends Parser {
 	private final char _ch;
 	ExactCharParser(char ch) {
-		super("ExactChar");
 		_ch = ch;
 	}
 	@Override

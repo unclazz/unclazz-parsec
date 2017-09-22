@@ -6,7 +6,6 @@ final class CaptureParser extends ValParser<String> {
 	private final Parser _original;
 	
 	CaptureParser(Parser original) {
-		super("Capture");
 		_original = original;
 	}
 

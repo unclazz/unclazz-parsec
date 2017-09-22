@@ -5,7 +5,6 @@ import java.io.IOException;
 final class OptParser extends Parser {
 	private final Parser _original;
 	OptParser(Parser original) {
-		super("OrNot");
 		_original = original;
 	}
 

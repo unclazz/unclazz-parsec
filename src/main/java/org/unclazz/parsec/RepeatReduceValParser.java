@@ -12,7 +12,6 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 	private final boolean _noSeed;
 
 	 RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
-		super("RepeatReduce");
 		_original = original;
 		_repConf = repConf;
 		_redConf = redConf;

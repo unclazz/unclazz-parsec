@@ -7,7 +7,6 @@ final class ThenParser extends Parser {
 	private final Parser _right;
 	
 	protected ThenParser(Parser left, Parser right) {
-		super("Then");
 		_left = left;
 		_right = right;
 	}
@@ -32,7 +31,6 @@ final class ThenTakeLeftParser<T> extends ValParser<T> {
 	private final Parser _right;
 	
 	protected ThenTakeLeftParser(ValParser<T> left, Parser right) {
-		super("Then");
 		_left = left;
 		_right = right;
 	}
@@ -58,7 +56,6 @@ final class ThenTakeRightParser<T> extends ValParser<T> {
 	private final ValParser<T> _right;
 	
 	protected ThenTakeRightParser(Parser left, ValParser<T> right) {
-		super("Then");
 		_left = left;
 		_right = right;
 	}
