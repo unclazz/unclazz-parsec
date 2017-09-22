@@ -2,7 +2,10 @@ package org.unclazz.parsec;
 
 import java.nio.CharBuffer;
 
-public class Mappers{
+import org.unclazz.parsec.data.Tuple2;
+import org.unclazz.parsec.data.Tuple3;
+
+public final class Mappers {
 	private Mappers() {}
 	private static final JavaStringUnescaper _javaString = new JavaStringUnescaper();
 	private static final JsonStringUnescaper _jsonString = new JsonStringUnescaper();
@@ -24,7 +27,14 @@ public class Mappers{
 	public static Double floatingPoint(String value) {
 		return Double.parseDouble(value);
 	}
+	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(T1 item1, Tuple2<T2, T3> tuple) {
+		return Tuple3.of(item1, tuple.item1(), tuple.item2());
+	}
+	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(Tuple2<T1, T2> tuple, T3 item3) {
+		return Tuple3.of(tuple.item1(), tuple.item2(), item3);
+	}
 }
+
 
 final class JavaStringUnescaper{
 	public String unescape(String original) {
