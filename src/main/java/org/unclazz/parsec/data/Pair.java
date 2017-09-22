@@ -1,6 +1,18 @@
 package org.unclazz.parsec.data;
 
+/**
+ * 要素数2のタプルです。
+ *
+ * @param <T1> 要素1の型
+ * @param <T2> 要素2の型
+ */
 public final class Pair<T1,T2> implements Tuple {
+	/**
+	 * タプルのインスタンスを返します。
+	 * @param item1 要素1の値
+	 * @param item2 要素2の値
+	 * @return
+	 */
 	public static<T1, T2> Pair<T1, T2> of(T1 item1, T2 item2){
 		return new Pair<>(item1, item2);
 	}
@@ -13,9 +25,17 @@ public final class Pair<T1,T2> implements Tuple {
 		_item2 = item2;
 	}
 	
+	/**
+	 * タプルの要素1です。
+	 * @return
+	 */
 	public T1 item1() {
 		return _item1;
 	}
+	/**
+	 * タプルの要素2です。
+	 * @return
+	 */
 	public T2 item2() {
 		return _item2;
 	}
