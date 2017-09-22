@@ -141,4 +141,20 @@ abstract class ParserSupport{
 	protected<T> ValParser<T> lazyVal(Supplier<ValParser<T>> func) {
 		return new LazyValParser<>(func);
 	}
+	/**
+	 * 肯定先読みを行うパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	protected Parser lookahead(Parser original) {
+		return new LookaheadParser(original);
+	}
+	/**
+	 * パーサーの成否を反転させるパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	protected Parser not(Parser original) {
+		return new NotParser(original);
+	}
 }
