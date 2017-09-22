@@ -3,10 +3,9 @@ package org.unclazz.parsec;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-final class ProductParser<T> extends ValParser<T>{
+final class ProduceParser<T> extends ValParser<T>{
 	private final Supplier<T> _func;
-	ProductParser(Supplier<T> func) {
-		super("Yield");
+	ProduceParser(Supplier<T> func) {
 		_func = func;
 	}
 	@Override
