@@ -119,6 +119,14 @@ abstract class ParserSupport{
 		return new KeywordParser(keyword, cutIndex);
 	}
 	/**
+	 * 引数で指定したキーワードにマッチするパーサーを返します。
+	 * @param keywords
+	 * @return
+	 */
+	protected Parser keywordIn(String...keywords) {
+		return new KeywordInParser(keywords);
+	}
+	/**
 	 * 文字位置を変化させず指定した値を産生するパーサーを返します。
 	 * @param value 値
 	 * @return
