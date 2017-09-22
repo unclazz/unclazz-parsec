@@ -102,6 +102,40 @@ abstract class ParserSupport{
 		return new CharClassParser(CharClass.between(start, end));
 	}
 	/**
+	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param chs
+	 * @param min
+	 * @return
+	 */
+	protected Parser charWhileIn(String chs, int min) {
+		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), min);
+	}
+	/**
+	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param chs
+	 * @return
+	 */
+	protected Parser charWhileIn(String chs) {
+		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
+	}
+	/**
+	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param clazz
+	 * @param min
+	 * @return
+	 */
+	protected Parser charWhileIn(CharClass clazz, int min) {
+		return new CharsWhileInParser(clazz, min);
+	}
+	/**
+	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param clazz
+	 * @return
+	 */
+	protected Parser charWhileIn(CharClass clazz) {
+		return new CharsWhileInParser(clazz, 0);
+	}
+	/**
 	 * 引数で指定したキーワードにマッチするパーサーを返します。
 	 * @param keyword キーワード
 	 * @return
