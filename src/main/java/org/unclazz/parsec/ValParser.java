@@ -7,6 +7,10 @@ import java.util.function.Function;
 import org.unclazz.parsec.data.Seq;
 import org.unclazz.parsec.data.Tuple2;
 
+/**
+ * パーサーを表す抽象クラスです。
+ * <p>このパーサーはパースの成功・失敗の情報とともにキャプチャした値も返します。</p>
+ */
 public abstract class ValParser<T> extends ParserSupport {
 	/**
 	 * 引数なしのコンストラクタです。

@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * パーサーを表す抽象クラスです。
  * <p>このパーサーはパース処理にあたってパース対象の値をキャプチャせず、パースの成功・失敗の情報だけを返します。
  * キャプチャが必要な場合は値をキャプチャするパーサーである{@link ValParser}の派生クラスを利用します。
- * {@link ValParser}のインスタンスは{@link Parser#val()}や{@link Parser#map(Function)}メソッドから得られます。</p>
+ * {@link ValParser}のインスタンスは{@link #val()}や{@link #map(Function)}や{@link #means(Object)}メソッドから得られます。</p>
  */
 public abstract class Parser extends ParserSupport {
 	/**
