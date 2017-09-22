@@ -4,8 +4,15 @@ import java.io.IOException;
 
 final class KeywordParser extends Parser {
 	private final String _keyword;
-	public KeywordParser(String keyword) {
+	private final int _cutIndex;
+	KeywordParser(String keyword) {
 		_keyword = keyword;
+		_cutIndex = -1;
+	}
+	KeywordParser(String keyword, int cutIndex) {
+		ParsecUtility.mustBeGreaterThanOrEqual("keyword", cutIndex, -1);
+		_keyword = keyword;
+		_cutIndex = cutIndex;
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
@@ -13,9 +20,10 @@ final class KeywordParser extends Parser {
 			final char expected = _keyword.charAt(i);
 			final int actual = ctx.source().read();
 			if (expected != actual) {
-				return failure("%s expected but %s found.", 
+				final ResultCore rc = failure("%s expected but %s found.", 
 						ParsecUtility.charToString(expected),
 						ParsecUtility.charToString(actual));
+				return _cutIndex == -1 || i < _cutIndex ? rc : rc.allowBacktrack(false);
 			}
 		}
 		return success();

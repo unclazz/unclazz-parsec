@@ -110,6 +110,15 @@ abstract class ParserSupport{
 		return new KeywordParser(keyword);
 	}
 	/**
+	 * 引数で指定したキーワードにマッチするパーサーを返します。
+	 * @param keyword キーワード
+	 * @param cutIndex この添字より前までパース成功したら以降バックトラックは無効
+	 * @return
+	 */
+	protected Parser keyword(String keyword, int cutIndex) {
+		return new KeywordParser(keyword, cutIndex);
+	}
+	/**
 	 * 文字位置を変化させず指定した値を産生するパーサーを返します。
 	 * @param value 値
 	 * @return
