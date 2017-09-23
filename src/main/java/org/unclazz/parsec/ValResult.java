@@ -2,6 +2,11 @@ package org.unclazz.parsec;
 
 import java.util.function.Function;
 
+/**
+ * {@link ValParser}のパースの結果を表すオブジェクトです。
+ * <p>{@link ValResultCore}の下位型であり、パース前後の文字位置情報も持ちます。</p>
+ * @param <T> キャプチャ値の型
+ */
 public final class ValResult<T> extends ValResultCore<T> {
 	private final CharPosition _start;
 	private final CharPosition _end;
@@ -12,9 +17,17 @@ public final class ValResult<T> extends ValResultCore<T> {
 		_end = end;
 	}
 	
+	/**
+	 * パース開始時の文字位置です。
+	 * @return
+	 */
 	public CharPosition start() {
 		return _start;
 	}
+	/**
+	 * パース終了時の文字位置です。
+	 * @return
+	 */
 	public CharPosition end() {
 		return _end;
 	}
@@ -27,10 +40,10 @@ public final class ValResult<T> extends ValResultCore<T> {
 	public ValResult<T> allowBacktrack(boolean yesNo){
 		return new ValResult<>(isSuccessful(), value(), message(), yesNo, _start, _end);
 	}
-	public ValResult<T> or(ValResult<T> other){
-		if (isSuccessful()) return this;
-		else return other;
-	}
+	/**
+	 * 値との紐付けを解除して{@link Parser}のパース結果を表すオブジェクトに変換します。
+	 * @return
+	 */
 	public Result detachValue(){
 		return new Result(isSuccessful(), message(), canBacktrack(), _start, _end);
 	}
