@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Stack;
 
+/**
+ * リセット機能を持つリーダーです。
+ */
 class ResettableReader extends PrependableReader {
 	
 	private boolean _marked;
@@ -14,10 +17,16 @@ class ResettableReader extends PrependableReader {
 		super(reader);
 	}
 	
+	/**
+	 * 現在の文字位置にマークを設定します。
+	 */
 	public void mark() {
 		_marked = true;
 		_marks.push(position());
 	}
+	/**
+	 * 直近のマークを解除します。
+	 */
 	public void unmark() {
 		if (_marked) {
 			_marks.pop();
@@ -27,6 +36,11 @@ class ResettableReader extends PrependableReader {
 			}
 		}
 	}
+	/**
+	 * 直近マークした文字位置から現在の文字位置の1つ前までの文字列をキャプチャします。
+	 * @param unmark マーク解除も同時に行う場合{@code true}
+	 * @return
+	 */
 	public String capture(boolean unmark) {
 		if (_marked) {
 			final int delta = position().index() - _marks.peek().index();
@@ -37,6 +51,10 @@ class ResettableReader extends PrependableReader {
 		}
 		return null;
 	}
+	/**
+	 * 直近マークした文字位置から現在の文字位置の1つ前までの文字列をキャプチャします。
+	 * @return マーク解除も同時に行う場合{@code true}
+	 */
 	public String capture() {
 		return capture(false);
 	}
@@ -46,9 +64,16 @@ class ResettableReader extends PrependableReader {
 		if (_marked && ch != -1) _backup.push((char) ch);
 		return ch;
 	}
+	/**
+	 * 直近マークした位置まで文字位置を戻します。
+	 */
 	public void reset() {
 		reset(false);
 	}
+	/**
+	 * 直近マークした位置まで文字位置を戻します。
+	 * @param unmark
+	 */
 	public void reset(boolean unmark) {
 		if (_marked) {
 			final CharPosition lastMark = _marks.peek();

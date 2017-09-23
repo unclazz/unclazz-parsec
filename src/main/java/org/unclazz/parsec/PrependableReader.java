@@ -4,6 +4,9 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * データソースの先頭にシーケンスを接続する機能を持つリーダーです。
+ */
 class PrependableReader extends AbstractReader {
 
 	private CharArrayReader _prefixReader;
@@ -34,6 +37,11 @@ class PrependableReader extends AbstractReader {
 	public int peek() {
 		return _prefixReader.hasReachedEof() ? _mainReader.peek() : _prefixReader.peek();
 	}
+	/**
+	 * 文字位置を設定し直し、データソースの先頭にシーケンスを連結します。
+	 * @param position 文字位置
+	 * @param prefix データソースの先頭に連結するシーケンス
+	 */
 	protected void reattach(CharPosition position, char[] prefix) {
 		position(position);
 		_prefixReader = CharArrayReader.from(prefix);
