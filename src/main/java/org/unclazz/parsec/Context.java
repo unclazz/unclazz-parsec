@@ -38,23 +38,49 @@ public final class Context {
 	CharClass skipTarget() {
 		return _skipTarget;
 	}
+	/**
+	 * データソースです。
+	 * @return 
+	 */
 	public TextReader source() {
 		return _source;
 	}
+	/**
+	 * 自動スキップが有効かどうかを示します。
+	 * @return
+	 */
 	public boolean autoSkip() {
 		return _autoSkip;
 	}
+	/**
+	 * ログ出力が有効かどうかを示します。
+	 * @return
+	 */
 	public boolean logging() {
 		return _logging;
 	}
+	/**
+	 * コンテキストの構成変更を行います。
+	 * @param action
+	 * @return
+	 */
 	public Context configure(Consumer<ContextConfigurer> action) {
 		final ContextConfigurer config = new ContextConfigurer(this);
 		action.accept(config);
 		return config.makeContext();
 	}
+	/**
+	 * デバッグログを出力します。
+	 * @param message
+	 */
 	public void log(String message) {
 		if (_logging) _logAppender.accept(message);
 	}
+	/**
+	 * デバッグログを出力します。
+	 * @param format
+	 * @param args
+	 */
 	public void log(String format, Object... args) {
 		if (_logging) log(makeLabel(' ').append(String.format(format, args)).toString());
 	}
