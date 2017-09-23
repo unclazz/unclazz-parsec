@@ -1,6 +1,5 @@
 package org.unclazz.parsec;
 
-import java.nio.CharBuffer;
 import java.util.Arrays;
 
 final class CharArrayReader {
@@ -29,10 +28,9 @@ final class CharArrayReader {
 	}
 	public String readToEnd() {
 		if (hasReachedEof()) return null;
-		final int len = _items.length - _index;
-		final CharBuffer buf = CharBuffer.allocate(len).put(_items, _index, len);
+		final String tmp = new String(_items, _index, _items.length - _index);
 		_index = _items.length;
-		return buf.flip().toString();
+		return tmp;
 	}
 	public int peek(){
 		return _index < _items.length ? _items[_index] : -1;
