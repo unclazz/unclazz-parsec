@@ -8,6 +8,7 @@ final class PeekableReader implements Closeable, AutoCloseable{
 	private final Reader _inner;
 	private int _cache = -1;
 	public PeekableReader(Reader inner) {
+		ParsecUtility.mustNotBeNull("inner", inner);
 		_inner = inner;
 		try {
 			_cache = inner.read();
