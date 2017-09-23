@@ -7,6 +7,8 @@ final class MapValParser<T,U> extends ValParser<U> {
 	private final ValParser<T> _original;
 	private final Function<T, U> _func;
 	MapValParser(ValParser<T> original, Function<T, U> func) {
+		ParsecUtility.mustNotBeNull("original", original);
+		ParsecUtility.mustNotBeNull("func", func);
 		_original = original;
 		_func = func;
 	}

@@ -10,11 +10,15 @@ class PrependableReader extends AbstractReader {
 	private final PeekableReader _mainReader;
 	
 	PrependableReader(CharPosition p, char[] prefix, Reader main){
+		ParsecUtility.mustNotBeNull("p", p);
+		ParsecUtility.mustNotBeNull("prefix", prefix);
+		ParsecUtility.mustNotBeNull("main", main);
 		position(p);
 		_prefixReader = CharArrayReader.from(prefix);
 		_mainReader = new PeekableReader(main);
 	}
 	PrependableReader(Reader main){
+		ParsecUtility.mustNotBeNull("main", main);
 		_prefixReader = CharArrayReader.from(new char[0]);
 		_mainReader = new PeekableReader(main);
 	}

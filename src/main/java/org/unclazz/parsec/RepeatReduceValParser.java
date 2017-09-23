@@ -12,6 +12,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 	private final boolean _noSeed;
 
 	 RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
+			ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 		_repConf = repConf;
 		_redConf = redConf;

@@ -9,6 +9,8 @@ final class Tuple2Parser<T1, T2> extends ValParser<Tuple2<T1, T2>> {
 	private final ValParser<T2> _right;
 	
 	public Tuple2Parser(ValParser<T1> left, ValParser<T2> right) {
+		ParsecUtility.mustNotBeNull("left", left);
+		ParsecUtility.mustNotBeNull("right", right);
 		_left = left;
 		_right = right;
 	}

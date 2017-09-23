@@ -5,6 +5,7 @@ import java.io.IOException;
 final class NotParser extends Parser{
 	private final Parser _original;
 	NotParser(Parser original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 	@Override

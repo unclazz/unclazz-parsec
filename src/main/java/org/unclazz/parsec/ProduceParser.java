@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 final class ProduceParser<T> extends ValParser<T>{
 	private final Supplier<T> _func;
 	ProduceParser(Supplier<T> func) {
+		ParsecUtility.mustNotBeNull("func", func);
 		_func = func;
 	}
 	@Override

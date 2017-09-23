@@ -5,6 +5,7 @@ import java.io.IOException;
 final class CutValParser<T> extends ValParser<T> {
 	private final ValParser<T> _original;
 	CutValParser(ValParser<T> original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 	@Override

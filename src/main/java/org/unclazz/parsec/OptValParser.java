@@ -6,6 +6,7 @@ import java.util.Optional;
 final class OptValParser<T> extends ValParser<Optional<T>> {
 	private final ValParser<T> _original;
 	OptValParser(ValParser<T> original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 

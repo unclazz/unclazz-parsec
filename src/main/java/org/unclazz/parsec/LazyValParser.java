@@ -7,6 +7,7 @@ final class LazyValParser<T> extends ValParser<T>{
 	private final Supplier<ValParser<T>> _func;
 	private ValParser<T> _cache;
 	LazyValParser(Supplier<ValParser<T>> func){
+		ParsecUtility.mustNotBeNull("func", func);
 		_func = func;
 	}
 	@Override

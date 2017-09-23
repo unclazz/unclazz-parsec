@@ -6,6 +6,8 @@ final class CharsWhileInParser extends Parser {
 	private final CharClass _clazz;
 	private final int _min;
 	CharsWhileInParser(CharClass clazz, int min){
+		ParsecUtility.mustNotBeNull("clazz", clazz);
+		ParsecUtility.mustBeGreaterThanOrEqual("min", min, 0);
 		_clazz = clazz;
 		_min = min;
 	}

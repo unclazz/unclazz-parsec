@@ -6,6 +6,7 @@ final class LookaheadParser extends Parser{
 	private final Parser _original;
 	
 	LookaheadParser(Parser original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 

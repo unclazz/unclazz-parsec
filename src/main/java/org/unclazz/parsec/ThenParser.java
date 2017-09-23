@@ -7,6 +7,8 @@ final class ThenParser extends Parser {
 	private final Parser _right;
 	
 	protected ThenParser(Parser left, Parser right) {
+		ParsecUtility.mustNotBeNull("left", left);
+		ParsecUtility.mustNotBeNull("right", right);
 		_left = left;
 		_right = right;
 	}

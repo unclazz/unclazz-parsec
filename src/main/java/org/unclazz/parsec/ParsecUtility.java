@@ -25,6 +25,11 @@ final class ParsecUtility {
 		if (isEmpty(target)) throw new IllegalArgumentException
 		(String.format("argument \"%s\" must not be empty.", name));
 	}
+	public static void mustNotBeEmpty(String name, String target){
+		mustNotBeNull(name, target);
+		if (target.length() == 0) throw new IllegalArgumentException
+		(String.format("argument \"%s\" must not be empty.", name));
+	}
 	public static void mustNotBeEmpty(String name, char[] target){
 		mustNotBeNull(name, target);
 		if (target.length == 0) throw new IllegalArgumentException

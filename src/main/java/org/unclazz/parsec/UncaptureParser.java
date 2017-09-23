@@ -5,6 +5,7 @@ import java.io.IOException;
 final class UncaptureParser<T> extends Parser{
 	private final ValParser<T> _original;
 	UncaptureParser(ValParser<T> original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 	@Override

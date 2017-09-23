@@ -5,6 +5,7 @@ import java.io.IOException;
 final class OptParser extends Parser {
 	private final Parser _original;
 	OptParser(Parser original) {
+		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 	}
 

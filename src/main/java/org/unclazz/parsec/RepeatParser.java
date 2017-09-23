@@ -6,6 +6,7 @@ public final class RepeatParser extends Parser {
 	private final SeqParser<String> _inner;
 	
 	RepeatParser(Parser original, int min, int max, int exactly, Parser sep) {
+		ParsecUtility.mustNotBeNull("original", original);
 		final RepeatConfig repConf = exactly == -1 
 				? RepeatConfig.range(min, max, sep)
 				: RepeatConfig.exactly(exactly, sep);

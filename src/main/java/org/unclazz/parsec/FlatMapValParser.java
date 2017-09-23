@@ -7,6 +7,8 @@ final class FlatMapValParser<T,U> extends ValParser<U> {
 	private final ValParser<T> _original;
 	private final Function<T, ValParser<U>> _func;
 	FlatMapValParser(ValParser<T> original, Function<T, ValParser<U>> func) {
+		ParsecUtility.mustNotBeNull("original", original);
+		ParsecUtility.mustNotBeNull("func", func);
 		_original = original;
 		_func = func;
 	}

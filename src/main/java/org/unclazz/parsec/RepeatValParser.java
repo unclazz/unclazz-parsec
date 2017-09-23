@@ -11,6 +11,7 @@ public final class RepeatValParser<T> extends ValParser<Seq<T>> {
 	private final SeqParser<T> _inner;
 	
 	RepeatValParser(ValParser<T> original, int min, int max, int exactly, Parser sep) {
+		ParsecUtility.mustNotBeNull("original", original);
 		final RepeatConfig repConf = exactly == -1 
 				? RepeatConfig.range(min, max, sep)
 				: RepeatConfig.exactly(exactly, sep);

@@ -7,6 +7,7 @@ final class LazyParser extends Parser{
 	private final Supplier<Parser> _func;
 	private Parser _cache;
 	LazyParser(Supplier<Parser> func){
+		ParsecUtility.mustNotBeNull("func", func);
 		_func = func;
 	}
 	@Override
