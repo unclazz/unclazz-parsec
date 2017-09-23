@@ -44,6 +44,6 @@ class PrependableReader extends AbstractReader {
 	 */
 	protected void reattach(CharPosition position, char[] prefix) {
 		position(position);
-		_prefixReader = CharArrayReader.from(prefix);
+		_prefixReader = _prefixReader.prepend(prefix);
 	}
 }
