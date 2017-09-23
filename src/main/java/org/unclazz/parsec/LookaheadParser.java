@@ -11,10 +11,15 @@ final class LookaheadParser extends Parser{
 
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
+		// _originalによるパースを試行し、結果の成否に関わらずリセットを行う
 		final TextReader src = ctx.source();
 		src.mark();
 		final Result r = _original.parse(ctx);
 		src.reset(true);
-		return r;
+		
+		// _originalのパース成否を確認しつつ結果を生成して返す
+		// ※_originalのパース結果をそのまま呼び出し元に返すと、
+		// パース前後の位置情報が誤ったものになってしまう。
+		return r.isSuccessful() ? success() : failure(r.message());
 	}
 }
