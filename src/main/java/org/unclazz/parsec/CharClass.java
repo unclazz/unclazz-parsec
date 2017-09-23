@@ -37,6 +37,14 @@ public abstract class CharClass {
 	public static CharClass anyOf(String cs) {
 		return new CharRangeCharClass(cs.toCharArray());
 	}
+	/**
+	 * 補集合となる文字クラスを返します。
+	 * @param clazz
+	 * @return
+	 */
+	public static CharClass not(CharClass clazz) {
+		return new ComplementCharClass(clazz);
+	}
 	
 	/**
 	 * 文字が文字クラスに属しているかどうかを判定します。
