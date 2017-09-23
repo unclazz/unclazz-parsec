@@ -46,18 +46,14 @@ final class CharArrayReader {
 		final int restLength = _items.length - _index;
 		final int newLength = prefix.length + restLength;
 		final char[] newItems = Arrays.copyOf(prefix, newLength);
-		for (int i = prefix.length, j = _index; i < newLength; i++, j++){
-			newItems[i] = _items[j];
-		}
 		
+		System.arraycopy(_items, _index, newItems, prefix.length, restLength);
 		return new CharArrayReader(newItems);
 	}
 	public char[] toArray(){
 		final int restLength = _items.length - _index;
 		final char[] arr = new char[restLength];
-		for (int i = 0, j = _index; i < restLength; i++, j++){
-			arr[i] = _items[j];
-		}
+		System.arraycopy(_items, _index, arr, 0, restLength);
 		return arr;
 	}
 }
