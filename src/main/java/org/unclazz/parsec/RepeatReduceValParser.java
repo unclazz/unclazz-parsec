@@ -61,17 +61,17 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 		
 		return success(_redConf.resultSelector.apply(acc));
 	}
-	public RepeatReduceValParser<T,Optional<T>,Optional<T>> reReduce(BiFunction<T, T, T> accumulator){
+	RepeatReduceValParser<T,Optional<T>,Optional<T>> reReduce(BiFunction<T, T, T> accumulator){
 		final BiFunction<Optional<T>, T, Optional<T>> accumulator2 =
 				(a, b) -> a.isPresent() ? Optional.of(accumulator.apply(a.get(), b)) : a;
 		return new RepeatReduceValParser<>(_original, 
 				_repConf, new ReduceConfig<>(Optional::empty, accumulator2, a -> a));
 	}
-	public<U2> RepeatReduceValParser<T,U2,U2> reReduce(Supplier<U2> seedFactory,BiFunction<U2, T, U2> accumulator){
+	<U2> RepeatReduceValParser<T,U2,U2> reReduce(Supplier<U2> seedFactory,BiFunction<U2, T, U2> accumulator){
 		return new RepeatReduceValParser<>(_original, 
 				_repConf, new ReduceConfig<>(seedFactory, accumulator, a -> a));
 	}
-	public<U2, V2> RepeatReduceValParser<T,U2,V2> reReduce(Supplier<U2> seedFactory,
+	<U2, V2> RepeatReduceValParser<T,U2,V2> reReduce(Supplier<U2> seedFactory,
 			BiFunction<U2, T, U2> accumulator, Function<U2, V2> resultSelector){
 		return new RepeatReduceValParser<>(_original, 
 				_repConf, new ReduceConfig<>(seedFactory, accumulator, resultSelector));
