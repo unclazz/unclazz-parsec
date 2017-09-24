@@ -1,6 +1,7 @@
 package org.unclazz.parsec;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
@@ -148,61 +149,37 @@ final class CharRangeCharClass extends CharClass{
 	private static CharRange[] tryMerge(CharRange[] rs) {
 		// 文字範囲の数が0か1の場合は最適化の余地がないため即座に処理を終える
 		if (rs.length <= 1) return rs;
+		
 		// 文字範囲をその開始文字の自然順序でソート
+		Arrays.sort(rs, charRangeCompare);
+		
 		// その後先頭の要素から順番にスタックに格納しつつ最適化を試みる
-		return Arrays.stream(rs).sorted(CharRangeCharClass::compare2Ranges)
-				.reduce(new Stack<CharRange>(), CharRangeCharClass::tryMerge_accumulator, 
-						CharRangeCharClass::tryMerge_combinator).toArray(new CharRange[0]);
+		final Stack<CharRange> stack = new Stack<CharRange>();
+		stack.push(rs[0]);
+		for (int i = 1; i < rs.length; i ++) {
+			final CharRange r = rs[i];
+	        // 直近処理済み文字範囲と今回処理対象の文字範囲の合成を試みる
+	        final Optional<CharRange> res = tryMerge_accumulator_merge2Ranges(stack.peek(), r);
+	        // 合成が成功したかどうかチェック
+	        if (res.isPresent()) {
+	        	// 成功した場合は直近処理済みの文字範囲をスタックから除去
+	            stack.pop();
+	            // 合成済みの文字範囲をスタックに追加
+	            stack.push(res.get());
+	        } else {
+	        	// 失敗した場合は単に今回処理対象の文字範囲をスタックに追加
+	            stack.push(r);
+	        }
+		}
+		return stack.toArray(new CharRange[0]);
 	}
-	/**
-	 * 2つの文字範囲をその開始文字の自然順序で比較します。
-	 * @param left
-	 * @param right
-	 * @return
-	 */
-	private static int compare2Ranges(CharRange left, CharRange right) {
-		return left.start - right.start;
-	}
-	/**
-	 * 2つの文字範囲のスタックを合成して1つのスタックにします。
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	private static Stack<CharRange> tryMerge_combinator(Stack<CharRange> a, Stack<CharRange> b) {
-		a.addAll(b);
-		return a;
-	}
-	/**
-	 * 処理済み文字範囲のスタックと新しい処理対象の文字範囲をとり、
-	 * 直近処理済み文字範囲の新しい処理対象の文字範囲のマージを試みます。
-	 * @param stack 処理済み文字範囲のスタック
-	 * @param range 新しい処理対象の文字範囲
-	 * @return
-	 */
-	private static Stack<CharRange> tryMerge_accumulator(Stack<CharRange> stack, CharRange range) {
-		// スタックが空（＝集約ループの初回）かどうかチェック
-        if (stack.isEmpty()) {
-        	// 空の場合は合成の試行はせず単に今回処理対象の文字範囲をスタックに追加
-            stack.push(range);
-            // 次回処理のためスタックを呼び出し元に返す
-            return stack;
-        }
-        // 直近処理済み文字範囲と今回処理対象の文字範囲の合成を試みる
-        final Optional<CharRange> res = tryMerge_accumulator_merge2Ranges(stack.peek(), range);
-        // 合成が成功したかどうかチェック
-        if (res.isPresent()) {
-        	// 成功した場合は直近処理済みの文字範囲をスタックから除去
-            stack.pop();
-            // 合成済みの文字範囲をスタックに追加
-            stack.push(res.get());
-        } else {
-        	// 失敗した場合は単に今回処理対象の文字範囲をスタックに追加
-            stack.push(range);
-        }
-        // 次回処理のためスタックを呼び出し元に返す
-        return stack;
-	}
+	private static final Comparator<CharRange> charRangeCompare 
+	= new Comparator<CharRange>() {
+		@Override
+		public int compare(CharRange o1, CharRange o2) {
+			return o1.start - o2.start;
+		}
+	};
 	/**
 	 * 2つの文字範囲の合成を試行します。
 	 * @param left
