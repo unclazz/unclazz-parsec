@@ -6,28 +6,70 @@ import org.unclazz.parsec.data.Tuple;
 import org.unclazz.parsec.data.Tuple2;
 import org.unclazz.parsec.data.Tuple3;
 
+/**
+ * {@link ValParser#map(java.util.function.Function)}
+ * の引数として利用する関数型インターフェースを提供するユーティリティです。
+ */
 public final class Mappers {
 	private Mappers() {}
 	private static final JavaStringUnescaper _javaString = new JavaStringUnescaper();
 	private static final JsonStringUnescaper _jsonString = new JsonStringUnescaper();
+	
+	/**
+	 * Java言語の文字列としてエスケープが行われたシーケンスを
+	 * それが意味することろの本当の文字列に変換します（unescapeします）。
+	 * @param value
+	 * @return
+	 */
 	public static String javaString(String value) {
 		return _javaString.unescape(value);
 	}
+	/**
+	 * JSONの文字列としてエスケープが行われたシーケンスを
+	 * それが意味することろの本当の文字列に変換します（unescapeします）。
+	 * @param value
+	 * @return
+	 */
 	public static String jsonString(String value) {
 		return _jsonString.unescape(value);
 	}
+	/**
+	 * 文字列を整数値に変換します。
+	 * @param value
+	 * @return
+	 */
 	public static Integer digits(String value) {
 		return Integer.parseInt(value);
 	}
+	/**
+	 * 文字列を8進数表記と見なして整数値に変換します。
+	 * @param value
+	 * @return
+	 */
 	public static Integer octalDigits(String value) {
 		return Integer.parseInt(value, 8);
 	}
+	/**
+	 * 文字列を16進数表記と見なして整数値に変換します。
+	 * @param value
+	 * @return
+	 */
 	public static Integer hexDigits(String value) {
 		return Integer.parseInt(value, 16);
 	}
+	/**
+	 * 文字列を浮動小数点数に変換します。
+	 * @param value
+	 * @return
+	 */
 	public static Double floatingPoint(String value) {
 		return Double.parseDouble(value);
 	}
+	/**
+	 * タプルの平坦化を行います。
+	 * @param value
+	 * @return
+	 */
 	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(Tuple2<Tuple2<T1, T2>, T3> tuple) {
 		return Tuple.of(tuple.item1().item1(), tuple.item1().item2(), tuple.item2());
 	}
