@@ -12,6 +12,7 @@ final class OptParser extends Parser {
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
 		final TextReader src = ctx.source();
+		src.mark();
 		final Result res = _original.parse(ctx);
 		if (res.isSuccessful()) {
 			src.unmark();

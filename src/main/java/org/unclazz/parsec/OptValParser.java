@@ -13,6 +13,7 @@ final class OptValParser<T> extends ValParser<Optional<T>> {
 	@Override
 	protected ValResultCore<Optional<T>> doParse(Context ctx) throws IOException {
 		final TextReader src = ctx.source();
+		src.mark();
 		final ValResult<T> res = _original.parse(ctx);
 		if (res.isSuccessful()) {
 			src.unmark();
