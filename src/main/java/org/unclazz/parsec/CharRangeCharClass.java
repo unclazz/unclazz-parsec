@@ -165,7 +165,7 @@ final class CharRangeCharClass extends CharClass{
 		for (int i = 1; i < rs.length; i ++) {
 			final CharRange r = rs[i];
 	        // 直近処理済み文字範囲と今回処理対象の文字範囲の合成を試みる
-	        final Optional<CharRange> res = tryMerge_accumulator_merge2Ranges(stack.peek(), r);
+	        final Optional<CharRange> res = tryMerge2CharRanges(stack.peek(), r);
 	        // 合成が成功したかどうかチェック
 	        if (res.isPresent()) {
 	        	// 成功した場合は直近処理済みの文字範囲をスタックから除去
@@ -192,7 +192,7 @@ final class CharRangeCharClass extends CharClass{
 	 * @param right
 	 * @return
 	 */
-	private static Optional<CharRange> tryMerge_accumulator_merge2Ranges(CharRange left, CharRange right) {
+	private static Optional<CharRange> tryMerge2CharRanges(CharRange left, CharRange right) {
 		// ［条件1］左辺.開始 <= 右辺.開始　かつ　［条件2］右辺.開始 <= 左辺.終了
 		// ※条件1は先行して実施されるソート処理によりその成立が約束されているため再チェックはしない。
 		if (/* left.start <= right.start && */ right.start <= left.end) {
