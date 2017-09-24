@@ -15,6 +15,10 @@ final class ParsecUtility {
 		if (0 <= ch && ch <= 31) return code0to31[ch];
 		return String.format("'%s'(%s)", (char) ch, ch);
 	}
+	public static String escapeIfControl(char ch) {
+		if (ch <= 31) return String.format("<%s>", code0to31[ch]);
+		else return Character.toString(ch);
+	}
 	
 	public static void mustNotBeNull(String name, Object target){
 		if (target == null) throw new NullPointerException

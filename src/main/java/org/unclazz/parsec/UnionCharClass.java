@@ -7,6 +7,7 @@ import java.util.Arrays;
  */
 final class UnionCharClass extends CharClass{
 	private final CharClass[] _items;
+	private String _contentCache;
 	
 	UnionCharClass(CharClass left, CharClass right) {
 		ParsecUtility.mustNotBeNull("left", left);
@@ -65,5 +66,18 @@ final class UnionCharClass extends CharClass{
 				return new CharClass[] {left, right};
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		if (_contentCache == null) {
+			final StringBuilder buf = new StringBuilder().append('{');
+			for (final CharClass clz : _items) {
+				if (buf.length() > 1) buf.append(" | ");
+				buf.append(clz);
+			}
+			_contentCache = buf.append('}').toString();
+		}
+		return _contentCache;
 	}
 }

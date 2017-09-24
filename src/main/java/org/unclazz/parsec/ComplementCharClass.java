@@ -5,6 +5,7 @@ package org.unclazz.parsec;
  */
 final class ComplementCharClass extends CharClass{
 	private final CharClass _clazz;
+	private String _contentCache;
 	public ComplementCharClass(CharClass clazz) {
 		ParsecUtility.mustNotBeNull("clazz", clazz);
 		_clazz = clazz;
@@ -12,5 +13,12 @@ final class ComplementCharClass extends CharClass{
 	@Override
 	public boolean contains(int ch) {
 		return !_clazz.contains(ch);
+	}
+	@Override
+	public String toString() {
+		if (_contentCache == null) {
+			_contentCache = String.format("not %s", _clazz);
+		}
+		return _contentCache;
 	}
 }

@@ -12,6 +12,7 @@ import java.util.Stack;
  */
 final class CharRangeCharClass extends CharClass{
 	private final CharRange[] _charRanges;
+	private String _contentCache;
 	
 	CharRangeCharClass(CharRange[] ranges) {
 		ParsecUtility.mustNotBeNull("ranges", ranges);
@@ -215,5 +216,31 @@ final class CharRangeCharClass extends CharClass{
 		// 左辺と右辺の文字範囲に重なる部分はない
 		// 合成失敗：　呼び出し元には値を返さない
 		return Optional.empty();
+	}
+	@Override
+	public String toString() {
+		if (_contentCache == null) {
+			final StringBuilder buf = new StringBuilder().append('[');
+			
+			for (final CharRange cr : _charRanges) {
+				escapeThenAppend(cr.start, buf);
+				if (cr.start != cr.end) {
+					buf.append('-');
+					escapeThenAppend(cr.end, buf);
+				}
+			}
+	
+			_contentCache = buf.append(']').toString();
+		}
+		return _contentCache;
+	}
+	private void escapeThenAppend(char ch, StringBuilder buf) {
+		if (ch == '[' || ch == ']' || ch == '\\' || ch == '^') {
+			buf.append('\\').append(ch);
+		} else if (ch <= 31) {
+			buf.append(ParsecUtility.escapeIfControl(ch));
+		} else {
+			buf.append(ch);
+		}
 	}
 }

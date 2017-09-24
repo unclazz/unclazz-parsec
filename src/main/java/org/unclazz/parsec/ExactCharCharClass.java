@@ -5,6 +5,7 @@ package org.unclazz.parsec;
  */
 final class ExactCharCharClass extends CharClass{
 	private char _ch;
+	private String _contentCache;
 	public ExactCharCharClass(char ch) {
 		_ch = ch;
 	}
@@ -39,6 +40,9 @@ final class ExactCharCharClass extends CharClass{
 	}
 	@Override
 	public String toString() {
-		return ParsecUtility.charToString(_ch);
+		if (_contentCache == null) {
+			_contentCache = String.format("'%s'", ParsecUtility.escapeIfControl(_ch));
+		}
+		return _contentCache;
 	}
 }
