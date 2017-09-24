@@ -15,7 +15,7 @@ final class CharRangeCharClass extends CharClass{
 	
 	CharRangeCharClass(CharRange[] ranges) {
 		ParsecUtility.mustNotBeNull("ranges", ranges);
-		_charRanges = ranges;
+		_charRanges = tryMerge(ranges);
 	}
 	CharRangeCharClass(char[] cs) {
 		ParsecUtility.mustNotBeNull("cs", cs);
@@ -35,13 +35,18 @@ final class CharRangeCharClass extends CharClass{
 	public CharClass union(CharClass other) {
 		if (other instanceof CharRangeCharClass) {
 			final CharRangeCharClass that = (CharRangeCharClass) other;
-			return new CharRangeCharClass(tryMerge(concat(_charRanges, that._charRanges)));
+			return new CharRangeCharClass(concat(_charRanges, that._charRanges));
 		}
 		return super.union(other);
 	}
 	@Override
 	public CharClass plus(char ch) {
 		if (contains(ch)) return this;
+		if (contains(ch - 1) || contains(ch + 1)) {
+			final CharRange[] newRanges = Arrays.copyOf(_charRanges, _charRanges.length + 1);
+			newRanges[_charRanges.length] = new CharRange(ch, ch);
+			return new CharRangeCharClass(newRanges);
+		}
 		return super.plus(ch);
 	}
 	
@@ -84,7 +89,7 @@ final class CharRangeCharClass extends CharClass{
 		for (int i = size; i < cs.length; i ++) {
 			final char ch = cs[i];
 			// バッファ内にすでに存在するかどうか判定する
-			if (Arrays.binarySearch(buf, ch) == -1) {
+			if (Arrays.binarySearch(buf, ch) < 0) {
 				// 含まれていない場合はバッファに追加する
 				buf[size ++] = ch;
 			}
@@ -191,7 +196,7 @@ final class CharRangeCharClass extends CharClass{
 		// ※条件1は先行して実施されるソート処理によりその成立が約束されているため再チェックはしない。
 		if (/* left.start <= right.start && */ right.start <= left.end) {
 			
-			// ［条件3］左辺.終了 < 右辺.終了　
+			// ［条件3］左辺.終了 < 右辺.終了　もしくは　
 			if (left.end < right.end) {
 				// 左辺と右辺に重なる部分があり、ただし右辺は左辺に完全には包含されない場合
 				// 合成成功：　左辺.開始 から 右辺.終了 までの新しい範囲を作成して呼び出し元に返す
@@ -201,6 +206,11 @@ final class CharRangeCharClass extends CharClass{
 			// 右辺は左辺に完全に包含されている場合
 			// 合成成功：　呼び出し元には左辺をそのまま返す
             return Optional.of(left);
+		}
+		// ［条件4］左辺.終了 + 1 == 右辺.開始
+		// ※条件4は隣接する2つの範囲を検出するためのもの
+		if (left.end + 1 == right.start) {
+			return Optional.of(new CharRange(left.start, right.end));
 		}
 		// 左辺と右辺の文字範囲に重なる部分はない
 		// 合成失敗：　呼び出し元には値を返さない
