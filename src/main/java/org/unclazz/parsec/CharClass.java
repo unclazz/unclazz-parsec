@@ -46,6 +46,85 @@ public abstract class CharClass {
 		return new ComplementCharClass(clazz);
 	}
 	
+	private static CharClass _newline;
+	private static CharClass _alphabetic;
+	private static CharClass _numeric;
+	private static CharClass _alphanumeric;
+	private static CharClass _hexDigit;
+	private static CharClass _control;
+	private static CharClass _spaceAndControl;
+	
+	/**
+	 * 改行の文字クラスです。
+	 * @return
+	 */
+	public static CharClass newline() {
+		if (_newline == null) {
+			_newline = anyOf('\r', '\n');
+		}
+		return _newline;
+	}
+	/**
+	 * {@code [A-Za-z]}の文字クラスです。
+	 * @return
+	 */
+	public static CharClass alphabetic() {
+		if (_alphabetic == null) {
+			_alphabetic = between('A', 'Z').union(between('a', 'z'));
+		}
+		return _alphabetic;
+	}
+	/**
+	 * {@code [0-9]}の文字クラスです。
+	 * @return
+	 */
+	public static CharClass numeric() {
+		if (_numeric == null) {
+			_numeric = between('0', '9');
+		}
+		return _numeric;
+	}
+	/**
+	 * {@code [0-9A-Za-z]}の文字クラスです。
+	 * @return
+	 */
+	public static CharClass alphanumeric() {
+		if (_alphanumeric == null) {
+			_alphanumeric = numeric().union(alphabetic());
+		}
+		return _alphanumeric;
+	}
+	/**
+	 * {@code [0-9A-Fa-f]}の文字クラスです。
+	 * @return
+	 */
+	public static CharClass hexDigit() {
+		if (_hexDigit == null) {
+			 _hexDigit = numeric().union(between('A', 'F')).union(between('a', 'f'));
+		}
+		return _hexDigit;
+	}
+	/**
+	 * 制御文字（コードポイント0から31と127）の文字クラスです。
+	 * @return
+	 */
+	public static CharClass control() {
+		if (_control == null) {
+			_control = between((char)0, (char)31).plus((char)127);
+		}
+		return _control;
+	}
+	/**
+	 * 制御文字と空白文字（コードポイント31）の文字クラスです。
+	 * @return
+	 */
+	public static CharClass spaceAndControl() {
+		if (_spaceAndControl == null) {
+			_spaceAndControl = control().plus((char)32);
+		}
+		return _spaceAndControl;
+	}
+	
 	/**
 	 * 文字が文字クラスに属しているかどうかを判定します。
 	 * @param ch
