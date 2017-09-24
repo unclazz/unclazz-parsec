@@ -1,4 +1,4 @@
-package org.unclazz.parsec.sample.math;
+package org.unclazz.parsec.sample;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
