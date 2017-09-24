@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.unclazz.parsec.data.Tuple;
 import org.unclazz.parsec.data.Tuple2;
 
 final class KeywordInParser extends Parser {
@@ -83,7 +84,7 @@ final class KeywordInParser extends Parser {
 		for (int i = 0; i < ks.length - 1; i ++) {
 			final String k0 = ks[i];
 			final String k1 = ks[i + 1];
-			buf.add(Tuple2.of(k0, commonPrefixLength(k0, k1)));
+			buf.add(Tuple.of(k0, commonPrefixLength(k0, k1)));
 		}
 		return buf;
 	}

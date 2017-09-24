@@ -2,6 +2,7 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 
+import org.unclazz.parsec.data.Tuple;
 import org.unclazz.parsec.data.Tuple2;
 
 final class Tuple2Parser<T1, T2> extends ValParser<Tuple2<T1, T2>> {
@@ -25,6 +26,6 @@ final class Tuple2Parser<T1, T2> extends ValParser<Tuple2<T1, T2>> {
 		
 		if (!rightResult.isSuccessful()) return failure(rightResult.message());
 		
-		return success(Tuple2.of(leftResult.value(), rightResult.value())).allowBacktrack(canBacktrack);
+		return success(Tuple.of(leftResult.value(), rightResult.value())).allowBacktrack(canBacktrack);
 	}
 }

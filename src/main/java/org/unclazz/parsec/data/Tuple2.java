@@ -7,20 +7,10 @@ package org.unclazz.parsec.data;
  * @param <T2> 要素2の型
  */
 public final class Tuple2<T1,T2> implements Tuple {
-	/**
-	 * タプルのインスタンスを返します。
-	 * @param item1 要素1の値
-	 * @param item2 要素2の値
-	 * @return
-	 */
-	public static<T1, T2> Tuple2<T1, T2> of(T1 item1, T2 item2){
-		return new Tuple2<>(item1, item2);
-	}
-	
 	private final T1 _item1;
 	private final T2 _item2;
 	
-	private Tuple2(T1 item1, T2 item2) {
+	Tuple2(T1 item1, T2 item2) {
 		_item1 = item1;
 		_item2 = item2;
 	}

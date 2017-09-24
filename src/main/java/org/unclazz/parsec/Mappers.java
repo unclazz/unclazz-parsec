@@ -2,6 +2,7 @@ package org.unclazz.parsec;
 
 import java.nio.CharBuffer;
 
+import org.unclazz.parsec.data.Tuple;
 import org.unclazz.parsec.data.Tuple2;
 import org.unclazz.parsec.data.Tuple3;
 
@@ -28,7 +29,7 @@ public final class Mappers {
 		return Double.parseDouble(value);
 	}
 	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(Tuple2<Tuple2<T1, T2>, T3> tuple) {
-		return Tuple3.of(tuple.item1().item1(), tuple.item1().item2(), tuple.item2());
+		return Tuple.of(tuple.item1().item1(), tuple.item1().item2(), tuple.item2());
 	}
 }
 
