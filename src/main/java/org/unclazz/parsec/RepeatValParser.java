@@ -2,6 +2,7 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -22,7 +23,7 @@ public final class RepeatValParser<T> extends ValParser<List<T>> {
 		return _inner.parse(ctx);
 	}
 	
-	public ValParser<T> reduce(BiFunction<T, T, T> accumulator){
+	public ValParser<Optional<T>> reduce(BiFunction<T, T, T> accumulator){
 		return _inner.reReduce(accumulator);
 	}
 	public<U> ValParser<U> reduce(Supplier<U> seed, BiFunction<U, T, U> accumulator){

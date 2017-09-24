@@ -1,6 +1,7 @@
 package org.unclazz.parsec;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -9,21 +10,18 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 	private final ValParser<T> _original;
 	private final RepeatConfig _repConf;
 	private final ReduceConfig<T,U,V> _redConf;
-	private final boolean _noSeed;
 
 	 RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
 			ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 		_repConf = repConf;
 		_redConf = redConf;
-		_noSeed = redConf.seedFactory == null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected ValResultCore<V> doParse(Context ctx) throws IOException {
 		final TextReader src = ctx.source();
-		U acc = _noSeed ? null : _redConf.seedFactory.get();
+		U acc = _redConf.seedFactory.get();
 		
         // 予め指定された回数のパースを試みる
 		for (int i = 1; i < _repConf.maximum; i++) {
@@ -55,11 +53,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
             }
 
             // ループ回数のシードの有無を確認
-            acc = (i == 1 && _noSeed) 
-                // ループ1回目 かつ シードなし の場合、初回キャプチャをそのままアキュームレート
-                ? (U)mainResult.value()
-                // それ以外の場合、
-                : _redConf.accumulator.apply(acc, mainResult.value());
+            acc = _redConf.accumulator.apply(acc, mainResult.value());
 
             // min ＜ ループ回数 ならリセットのための準備を解除
             if (_repConf.breakable && _repConf.minimal < i) src.unmark();
@@ -67,9 +61,11 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 		
 		return success(_redConf.resultSelector.apply(acc));
 	}
-	public RepeatReduceValParser<T,T,T> reReduce(BiFunction<T, T, T> accumulator){
+	public RepeatReduceValParser<T,Optional<T>,Optional<T>> reReduce(BiFunction<T, T, T> accumulator){
+		final BiFunction<Optional<T>, T, Optional<T>> accumulator2 =
+				(a, b) -> a.isPresent() ? Optional.of(accumulator.apply(a.get(), b)) : a;
 		return new RepeatReduceValParser<>(_original, 
-				_repConf, new ReduceConfig<>(null, accumulator, a -> a));
+				_repConf, new ReduceConfig<>(Optional::empty, accumulator2, a -> a));
 	}
 	public<U2> RepeatReduceValParser<T,U2,U2> reReduce(Supplier<U2> seedFactory,BiFunction<U2, T, U2> accumulator){
 		return new RepeatReduceValParser<>(_original, 
@@ -126,6 +122,7 @@ final class ReduceConfig<T,U,V>{
 	public final BiFunction<U, T, U> accumulator;
 	public final Function<U, V> resultSelector;
 	ReduceConfig(Supplier<U> seedFactory, BiFunction<U, T, U> accumulator, Function<U, V> resultSelector) {
+		ParsecUtility.mustNotBeNull("seedFactory", seedFactory);
 		ParsecUtility.mustNotBeNull("accumulator", accumulator);
 		ParsecUtility.mustNotBeNull("resultSelector", resultSelector);
 		
