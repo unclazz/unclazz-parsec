@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.stream.Stream;
 
 /**
  * イミュータブルなリストです。
@@ -131,10 +130,6 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	@Override
 	public Iterator<T> iterator() {
 		return new ReadOnlyListIterator<>(_items);
-	}
-	@Override
-	public Stream<T> stream(){
-		return Arrays.stream(_items);
 	}
 	@Override
 	public String toString() {
