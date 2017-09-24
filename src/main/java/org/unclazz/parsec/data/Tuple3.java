@@ -47,4 +47,8 @@ public final class Tuple3<T1,T2, T3> implements Tuple {
 	public Object[] values() {
 		return new Object[] { _item1, _item2, _item3 };
 	}
+	@Override
+	public String toString() {
+		return String.format("(%s, %s, %s)", _item1, _item2, _item3);
+	}
 }

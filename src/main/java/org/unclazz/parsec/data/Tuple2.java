@@ -37,4 +37,8 @@ public final class Tuple2<T1,T2> implements Tuple {
 	public Object[] values() {
 		return new Object[] { _item1, _item2 };
 	}
+	@Override
+	public String toString() {
+		return String.format("(%s, %s)", _item1, _item2);
+	}
 }
