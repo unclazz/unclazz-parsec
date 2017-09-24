@@ -236,6 +236,7 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	@Override
 	public List<T> subList(int fromIndex, int toIndex) {
+		if ((fromIndex < 0 || toIndex > size() || fromIndex > toIndex)) throw new IndexOutOfBoundsException();
 		return new ReadOnlyList<>(Arrays.copyOfRange(_items, fromIndex, toIndex));
 	}
 	@Override
