@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	private static final ReadOnlyList<?> _empty = new ReadOnlyList<Void>(new Void[0]);
 	private static void mustNotBeNull(String name, Object target) {
-		if (target == null) throw new IllegalArgumentException
+		if (target == null) throw new NullPointerException
 		(String.format("argument \"%s\" must not be null.", name));
 	}
 	/**

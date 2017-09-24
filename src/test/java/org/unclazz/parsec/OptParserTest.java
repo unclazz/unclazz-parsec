@@ -14,7 +14,7 @@ public class OptParserTest {
 		try {
 			new OptParser(null);
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			// OK
 		}
 	}

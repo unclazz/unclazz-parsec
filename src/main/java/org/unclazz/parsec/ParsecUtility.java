@@ -17,13 +17,8 @@ final class ParsecUtility {
 	}
 	
 	public static void mustNotBeNull(String name, Object target){
-		if (target == null) throw new IllegalArgumentException
+		if (target == null) throw new NullPointerException
 		(String.format("argument \"%s\" must not be null.", name));
-	}
-	public static<T> void mustNotBeEmpty(String name, Iterable<T> target){
-		mustNotBeNull(name, target);
-		if (isEmpty(target)) throw new IllegalArgumentException
-		(String.format("argument \"%s\" must not be empty.", name));
 	}
 	public static void mustNotBeEmpty(String name, String target){
 		mustNotBeNull(name, target);
@@ -34,14 +29,6 @@ final class ParsecUtility {
 		mustNotBeNull(name, target);
 		if (target.length == 0) throw new IllegalArgumentException
 		(String.format("argument \"%s\" must not be empty.", name));
-	}
-	public static<T> int count(Iterable<T> target){
-		int c = 0;
-		for (@SuppressWarnings("unused") T x : target) c ++;
-		return c;
-	}
-	public static<T> boolean isEmpty(Iterable<T> target){
-		return 0 == count(target);
 	}
 	public static void mustBeGreaterThan(String name, int target, int threshold) {
 		if (target <= threshold) throw new IllegalArgumentException

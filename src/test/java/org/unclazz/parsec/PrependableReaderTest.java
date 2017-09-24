@@ -63,12 +63,12 @@ public class PrependableReaderTest {
 	public void testPrependableReaderCharPositionCharArrayReader() throws IOException {
 		try(final PrependableReader r = new PrependableReader(CharPosition.ofBof(), null, new StringReader("abc"))) {
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			// OK
 		}
 		try(final PrependableReader r = new PrependableReader(null, "012".toCharArray(), new StringReader("abc"))) {
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			// OK
 		}
 	}
@@ -77,7 +77,7 @@ public class PrependableReaderTest {
 	public void testPrependableReaderReader() throws IOException {
 		try(final PrependableReader r = new PrependableReader(null)) {
 			fail();
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			// OK
 		}
 	}
