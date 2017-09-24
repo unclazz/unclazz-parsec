@@ -2,6 +2,10 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 
+/**
+ * パターンの繰返しをパースするパーサーです。
+ * <p>このパーサーのインスタンスは{@link Parser#rep()}およびその多重定義から得られます。</p>
+ */
 public final class RepeatParser extends Parser {
 	private final ListParser<String> _inner;
 	
@@ -17,6 +21,10 @@ public final class RepeatParser extends Parser {
 	protected ResultCore doParse(Context ctx) throws IOException {
 		return _inner.parse(ctx).detachValue();
 	}
+	/**
+	 * 繰返しの回数をカウントするパーサーを返します。
+	 * @return
+	 */
 	public ValParser<Integer> count() {
 		return _inner.reReduce(() -> 0, (a, b) -> a + 1);
 	}
