@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.unclazz.parsec.data.Seq;
+import org.unclazz.parsec.data.ReadOnlyList;
 import org.unclazz.parsec.data.Tuple2;
 
 /**
@@ -182,7 +182,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * パターンの0回以上上限なしの繰返しにマッチするパーサーを返します。
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(){
+	public ValParser<ReadOnlyList<T>> rep(){
 		return new RepeatValParser<>(this, 0, -1, -1, null);
 	}
 	/**
@@ -190,7 +190,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param sep
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(Parser sep){
+	public ValParser<ReadOnlyList<T>> rep(Parser sep){
 		return new RepeatValParser<>(this, 0, -1, -1, sep);
 	}
 	/**
@@ -198,7 +198,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param min
 	 * @return
 	 */
-	public ValParser<Seq<T>> repMin(int min) {
+	public ValParser<ReadOnlyList<T>> repMin(int min) {
 		return new RepeatValParser<>(this, min, -1, -1, null);
 	}
 	/**
@@ -207,7 +207,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param sep
 	 * @return
 	 */
-	public ValParser<Seq<T>> repMin(int min, Parser sep) {
+	public ValParser<ReadOnlyList<T>> repMin(int min, Parser sep) {
 		return new RepeatValParser<>(this, min, -1, -1, sep);
 	}
 	/**
@@ -216,7 +216,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param max
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(int min, int max) {
+	public ValParser<ReadOnlyList<T>> rep(int min, int max) {
 		return new RepeatValParser<>(this, min, max, -1, null);
 	}
 	/**
@@ -226,7 +226,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param sep
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(int min, int max, Parser sep) {
+	public ValParser<ReadOnlyList<T>> rep(int min, int max, Parser sep) {
 		return new RepeatValParser<>(this, min, max, -1, sep);
 	}
 	/**
@@ -234,7 +234,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param exactly
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(int exactly) {
+	public ValParser<ReadOnlyList<T>> rep(int exactly) {
 		return new RepeatValParser<>(this, -1, -1, exactly, null);
 	}
 	/**
@@ -243,7 +243,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @param sep
 	 * @return
 	 */
-	public ValParser<Seq<T>> rep(int exactly, Parser sep) {
+	public ValParser<ReadOnlyList<T>> rep(int exactly, Parser sep) {
 		return new RepeatValParser<>(this, -1, -1, exactly, sep);
 	}
 }

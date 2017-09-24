@@ -5,21 +5,21 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.unclazz.parsec.data.Seq;
+import org.unclazz.parsec.data.ReadOnlyList;
 
-public final class RepeatValParser<T> extends ValParser<Seq<T>> {
-	private final SeqParser<T> _inner;
+public final class RepeatValParser<T> extends ValParser<ReadOnlyList<T>> {
+	private final ListParser<T> _inner;
 	
 	RepeatValParser(ValParser<T> original, int min, int max, int exactly, Parser sep) {
 		ParsecUtility.mustNotBeNull("original", original);
 		final RepeatConfig repConf = exactly == -1 
 				? RepeatConfig.range(min, max, sep)
 				: RepeatConfig.exactly(exactly, sep);
-		_inner = new SeqParser<T>(original, repConf);
+		_inner = new ListParser<T>(original, repConf);
 	}
 
 	@Override
-	protected ValResultCore<Seq<T>> doParse(Context ctx) throws IOException {
+	protected ValResultCore<ReadOnlyList<T>> doParse(Context ctx) throws IOException {
 		return _inner.parse(ctx);
 	}
 	
