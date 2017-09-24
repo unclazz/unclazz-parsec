@@ -80,7 +80,10 @@ class ResettableReader extends PrependableReader {
 			final int delta = position().index() - lastMark.index();
 			
             // 現在の文字位置とマークした文字位置が同値ならリセットは不要
-			if (delta == 0) return;
+			if (delta == 0) {
+				if (unmark) unmark();
+				return;
+			}
 			
             // それ以外の場合は完全もしくは部分リセットが必要
             // バックアップの現状の情報を一時変数に移動
