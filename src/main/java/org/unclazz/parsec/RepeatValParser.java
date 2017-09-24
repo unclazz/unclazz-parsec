@@ -1,13 +1,12 @@
 package org.unclazz.parsec;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.unclazz.parsec.data.ReadOnlyList;
-
-public final class RepeatValParser<T> extends ValParser<ReadOnlyList<T>> {
+public final class RepeatValParser<T> extends ValParser<List<T>> {
 	private final ListParser<T> _inner;
 	
 	RepeatValParser(ValParser<T> original, int min, int max, int exactly, Parser sep) {
@@ -19,7 +18,7 @@ public final class RepeatValParser<T> extends ValParser<ReadOnlyList<T>> {
 	}
 
 	@Override
-	protected ValResultCore<ReadOnlyList<T>> doParse(Context ctx) throws IOException {
+	protected ValResultCore<List<T>> doParse(Context ctx) throws IOException {
 		return _inner.parse(ctx);
 	}
 	
