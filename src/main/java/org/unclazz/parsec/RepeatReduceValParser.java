@@ -72,7 +72,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 	}
 	RepeatReduceValParser<T,Optional<T>,Optional<T>> reReduce(BiFunction<T, T, T> accumulator){
 		final BiFunction<Optional<T>, T, Optional<T>> accumulator2 =
-				(a, b) -> a.isPresent() ? Optional.of(accumulator.apply(a.get(), b)) : a;
+				(a, b) -> a.isPresent() ? Optional.of(accumulator.apply(a.get(), b)) : Optional.of(b);
 		return new RepeatReduceValParser<>(_original, 
 				_repConf, new ReduceConfig<>(Optional::empty, accumulator2, a -> a));
 	}
