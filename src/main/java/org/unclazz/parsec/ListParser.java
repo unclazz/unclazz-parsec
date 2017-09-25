@@ -18,7 +18,7 @@ final class ListParser<T> extends RepeatReduceValParser<T, Queue<T>, List<T>>{
 		return new ReduceConfig<T, Queue<T>, List<T>>(ListParser::seed, ListParser::accumulate, a -> ReadOnlyList.of(a));
 	}
 	
-	protected ListParser(ValParser<T> original, RepeatConfig repConf) {
+	ListParser(ValParser<T> original, RepeatConfig repConf) {
 		super(original, repConf, reduceConfig());
 	}
 }
