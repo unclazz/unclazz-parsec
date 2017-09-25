@@ -31,6 +31,14 @@ public final class Parsers {
 		return new ExactCharParser(ch);
 	}
 	/**
+	 * 引数で指定した文字以外にマッチするパーサーを返します。
+	 * @param ch 文字
+	 * @return
+	 */
+	public static Parser except(char ch){
+		return charIn(CharClass.not(CharClass.exact(ch)));
+	}
+	/**
 	 * 引数で指定した文字集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
 	 * @return
@@ -55,6 +63,30 @@ public final class Parsers {
 		return new CharClassParser(clazz);
 	}
 	/**
+	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
+	 * @param chs 文字集合
+	 * @return
+	 */
+	public static Parser charNotIn(String chs){
+		return charNotIn(chs.toCharArray());
+	}
+	/**
+	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
+	 * @param chs 文字集合
+	 * @return
+	 */
+	public static Parser charNotIn(char...chs){
+		return new CharClassParser(CharClass.not(CharClass.anyOf(chs)));
+	}
+	/**
+	 * 引数で指定した文字クラスの補集合にマッチするパーサーを返します。
+	 * @param clazz 文字集合
+	 * @return
+	 */
+	public static Parser charNotIn(CharClass clazz){
+		return new CharClassParser(CharClass.not(clazz));
+	}
+	/**
 	 * 引数で指定した文字の範囲にマッチするパーサーを返します。
 	 * @param start 範囲の開始
 	 * @param end 範囲の終了
@@ -62,6 +94,23 @@ public final class Parsers {
 	 */
 	public static  Parser charBetween(char start, char end){
 		return new CharClassParser(CharClass.between(start, end));
+	}
+	/**
+	 * 引数で指定した文字の範囲の外側にマッチするパーサーを返します。
+	 * @param start 範囲の開始
+	 * @param end 範囲の終了
+	 * @return
+	 */
+	public static Parser charNotBetween(char start, char end){
+		return new CharClassParser(CharClass.not(CharClass.between(start, end)));
+	}
+	/**
+	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param chs
+	 * @return
+	 */
+	public static  Parser charsWhileIn(String chs) {
+		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
@@ -74,11 +123,11 @@ public final class Parsers {
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param chs
+	 * @param clazz
 	 * @return
 	 */
-	public static  Parser charsWhileIn(String chs) {
-		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
+	public static  Parser charWhileIn(CharClass clazz) {
+		return new CharsWhileInParser(clazz, 0);
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
@@ -90,12 +139,38 @@ public final class Parsers {
 		return new CharsWhileInParser(clazz, min);
 	}
 	/**
-	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param chs
+	 * @return
+	 */
+	public static Parser charsWhileNotIn(String chs) {
+		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), 0);
+	}
+	/**
+	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param chs
+	 * @param min
+	 * @return
+	 */
+	public static Parser charsWhileNotIn(String chs, int min) {
+		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), min);
+	}
+	/**
+	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
 	 * @param clazz
 	 * @return
 	 */
-	public static  Parser charWhileIn(CharClass clazz) {
-		return new CharsWhileInParser(clazz, 0);
+	public static Parser charWhileNotIn(CharClass clazz) {
+		return new CharsWhileInParser(CharClass.not(clazz), 0);
+	}
+	/**
+	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
+	 * @param clazz
+	 * @param min
+	 * @return
+	 */
+	public static Parser charsWhileNotIn(CharClass clazz, int min) {
+		return new CharsWhileInParser(CharClass.not(clazz), min);
 	}
 	/**
 	 * 引数で指定したキーワードにマッチするパーサーを返します。
