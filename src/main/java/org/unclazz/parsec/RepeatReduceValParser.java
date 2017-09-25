@@ -6,12 +6,21 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * パターンの繰返しを読み取り集約を行うパーサーです。
+ * <p>このパーサーは元になるパーサーを用いたパースを指定回数繰返しつつ、そのパーサーが返した値を集約していきます。
+ * 繰り返しの最小最大やセパレータの有無、どのような集約オペレーションを行うかはコンスタラクタ引数を通じて指定することができます。</p>
+ * 
+ * @param <T> 繰り返されるパターンの型
+ * @param <U> 集約のシードと集約過程の値の型
+ * @param <V> 集約結果の値の型
+ */
 class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 	private final ValParser<T> _original;
 	private final RepeatConfig _repConf;
 	private final ReduceConfig<T,U,V> _redConf;
 
-	 RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
+	RepeatReduceValParser(ValParser<T> original, RepeatConfig repConf, ReduceConfig<T,U,V> redConf) {
 			ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
 		_repConf = repConf;
