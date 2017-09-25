@@ -86,14 +86,6 @@ abstract class ParserSupport{
 		return charIn(chs.toCharArray());
 	}
 	/**
-	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
-	 * @param chs 文字集合
-	 * @return
-	 */
-	protected Parser charNotIn(String chs){
-		return charNotIn(chs.toCharArray());
-	}
-	/**
 	 * 引数で指定した文字集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
 	 * @return
@@ -102,20 +94,28 @@ abstract class ParserSupport{
 		return new CharClassParser(CharClass.anyOf(chs));
 	}
 	/**
-	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
-	 * @param chs 文字集合
-	 * @return
-	 */
-	protected Parser charNotIn(char...chs){
-		return new CharClassParser(CharClass.not(CharClass.anyOf(chs)));
-	}
-	/**
 	 * 引数で指定した文字クラスにマッチするパーサーを返します。
 	 * @param chs 文字クラス
 	 * @return
 	 */
 	protected Parser charIn(CharClass clazz){
 		return new CharClassParser(clazz);
+	}
+	/**
+	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
+	 * @param chs 文字集合
+	 * @return
+	 */
+	protected Parser charNotIn(String chs){
+		return charNotIn(chs.toCharArray());
+	}
+	/**
+	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
+	 * @param chs 文字集合
+	 * @return
+	 */
+	protected Parser charNotIn(char...chs){
+		return new CharClassParser(CharClass.not(CharClass.anyOf(chs)));
 	}
 	/**
 	 * 引数で指定した文字クラスの補集合にマッチするパーサーを返します。
