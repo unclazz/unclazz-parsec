@@ -46,6 +46,7 @@ abstract class ParserSupport{
 		return _name;
 	}
 	
+	/* ---------- 以下、ファクトリーメソッド ---------- */
 	/**
 	 * EOFにマッチするパーサーを返します。
 	 * @return
@@ -208,4 +209,5 @@ abstract class ParserSupport{
 	protected Parser not(Parser original) {
 		return new NotParser(original);
 	}
+	/* ---------- 以上、ファクトリーメソッド ---------- */
 }

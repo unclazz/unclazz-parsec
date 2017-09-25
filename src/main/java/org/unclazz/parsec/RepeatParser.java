@@ -25,7 +25,7 @@ public final class RepeatParser extends Parser {
 		final TextReader src = ctx.source();
 		
         // 予め指定された回数のパースを試みる
-		for (int i = 1; i < _repConf.maximum; i++) {
+		for (int i = 1; i <= _repConf.maximum; i++) {
             // min ＜ ループ回数 ならリセットのための準備
             if (_repConf.breakable && _repConf.minimal < i) src.mark();
 			

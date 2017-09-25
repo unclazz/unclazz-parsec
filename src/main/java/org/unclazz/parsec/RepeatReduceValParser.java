@@ -24,7 +24,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 		U acc = _redConf.seedFactory.get();
 		
         // 予め指定された回数のパースを試みる
-		for (int i = 1; i < _repConf.maximum; i++) {
+		for (int i = 1; i <= _repConf.maximum; i++) {
             // min ＜ ループ回数 ならリセットのための準備
             if (_repConf.breakable && _repConf.minimal < i) src.mark();
 			
@@ -110,8 +110,8 @@ final class RepeatConfig{
             breakable = min != max;
 		}else {
 			if (exactly <= 1)  throw new IllegalArgumentException();
-			minimal = min;
-			maximum = max;
+			minimal = exactly;
+			maximum = exactly;
 			breakable = false;
 		}
 		separator = sep;
