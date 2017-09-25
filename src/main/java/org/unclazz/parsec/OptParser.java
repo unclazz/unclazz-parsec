@@ -16,6 +16,7 @@ final class OptParser extends Parser {
 		final Result res = _original.parse(ctx);
 		if (res.isSuccessful()) {
 			src.unmark();
+			return success();
 		}
 		src.reset(true);
 		return success();
