@@ -107,7 +107,7 @@ abstract class ParserSupport{
 	 * @param min
 	 * @return
 	 */
-	protected Parser charWhileIn(String chs, int min) {
+	protected Parser charsWhileIn(String chs, int min) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), min);
 	}
 	/**
@@ -115,7 +115,7 @@ abstract class ParserSupport{
 	 * @param chs
 	 * @return
 	 */
-	protected Parser charWhileIn(String chs) {
+	protected Parser charsWhileIn(String chs) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
 	}
 	/**
@@ -124,7 +124,7 @@ abstract class ParserSupport{
 	 * @param min
 	 * @return
 	 */
-	protected Parser charWhileIn(CharClass clazz, int min) {
+	protected Parser charsWhileIn(CharClass clazz, int min) {
 		return new CharsWhileInParser(clazz, min);
 	}
 	/**

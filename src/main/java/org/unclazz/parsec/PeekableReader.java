@@ -4,10 +4,15 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * {@link Reader}に{@link #peek()}機能を付け加えたクラスです。
+ * <p>このクラスはライブラリの内部でのみ利用することを想定しているため{@link Reader}を継承せず、
+ * 最小限のメンバーを宣言・実装・公開するだけに留めています。</p>
+ */
 final class PeekableReader implements Closeable, AutoCloseable{
 	private final Reader _inner;
 	private int _cache = -1;
-	public PeekableReader(Reader inner) {
+	PeekableReader(Reader inner) {
 		ParsecUtility.mustNotBeNull("inner", inner);
 		_inner = inner;
 		try {

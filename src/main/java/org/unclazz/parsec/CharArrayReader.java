@@ -1,11 +1,14 @@
 package org.unclazz.parsec;
 
+import java.io.Reader;
 import java.util.Arrays;
 
 /**
  * 文字の配列をデータソースとするリーダーです。
  * <p>データソースの先頭に別の文字の配列を連結する機能をサポートしており、
  * {@link PrependableReader}の実装コードで利用されています。</p>
+ * <p>このクラスはライブラリの内部でのみ利用することを想定しているため{@link Reader}を継承せず、
+ * 最小限のメンバーを宣言・実装・公開するだけに留めています。</p>
  */
 final class CharArrayReader {
 	private static final CharArrayReader _empty = new CharArrayReader(new char[0]);

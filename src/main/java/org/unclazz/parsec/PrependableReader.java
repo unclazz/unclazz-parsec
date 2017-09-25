@@ -30,7 +30,7 @@ class PrependableReader extends AbstractReader {
 		return _mainReader;
 	}
 	@Override
-	protected int readSimply() throws IOException {
+	protected int readOne() throws IOException {
 		return _prefixReader.hasReachedEof() ? _mainReader.read() : _prefixReader.read();
 	}
 	@Override
