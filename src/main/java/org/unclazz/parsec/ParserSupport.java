@@ -165,15 +165,15 @@ abstract class ParserSupport{
 	 * @param value 値
 	 * @return
 	 */
-	protected<T> ValParser<T> product(T value) {
-		return product(() -> value);
+	protected<T> ValParser<T> produce(T value) {
+		return produce(() -> value);
 	}
 	/**
 	 * 文字位置を変化させず指定した値を産生するパーサーを返します。
 	 * @param func ファクトリー
 	 * @return
 	 */
-	protected<T> ValParser<T> product(Supplier<T> func) {
+	protected<T> ValParser<T> produce(Supplier<T> func) {
 		return new ProduceParser<>(func);
 	}
 	/**
