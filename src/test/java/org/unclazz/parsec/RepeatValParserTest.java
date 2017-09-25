@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
 
@@ -165,6 +166,72 @@ public class RepeatValParserTest {
 		
 		assertThat(r_a_rep23_vs_aaaacc.isSuccessful(), is(true));
 		assertThat(r_a_rep23_vs_aaaacc.end().index(), is(4));
+	}
+	
+	@Test
+	public void testReduce1() throws IOException {
+		// Arrange
+		final ValParser<Optional<Integer>> p = Parsers.charIn("0123")
+				.map(Integer::parseInt).rep().reduce((a, b) -> a + b);
+		
+		// Act
+		final ValResult<Optional<Integer>> r_012345 = p.parse("012345");
+		final ValResult<Optional<Integer>> r_333450 = p.parse("333450");
+		final ValResult<Optional<Integer>> r_450123 = p.parse("450123");
+		
+		// Assert
+		assertThat(r_012345.isSuccessful(), is(true));
+		assertThat(r_012345.value().get(), is(6));
+		
+		assertThat(r_333450.isSuccessful(), is(true));
+		assertThat(r_333450.value().get(), is(9));
+
+		assertThat(r_450123.isSuccessful(), is(true));
+		assertThat(r_450123.value().isPresent(), is(false));
+	}
+	
+	@Test
+	public void testReduce2() throws IOException {
+		// Arrange
+		final ValParser<Integer> p = Parsers.charIn("0123")
+				.map(Integer::parseInt).rep().reduce(() -> 2, (a, b) -> a + b);
+		
+		// Act
+		final ValResult<Integer> r_012345 = p.parse("012345");
+		final ValResult<Integer> r_333450 = p.parse("333450");
+		final ValResult<Integer> r_450123 = p.parse("450123");
+		
+		// Assert
+		assertThat(r_012345.isSuccessful(), is(true));
+		assertThat(r_012345.value(), is(8));
+		
+		assertThat(r_333450.isSuccessful(), is(true));
+		assertThat(r_333450.value(), is(11));
+
+		assertThat(r_450123.isSuccessful(), is(true));
+		assertThat(r_450123.value(), is(2));
+	}
+	
+	@Test
+	public void testReduce3() throws IOException {
+		// Arrange
+		final ValParser<String> p = Parsers.charIn("0123")
+				.map(Integer::parseInt).rep().reduce(() -> 2, (a, b) -> a + b, c -> c.toString());
+		
+		// Act
+		final ValResult<String> r_012345 = p.parse("012345");
+		final ValResult<String> r_333450 = p.parse("333450");
+		final ValResult<String> r_450123 = p.parse("450123");
+		
+		// Assert
+		assertThat(r_012345.isSuccessful(), is(true));
+		assertThat(r_012345.value(), is("8"));
+		
+		assertThat(r_333450.isSuccessful(), is(true));
+		assertThat(r_333450.value(), is("11"));
+
+		assertThat(r_450123.isSuccessful(), is(true));
+		assertThat(r_450123.value(), is("2"));
 	}
 
 }
