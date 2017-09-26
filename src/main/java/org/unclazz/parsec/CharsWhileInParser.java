@@ -14,20 +14,12 @@ final class CharsWhileInParser extends Parser {
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
 		final TextReader src = ctx.source();
-        int count = 0;
-        while (!src.hasReachedEof()) {
-            final int ch = src.peek();
-            if (!_clazz.contains(ch)) break;
-            src.read();
-            count++;
-        }
-        if (_min <= count) {
-            return success();
-        } else {
-            final String m = String.format("expected that length of char sequence is" +
-                " greater than or equal %s, but actualy it is %s.",
-                _min, count);
-            return failure(m);
-        }
+		int ch = -1, count = 0;
+		while (0 <= (ch = src.peek()) && _clazz.contains(ch)) {
+			src.read();
+			count ++;
+		}
+		return _min <= count ? success() : failure("expected that length of char sequence is" +
+                    " greater than or equal %s, but actualy it is %s.", _min, count);
 	}
 }
