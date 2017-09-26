@@ -9,7 +9,7 @@ import java.io.Reader;
  * <p>このクラスは派生型に対して次の機能を提供します：</p>
  * <ul>
  * 	<li>現在の文字位置について行・列・インデクスの3値の参照と更新機能（{@link #position()}）</li>
- * 	<li>データソースの終端（EOF）に到達したかどうかのチェックするメソッド（{@link #hasReachedEof()}）</li>
+ * 	<li>データソースの終端（EOF）に到達したかどうかのチェックするメソッド（{@link #noRemaining()}・{@link #hasRemaining()}）</li>
  * 	<li>1行分のテキストやデータソースの終端までのテキストの一括読み取り機能（{@link #readLine()}と{@link #readToEnd()}）</li>
  * 	<li>ストリームなどの自動クローズとリソースの解放（{@link #close()}メソッド呼び出し時もしくはファイナライズ時）</li>
  * </ul>
@@ -67,10 +67,17 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 		return _position;
 	}
 	/**
-	 * EOFに到達しているかどうか判定します。
-	 * @return
+	 * データソースに読み取り可能なコンテンツが残っているかどうか判定します。
+	 * @return EOFに到達している場合は{@code false}
 	 */
-	public final boolean hasReachedEof() {
+	public final boolean hasRemaining() {
+		return peek() > -1;
+	}
+	/**
+	 * データソースの終端に到達しているかどうか判定します。
+	 * @return EOFに到達している場合は{@code true}
+	 */
+	public final boolean noRemaining() {
 		return peek() == -1;
 	}
 	@Override
@@ -94,11 +101,11 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	@Override
 	public final int read(char[] cbuf, int off, int len) throws IOException {
 		synchronized (this) {
-			if (hasReachedEof()) return -1;
+			if (noRemaining()) return -1;
 			
 			final int maxIndex = Math.min(cbuf.length, off + len);
 			int charCount = 0;
-			for (int i = off; i < maxIndex && !hasReachedEof(); i ++) {
+			for (int i = off; i < maxIndex && hasRemaining(); i ++) {
 				cbuf[i] = (char)read();
 				charCount ++;
 			}
@@ -114,10 +121,10 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	 * @throws IOException 文字の読み取り中に例外がスローされた場合
 	 */
 	public final String readLine() throws IOException {
-		if (hasReachedEof()) return null;
+		if (noRemaining()) return null;
 		final int startedOn = _position.line();
 		final StringBuilder buff = new StringBuilder();
-		while (startedOn == _position.line() && !hasReachedEof()) {
+		while (startedOn == _position.line() && hasRemaining()) {
 			int ch = read();
 			if (ch != '\r' && ch != '\n') buff.append((char)ch);
 		}
@@ -130,9 +137,9 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	 * @throws IOException 文字の読み取り中に例外がスローされた場合
 	 */
 	public final String readToEnd() throws IOException {
-		if (hasReachedEof()) return null;
+		if (noRemaining()) return null;
 		final StringBuilder buff = new StringBuilder();
-		while (!hasReachedEof()) buff.append((char)read());
+		while (hasRemaining()) buff.append((char)read());
 		return buff.toString();
 	}
 	@Override

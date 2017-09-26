@@ -35,7 +35,7 @@ final class CharArrayReader {
 	 * データソースのEOFに到達しているかどうか判定します。
 	 * @return
 	 */
-	public boolean hasReachedEof(){
+	public boolean noRemaining(){
 		return _items.length <= _index;
 	}
 	/**
@@ -57,7 +57,7 @@ final class CharArrayReader {
 	 * @return
 	 */
 	public String readToEnd() {
-		if (hasReachedEof()) return null;
+		if (noRemaining()) return null;
 		final String tmp = new String(_items, _index, _items.length - _index);
 		_index = _items.length;
 		return tmp;
@@ -78,7 +78,7 @@ final class CharArrayReader {
 		ParsecUtility.mustNotBeNull("prefix", prefix);
 		
 		if (prefix.length == 0) return this;
-		if (hasReachedEof()) return new CharArrayReader(prefix);
+		if (noRemaining()) return new CharArrayReader(prefix);
 		
 		final int restLength = _items.length - _index;
 		final int newLength = prefix.length + restLength;

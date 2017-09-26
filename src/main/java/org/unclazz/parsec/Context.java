@@ -92,7 +92,7 @@ public final class Context {
 	}
 	private void preParse_doSkip() throws IOException {
 		if (!_autoSkip) return;
-		while (!_source.hasReachedEof()) {
+		while (_source.hasRemaining()) {
 			final char ch = (char)_source.peek();
 			if (!_skipTarget.contains(ch)) break;
 			_source.read();

@@ -25,21 +25,21 @@ public class CharArrayReaderTest {
 	}
 
 	@Test
-	public void testHasReachedEof() {
+	public void testNoRemaining() {
 		// Arrange
 		final CharArrayReader r_empty = CharArrayReader.from("".toCharArray());
 		final CharArrayReader r_0123 = CharArrayReader.from("0123".toCharArray());
 		
 		// Act
 		// Assert
-		assertThat(r_empty.hasReachedEof(), is(true));
-		assertThat(r_empty.prepend("abc".toCharArray()).hasReachedEof(), is(false));
-		assertThat(r_0123.hasReachedEof(), is(false)); r_0123.read(); // => 0
-		assertThat(r_0123.hasReachedEof(), is(false)); r_0123.read(); // => 1
-		assertThat(r_0123.hasReachedEof(), is(false)); r_0123.read(); // => 2
-		assertThat(r_0123.hasReachedEof(), is(false)); r_0123.read(); // => 3
-		assertThat(r_0123.hasReachedEof(), is(true)); r_0123.read(); // => -1
-		assertThat(r_0123.hasReachedEof(), is(true));
+		assertThat(r_empty.noRemaining(), is(true));
+		assertThat(r_empty.prepend("abc".toCharArray()).noRemaining(), is(false));
+		assertThat(r_0123.noRemaining(), is(false)); r_0123.read(); // => 0
+		assertThat(r_0123.noRemaining(), is(false)); r_0123.read(); // => 1
+		assertThat(r_0123.noRemaining(), is(false)); r_0123.read(); // => 2
+		assertThat(r_0123.noRemaining(), is(false)); r_0123.read(); // => 3
+		assertThat(r_0123.noRemaining(), is(true)); r_0123.read(); // => -1
+		assertThat(r_0123.noRemaining(), is(true));
 	}
 
 	@Test

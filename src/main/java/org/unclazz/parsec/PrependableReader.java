@@ -31,11 +31,11 @@ class PrependableReader extends AbstractReader {
 	}
 	@Override
 	protected int readOne() throws IOException {
-		return _prefixReader.hasReachedEof() ? _mainReader.read() : _prefixReader.read();
+		return _prefixReader.noRemaining() ? _mainReader.read() : _prefixReader.read();
 	}
 	@Override
 	public int peek() {
-		return _prefixReader.hasReachedEof() ? _mainReader.peek() : _prefixReader.peek();
+		return _prefixReader.noRemaining() ? _mainReader.peek() : _prefixReader.peek();
 	}
 	/**
 	 * 文字位置を設定し直し、データソースの先頭にシーケンスを連結します。
