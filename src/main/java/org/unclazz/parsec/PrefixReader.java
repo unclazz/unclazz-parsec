@@ -7,23 +7,23 @@ import java.io.Reader;
 /**
  * データソースの先頭にシーケンスを接続する機能を持つリーダーです。
  */
-class PrependableReader extends AbstractReader {
+class PrefixReader extends AbstractReader {
 
 	private CharArrayReader _prefixReader;
-	private final PeekableReader _mainReader;
+	private final PeekReader _mainReader;
 	
-	PrependableReader(CharPosition p, char[] prefix, Reader main){
+	PrefixReader(CharPosition p, char[] prefix, Reader main){
 		ParsecUtility.mustNotBeNull("p", p);
 		ParsecUtility.mustNotBeNull("prefix", prefix);
 		ParsecUtility.mustNotBeNull("main", main);
 		position(p);
 		_prefixReader = CharArrayReader.from(prefix);
-		_mainReader = new PeekableReader(main);
+		_mainReader = new PeekReader(main);
 	}
-	PrependableReader(Reader main){
+	PrefixReader(Reader main){
 		ParsecUtility.mustNotBeNull("main", main);
 		_prefixReader = CharArrayReader.from(new char[0]);
-		_mainReader = new PeekableReader(main);
+		_mainReader = new PeekReader(main);
 	}
 	@Override
 	protected Closeable closable() {

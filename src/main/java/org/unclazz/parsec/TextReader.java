@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 /**
  * {@link Parser}や{@link ValParser}の入力データソースとなるリーダーです。
  */
-public final class TextReader extends ResettableReader {
+public final class TextReader extends ResetReader {
 	/**
 	 * 文字列からリーダーを生成して返します。
 	 * @param text

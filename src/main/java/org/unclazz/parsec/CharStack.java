@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 /**
  * 文字のスタックを表すクラスです。
- * {@link PrependableReader}内部で利用されています。
+ * {@link PrefixReader}内部で利用されています。
  */
 final class CharStack {
 	private int _size;

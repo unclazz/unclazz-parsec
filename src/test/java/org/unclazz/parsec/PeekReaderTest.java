@@ -8,12 +8,12 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-public class PeekableReaderTest {
+public class PeekReaderTest {
 
 	@Test
 	public void testPeek() throws IOException {
 		// Arrange
-		try (final PeekableReader r = new PeekableReader(new StringReader("012"))){
+		try (final PeekReader r = new PeekReader(new StringReader("012"))){
 			// Act
 			// Assert
 			assertThat(r.peek(), is('0' - 0));
@@ -29,7 +29,7 @@ public class PeekableReaderTest {
 	@Test
 	public void testRead() throws IOException {
 		// Arrange
-		try (final PeekableReader r = new PeekableReader(new StringReader("012"))){
+		try (final PeekReader r = new PeekReader(new StringReader("012"))){
 			// Act
 			// Assert
 			assertThat(r.read(), is('0' - 0));

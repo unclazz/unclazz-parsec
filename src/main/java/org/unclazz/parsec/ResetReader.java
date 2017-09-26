@@ -7,13 +7,13 @@ import java.util.Stack;
 /**
  * リセット機能を持つリーダーです。
  */
-class ResettableReader extends PrependableReader {
+class ResetReader extends PrefixReader {
 	
 	private boolean _marked;
 	private final CharStack _backup = new CharStack(100);
 	private final Stack<CharPosition> _marks = new Stack<>();
 	
-	ResettableReader(Reader reader) {
+	ResetReader(Reader reader) {
 		super(reader);
 	}
 	

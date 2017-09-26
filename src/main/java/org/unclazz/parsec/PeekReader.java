@@ -9,10 +9,10 @@ import java.io.Reader;
  * <p>このクラスはライブラリの内部でのみ利用することを想定しているため{@link Reader}を継承せず、
  * 最小限のメンバーを宣言・実装・公開するだけに留めています。</p>
  */
-final class PeekableReader implements Closeable, AutoCloseable{
+final class PeekReader implements Closeable, AutoCloseable{
 	private final Reader _inner;
 	private int _cache = -1;
-	PeekableReader(Reader inner) {
+	PeekReader(Reader inner) {
 		ParsecUtility.mustNotBeNull("inner", inner);
 		_inner = inner;
 		try {

@@ -8,15 +8,15 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-public class ResettableReaderTest {
+public class ResetReaderTest {
 
-	private ResettableReader create(String text) {
-		return new ResettableReader(new StringReader(text));
+	private ResetReader create(String text) {
+		return new ResetReader(new StringReader(text));
 	}
 	
 	@Test
 	public final void testMark() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		// 1度目のマーク
 		r.mark();
@@ -53,7 +53,7 @@ public class ResettableReaderTest {
 
 	@Test
 	public final void testUnmark() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		// 空振りのマーク解除オペ（何も起きない）
 		r.unmark();
@@ -75,7 +75,7 @@ public class ResettableReaderTest {
 
 	@Test
 	public final void testCaptureBoolean() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		assertThat(r.capture(true), is(nullValue()));
 		
@@ -92,7 +92,7 @@ public class ResettableReaderTest {
 
 	@Test
 	public final void testCapture() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		assertThat(r.capture(), is(nullValue()));
 		
@@ -134,7 +134,7 @@ public class ResettableReaderTest {
 
 	@Test
 	public final void testReset() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		// 空振りのリセットオペ（何も起きない）
 		r.reset();
@@ -176,7 +176,7 @@ public class ResettableReaderTest {
 
 	@Test
 	public final void testResetBoolean() throws IOException {
-		final ResettableReader r = create("01234");
+		final ResetReader r = create("01234");
 		
 		// 空振りのリセットオペ（何も起きない）
 		r.reset(true);

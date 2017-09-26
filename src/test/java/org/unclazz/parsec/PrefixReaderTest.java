@@ -8,16 +8,16 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-public class PrependableReaderTest {
+public class PrefixReaderTest {
 	
-	private PrependableReader create(String text) {
-		return new PrependableReader(new StringReader(text));
+	private PrefixReader create(String text) {
+		return new PrefixReader(new StringReader(text));
 	}
 
 	@Test
 	public void testPeek() throws IOException {
 		// Arrange
-		final PrependableReader r = create("012");
+		final PrefixReader r = create("012");
 		
 		// Act
 		// Assert
@@ -61,12 +61,12 @@ public class PrependableReaderTest {
 
 	@Test
 	public void testPrependableReaderCharPositionCharArrayReader() throws IOException {
-		try(final PrependableReader r = new PrependableReader(CharPosition.ofBof(), null, new StringReader("abc"))) {
+		try(final PrefixReader r = new PrefixReader(CharPosition.ofBof(), null, new StringReader("abc"))) {
 			fail();
 		} catch (NullPointerException e) {
 			// OK
 		}
-		try(final PrependableReader r = new PrependableReader(null, "012".toCharArray(), new StringReader("abc"))) {
+		try(final PrefixReader r = new PrefixReader(null, "012".toCharArray(), new StringReader("abc"))) {
 			fail();
 		} catch (NullPointerException e) {
 			// OK
@@ -75,7 +75,7 @@ public class PrependableReaderTest {
 
 	@Test
 	public void testPrependableReaderReader() throws IOException {
-		try(final PrependableReader r = new PrependableReader(null)) {
+		try(final PrefixReader r = new PrefixReader(null)) {
 			fail();
 		} catch (NullPointerException e) {
 			// OK
@@ -85,7 +85,7 @@ public class PrependableReaderTest {
 	@Test
 	public void testReattach() throws IOException {
 		// Arrange
-		final PrependableReader r = create("012");
+		final PrefixReader r = create("012");
 		
 		// Act
 		// Assert
