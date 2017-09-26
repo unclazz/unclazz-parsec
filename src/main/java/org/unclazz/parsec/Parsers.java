@@ -238,12 +238,28 @@ public final class Parsers {
 		return new LookaheadParser(original);
 	}
 	/**
+	 * 肯定先読みを行うパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	public static<T> Parser lookahead(ValParser<T> original) {
+		return new LookaheadParser(original.unval());
+	}
+	/**
 	 * パーサーの成否を反転させるパーサーを返します。
 	 * @param original
 	 * @return
 	 */
 	public static  Parser not(Parser original) {
 		return new NotParser(original);
+	}
+	/**
+	 * パーサーの成否を反転させるパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	public static<T>  Parser not(ValParser<T> original) {
+		return new NotParser(original.unval());
 	}
 	/**
 	 * 0個以上の空白にマッチするパーサーを返します。

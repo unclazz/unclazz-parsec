@@ -277,12 +277,28 @@ abstract class ParserSupport{
 		return new LookaheadParser(original);
 	}
 	/**
+	 * 肯定先読みを行うパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	protected<T> Parser lookahead(ValParser<T> original) {
+		return new LookaheadParser(original.unval());
+	}
+	/**
+	 * パーサーの成否を反転させるパーサーを返します。
+	 * @param original
+	 * @return
+	 */
+	/**
 	 * パーサーの成否を反転させるパーサーを返します。
 	 * @param original
 	 * @return
 	 */
 	protected Parser not(Parser original) {
 		return new NotParser(original);
+	}
+	protected<T> Parser not(ValParser<T> original) {
+		return new NotParser(original.unval());
 	}
 	/**
 	 * 0個以上の空白にマッチするパーサーを返します。
