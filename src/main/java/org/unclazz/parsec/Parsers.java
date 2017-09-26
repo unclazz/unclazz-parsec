@@ -245,5 +245,19 @@ public final class Parsers {
 	public static  Parser not(Parser original) {
 		return new NotParser(original);
 	}
+	/**
+	 * 0個以上の空白にマッチするパーサーを返します。
+	 * @return
+	 */
+	public static Parser space() {
+		return new SpaceParser(0);
+	}
+	/**
+	 * {@code min}個以上の空白にマッチするパーサーを返します。
+	 * @return
+	 */
+	public static Parser space(int min) {
+		return new SpaceParser(min);
+	}
 
 }

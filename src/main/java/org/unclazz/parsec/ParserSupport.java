@@ -284,5 +284,19 @@ abstract class ParserSupport{
 	protected Parser not(Parser original) {
 		return new NotParser(original);
 	}
+	/**
+	 * 0個以上の空白にマッチするパーサーを返します。
+	 * @return
+	 */
+	protected Parser space() {
+		return new SpaceParser(0);
+	}
+	/**
+	 * {@code min}個以上の空白にマッチするパーサーを返します。
+	 * @return
+	 */
+	protected Parser space(int min) {
+		return new SpaceParser(min);
+	}
 	/* ---------- 以上、ファクトリーメソッド ---------- */
 }
