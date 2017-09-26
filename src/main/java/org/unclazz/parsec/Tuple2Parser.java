@@ -24,8 +24,10 @@ final class Tuple2Parser<T1, T2> extends ValParser<Tuple2<T1, T2>> {
 		final ValResult<T2> rightResult = _right.parse(ctx);
 		final boolean canBacktrack = leftResult.canBacktrack() && rightResult.canBacktrack();
 		
-		if (!rightResult.isSuccessful()) return failure(rightResult.message());
-		
-		return success(Tuple.of(leftResult.value(), rightResult.value())).allowBacktrack(canBacktrack);
+		if (rightResult.isSuccessful()) {
+			return success(Tuple.of(leftResult.value(), rightResult.value()))
+					.allowBacktrack(canBacktrack);
+		}
+		return failure(rightResult.message()).allowBacktrack(canBacktrack);
 	}
 }
