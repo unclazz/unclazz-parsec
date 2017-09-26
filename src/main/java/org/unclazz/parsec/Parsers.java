@@ -126,7 +126,7 @@ public final class Parsers {
 	 * @param clazz
 	 * @return
 	 */
-	public static  Parser charWhileIn(CharClass clazz) {
+	public static  Parser charsWhileIn(CharClass clazz) {
 		return new CharsWhileInParser(clazz, 0);
 	}
 	/**
@@ -160,7 +160,7 @@ public final class Parsers {
 	 * @param clazz
 	 * @return
 	 */
-	public static Parser charWhileNotIn(CharClass clazz) {
+	public static Parser charsWhileNotIn(CharClass clazz) {
 		return new CharsWhileInParser(CharClass.not(clazz), 0);
 	}
 	/**

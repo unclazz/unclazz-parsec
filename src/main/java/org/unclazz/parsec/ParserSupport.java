@@ -165,7 +165,7 @@ abstract class ParserSupport{
 	 * @param clazz
 	 * @return
 	 */
-	protected Parser charWhileIn(CharClass clazz) {
+	protected Parser charsWhileIn(CharClass clazz) {
 		return new CharsWhileInParser(clazz, 0);
 	}
 	/**
@@ -199,7 +199,7 @@ abstract class ParserSupport{
 	 * @param clazz
 	 * @return
 	 */
-	protected Parser charWhileNotIn(CharClass clazz) {
+	protected Parser charsWhileNotIn(CharClass clazz) {
 		return new CharsWhileInParser(CharClass.not(clazz), 0);
 	}
 	/**
