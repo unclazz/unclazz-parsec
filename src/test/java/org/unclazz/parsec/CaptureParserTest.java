@@ -27,18 +27,23 @@ public class CaptureParserTest {
 		// Asseert
 		assertThat(r_a_rep_bbbbb.isSuccessful(), is(true));
 		assertThat(r_a_rep_bbbbb.value(), is(""));
+		assertThat(r_a_rep_bbbbb.end().index(), is(0));
 		
 		assertThat(r_a_rep_aabbb.isSuccessful(), is(true));
 		assertThat(r_a_rep_aabbb.value(), is("aa"));
+		assertThat(r_a_rep_aabbb.end().index(), is(2));
 		
 		assertThat(r_a_rep_aabab.isSuccessful(), is(true));
 		assertThat(r_a_rep_aabab.value(), is("aa"));
+		assertThat(r_a_rep_aabab.end().index(), is(2));
 		
 		assertThat(r_a_ba_rep_aabbb.isSuccessful(), is(true));
 		assertThat(r_a_ba_rep_aabbb.value(), is("aa"));
+		assertThat(r_a_ba_rep_aabbb.end().index(), is(2));
 		
 		assertThat(r_a_ba_rep_aabab.isSuccessful(), is(true));
 		assertThat(r_a_ba_rep_aabab.value(), is("aaba"));
+		assertThat(r_a_ba_rep_aabab.end().index(), is(4));
 	}
 
 }
