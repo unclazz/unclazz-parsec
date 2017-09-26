@@ -139,11 +139,23 @@ public abstract class ValParser<T> extends ParserSupport {
 	}
 	/**
 	 * キャプチャ結果に関数を適用するパーサーを返します。
+	 * <p>関数適用時に例外がスローされた場合、例外のメッセージが{@link ValResult#message()}に設定されます。</p>
 	 * @param func
 	 * @return
 	 */
 	public<U> ValParser<U> map(Function<T, U> func){
-		return new MapValParser<>(this, func);
+		return new MapValParser<>(this, func, false);
+	}
+	/**
+	 * キャプチャ結果に関数を適用するパーサーを返します。
+	 * <p>関数適用時に例外がスローされた場合、例外のメッセージが{@link ValResult#message()}に設定されます。
+	 * ただし引数{@code canThrow}に{@code true}が設定されている場合は例外はそのまま再スローされます。</p>
+	 * @param func
+	 * @param canThrow
+	 * @return
+	 */
+	public<U> ValParser<U> map(Function<T, U> func, boolean canThrow){
+		return new MapValParser<>(this, func, canThrow);
 	}
 	/**
 	 * パース結果の値を元に動的にパーサーを構築するパーサーを返します。

@@ -116,11 +116,23 @@ public abstract class Parser extends ParserSupport {
 	}
 	/**
 	 * パースした文字列に関数を適用するパーサーを返します。
+	 * <p>関数適用時に例外がスローされた場合、例外のメッセージが{@link ValResult#message()}に設定されます。</p>
 	 * @param func
 	 * @return
 	 */
 	public<T> ValParser<T> map(Function<String, T> func){
 		return val().map(func);
+	}
+	/**
+	 * パースした文字列に関数を適用するパーサーを返します。
+	 * <p>関数適用時に例外がスローされた場合、例外のメッセージが{@link ValResult#message()}に設定されます。
+	 * ただし引数{@code canThrow}に{@code true}が設定されている場合は例外はそのまま再スローされます。</p>
+	 * @param func
+	 * @param canThrow
+	 * @return
+	 */
+	public<T> ValParser<T> map(Function<String, T> func, boolean canThrow){
+		return val().map(func, canThrow);
 	}
 	/**
 	 * オプションのトークンにマッチするパーサーを返します。
