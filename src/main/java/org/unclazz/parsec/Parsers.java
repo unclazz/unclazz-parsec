@@ -2,6 +2,9 @@ package org.unclazz.parsec;
 
 import java.util.function.Supplier;
 
+import org.unclazz.parsec.data.ParserFactory;
+import org.unclazz.parsec.data.ValParserFactory;
+
 /**
  * {@link Parser}および{@link ValParser}のためのユーティリティです。
  */
@@ -218,7 +221,7 @@ public final class Parsers {
 	 * @param func ファクトリー
 	 * @return
 	 */
-	public static  Parser lazy(Supplier<Parser> func) {
+	public static  Parser lazy(ParserFactory func) {
 		return new LazyParser(func);
 	}
 	/**
@@ -226,7 +229,7 @@ public final class Parsers {
 	 * @param func ファクトリー
 	 * @return
 	 */
-	public static <T> ValParser<T> lazyVal(Supplier<ValParser<T>> func) {
+	public static <T> ValParser<T> lazy(ValParserFactory<T> func) {
 		return new LazyValParser<>(func);
 	}
 	/**

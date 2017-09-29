@@ -3,6 +3,9 @@ package org.unclazz.parsec;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
+import org.unclazz.parsec.data.ParserFactory;
+import org.unclazz.parsec.data.ValParserFactory;
+
 /**
  * {@link Parser}および{@link ValParser}クラスとその派生クラスのため
  * 各種のユーティリティとファクトリーメソッドを提供します。
@@ -257,7 +260,7 @@ abstract class ParserSupport{
 	 * @param func ファクトリー
 	 * @return
 	 */
-	protected Parser lazy(Supplier<Parser> func) {
+	protected Parser lazy(ParserFactory func) {
 		return new LazyParser(func);
 	}
 	/**
@@ -265,7 +268,7 @@ abstract class ParserSupport{
 	 * @param func ファクトリー
 	 * @return
 	 */
-	protected<T> ValParser<T> lazyVal(Supplier<ValParser<T>> func) {
+	protected<T> ValParser<T> lazy(ValParserFactory<T> func) {
 		return new LazyValParser<>(func);
 	}
 	/**

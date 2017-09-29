@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.unclazz.parsec.data.ParserFactory;
+import org.unclazz.parsec.data.ValParserFactory;
+
 /**
  * パーサーを表す抽象クラスです。
  * <p>このパーサーはパース処理にあたってパース対象の値をキャプチャせず、パースの成功・失敗の情報だけを返します。
@@ -158,11 +161,27 @@ public abstract class Parser extends ParserSupport {
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param func
+	 * @return
+	 */
+	public Parser or(ParserFactory func) {
+		return new OrParser(this, lazy(func));
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param other
 	 * @return
 	 */
 	public<T> Parser or(ValParser<T> other){
 		return new OrParser(this, other.unval());
+	}
+	/**
+	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
+	 * @param func
+	 * @return
+	 */
+	public<T> Parser or(ValParserFactory<T> func){
+		return new OrParser(this, lazy(func).unval());
 	}
 	/**
 	 * シーケンスを読み取るパーサーを返します。
@@ -174,11 +193,27 @@ public abstract class Parser extends ParserSupport {
 	}
 	/**
 	 * シーケンスを読み取るパーサーを返します。
+	 * @param func 次のトークンを読み取るパーサーのファクトリー
+	 * @return
+	 */
+	public Parser then(ParserFactory func) {
+		return new ThenParser(this, lazy(func));
+	}
+	/**
+	 * シーケンスを読み取るパーサーを返します。
 	 * @param other 次のトークンを読み取るパーサー
 	 * @return
 	 */
 	public<T> ValParser<T> then(ValParser<T> other){
 		return new ThenTakeRightParser<>(this, other);
+	}
+	/**
+	 * シーケンスを読み取るパーサーを返します。
+	 * @param func 次のトークンを読み取るパーサーのファクトリー
+	 * @return
+	 */
+	public<T> ValParser<T> then(ValParserFactory<T> func){
+		return new ThenTakeRightParser<>(this, lazy(func));
 	}
 	/**
 	 * パース成功時に指定した値を返すパーサーを返します。
