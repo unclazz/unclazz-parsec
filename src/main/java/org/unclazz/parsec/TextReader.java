@@ -16,12 +16,18 @@ import java.util.function.Consumer;
  */
 public final class TextReader extends ResetReader {
 	/**
+	 * 別のリーダーをラップした新しいインスタンスを返します。
+	 */
+	public static TextReader from(Reader reader) {
+		return new TextReader(reader);
+	}
+	/**
 	 * 文字列からリーダーを生成して返します。
 	 * @param text
 	 * @return
 	 */
 	public static TextReader from(String text) {
-		return new TextReader(new StringReader(text));
+		return from(new StringReader(text));
 	}
 	/**
 	 * ファイルからリーダーを生成して返します。
@@ -40,7 +46,7 @@ public final class TextReader extends ResetReader {
 	 * @return
 	 */
 	public static TextReader from(InputStream stream, Charset charset) {
-		return new TextReader(new BufferedReader(new InputStreamReader(stream, charset)));
+		return from(new BufferedReader(new InputStreamReader(stream, charset)));
 	}
 	
 	private TextReader(Reader reader) {
