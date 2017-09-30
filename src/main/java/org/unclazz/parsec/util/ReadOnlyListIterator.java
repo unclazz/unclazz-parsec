@@ -1,4 +1,4 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 import java.util.Iterator;
 import java.util.ListIterator;

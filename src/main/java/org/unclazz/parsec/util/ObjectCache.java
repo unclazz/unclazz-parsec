@@ -1,4 +1,4 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

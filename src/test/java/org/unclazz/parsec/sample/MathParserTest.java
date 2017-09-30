@@ -12,7 +12,7 @@ import org.unclazz.parsec.Mappers;
 import org.unclazz.parsec.ValParser;
 import org.unclazz.parsec.ValResult;
 import org.unclazz.parsec.ValResultCore;
-import org.unclazz.parsec.data.Tuple2;
+import org.unclazz.parsec.util.Tuple2;
 
 public final class MathParserTest {
 

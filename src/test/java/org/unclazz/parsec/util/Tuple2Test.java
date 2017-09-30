@@ -1,9 +1,11 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
+import org.unclazz.parsec.util.Tuple;
+import org.unclazz.parsec.util.Tuple2;
 
 public class Tuple2Test {
 

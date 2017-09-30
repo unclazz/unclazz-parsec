@@ -2,9 +2,9 @@ package org.unclazz.parsec;
 
 import java.nio.CharBuffer;
 
-import org.unclazz.parsec.data.Tuple;
-import org.unclazz.parsec.data.Tuple2;
-import org.unclazz.parsec.data.Tuple3;
+import org.unclazz.parsec.util.Tuple;
+import org.unclazz.parsec.util.Tuple2;
+import org.unclazz.parsec.util.Tuple3;
 
 /**
  * {@link ValParser#map(java.util.function.Function)}

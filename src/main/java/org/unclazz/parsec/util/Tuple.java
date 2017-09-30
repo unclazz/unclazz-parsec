@@ -1,4 +1,4 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 /**
  * タプルを表すインターフェースです。

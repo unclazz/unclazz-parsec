@@ -1,18 +1,21 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 /**
- * 要素数2のタプルです。
+ * 要素数3のタプルです。
  *
  * @param <T1> 要素1の型
  * @param <T2> 要素2の型
+ * @param <T3> 要素3の型
  */
-public final class Tuple2<T1,T2> implements Tuple {
+public final class Tuple3<T1,T2, T3> implements Tuple {
 	private final T1 _item1;
 	private final T2 _item2;
+	private final T3 _item3;
 	
-	Tuple2(T1 item1, T2 item2) {
+	Tuple3(T1 item1, T2 item2, T3 item3) {
 		_item1 = item1;
 		_item2 = item2;
+		_item3 = item3;
 	}
 	
 	/**
@@ -29,16 +32,23 @@ public final class Tuple2<T1,T2> implements Tuple {
 	public T2 item2() {
 		return _item2;
 	}
+	/**
+	 * タプルの要素3です。
+	 * @return
+	 */
+	public T3 item3() {
+		return _item3;
+	}
 	@Override
 	public int size() {
-		return 2;
+		return 3;
 	}
 	@Override
 	public Object[] values() {
-		return new Object[] { _item1, _item2 };
+		return new Object[] { _item1, _item2, _item3 };
 	}
 	@Override
 	public String toString() {
-		return String.format("(%s, %s)", _item1, _item2);
+		return String.format("(%s, %s, %s)", _item1, _item2, _item3);
 	}
 }

@@ -1,4 +1,4 @@
-package org.unclazz.parsec.data;
+package org.unclazz.parsec.util;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
+import org.unclazz.parsec.util.ReadOnlyList;
 
 public class ReadOnlyListIteratorTest {
 

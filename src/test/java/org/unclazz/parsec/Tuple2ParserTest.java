@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.Test;
-import org.unclazz.parsec.data.Tuple2;
+import org.unclazz.parsec.util.Tuple2;
 
 public class Tuple2ParserTest {
 

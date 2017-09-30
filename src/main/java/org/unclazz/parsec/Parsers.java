@@ -2,8 +2,8 @@ package org.unclazz.parsec;
 
 import java.util.function.Supplier;
 
-import org.unclazz.parsec.data.ParserFactory;
-import org.unclazz.parsec.data.ValParserFactory;
+import org.unclazz.parsec.util.ParserFactory;
+import org.unclazz.parsec.util.ValParserFactory;
 
 /**
  * {@link Parser}および{@link ValParser}のためのユーティリティです。

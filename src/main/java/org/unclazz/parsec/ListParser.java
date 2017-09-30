@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import org.unclazz.parsec.data.ReadOnlyList;
+import org.unclazz.parsec.util.ReadOnlyList;
 
 final class ListParser<T> extends RepeatReduceValParser<T, Queue<T>, List<T>>{
 	private static<T> Queue<T> seed() {

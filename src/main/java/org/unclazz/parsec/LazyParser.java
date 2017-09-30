@@ -2,8 +2,8 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 
-import org.unclazz.parsec.data.ObjectCache;
-import org.unclazz.parsec.data.ParserFactory;
+import org.unclazz.parsec.util.ObjectCache;
+import org.unclazz.parsec.util.ParserFactory;
 
 final class LazyParser extends Parser{
 	private static final ObjectCache<LazyParser> _instanceCache = new ObjectCache<>(100);

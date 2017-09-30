@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.unclazz.parsec.data.ParserFactory;
-import org.unclazz.parsec.data.ValParserFactory;
+import org.unclazz.parsec.util.ParserFactory;
+import org.unclazz.parsec.util.ValParserFactory;
 
 /**
  * パーサーを表す抽象クラスです。

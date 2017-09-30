@@ -2,8 +2,8 @@ package org.unclazz.parsec;
 
 import java.io.IOException;
 
-import org.unclazz.parsec.data.Tuple;
-import org.unclazz.parsec.data.Tuple2;
+import org.unclazz.parsec.util.Tuple;
+import org.unclazz.parsec.util.Tuple2;
 
 final class Tuple2Parser<T1, T2> extends ValParser<Tuple2<T1, T2>> {
 	private final ValParser<T1> _left;
