@@ -257,19 +257,21 @@ abstract class ParserSupport{
 	}
 	/**
 	 * パーサーが実際に必要になったときにこれを生成してパースを行う遅延初期化パーサーを返します。
+	 * <p>同一のファクトリーにより生成されたインスタンスが存在する場合はそのインスタンスが返されます。</p>
 	 * @param func ファクトリー
 	 * @return
 	 */
 	protected Parser lazy(ParserFactory func) {
-		return new LazyParser(func);
+		return LazyParser.getInstance(func);
 	}
 	/**
 	 * パーサーが実際に必要になったときにこれを生成してパースを行う遅延初期化パーサーを返します。
+	 * <p>同一のファクトリーにより生成されたインスタンスが存在する場合はそのインスタンスが返されます。</p>
 	 * @param func ファクトリー
 	 * @return
 	 */
 	protected<T> ValParser<T> lazy(ValParserFactory<T> func) {
-		return new LazyValParser<>(func);
+		return LazyValParser.getInstance(func);
 	}
 	/**
 	 * 肯定先読みを行うパーサーを返します。
