@@ -139,6 +139,14 @@ public abstract class Parser extends ParserSupport {
 		return val().map(func, canThrow);
 	}
 	/**
+	 * パース結果の値を元に動的にパーサーを構築するパーサーを返します。
+	 * @param func
+	 * @return
+	 */
+	public<T> ValParser<T> flatMap(Function<String, ValParser<T>> func){
+		return val().flatMap(func);
+	}
+	/**
 	 * オプションのトークンにマッチするパーサーを返します。
 	 * @return
 	 */
