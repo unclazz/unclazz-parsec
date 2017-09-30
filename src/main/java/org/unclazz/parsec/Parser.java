@@ -1,6 +1,7 @@
 package org.unclazz.parsec;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -165,23 +166,23 @@ public abstract class Parser extends ParserSupport {
 	 * @return
 	 */
 	public Parser or(ParserFactory func) {
-		return new OrParser(this, lazy(func));
+		return or(lazy(func));
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param other
 	 * @return
 	 */
-	public<T> Parser or(ValParser<T> other){
-		return new OrParser(this, other.unval());
+	public<T> ValParser<Optional<T>> or(ValParser<T> other){
+		return new OrOptParser<>(this, other);
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param func
 	 * @return
 	 */
-	public<T> Parser or(ValParserFactory<T> func){
-		return new OrParser(this, lazy(func).unval());
+	public<T> ValParser<Optional<T>> or(ValParserFactory<T> func){
+		return or(lazy(func));
 	}
 	/**
 	 * シーケンスを読み取るパーサーを返します。

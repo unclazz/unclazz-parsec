@@ -137,23 +137,23 @@ public abstract class ValParser<T> extends ParserSupport {
 	 * @return
 	 */
 	public ValParser<T> or(ValParserFactory<T> func){
-		return new OrValParser<>(this, lazy(func));
+		return or(lazy(func));
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param other
 	 * @return
 	 */
-	public Parser or(Parser other){
-		return new OrParser(this.unval(), other);
+	public ValParser<Optional<T>> or(Parser other){
+		return new OptOrParser<>(this, other);
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param func
 	 * @return
 	 */
-	public Parser or(ParserFactory func){
-		return new OrParser(this.unval(), lazy(func));
+	public ValParser<Optional<T>> or(ParserFactory func){
+		return or(lazy(func));
 	}
 	/**
 	 * キャプチャ結果に関数を適用するパーサーを返します。
