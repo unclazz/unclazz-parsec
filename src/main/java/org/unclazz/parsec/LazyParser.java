@@ -7,12 +7,19 @@ import org.unclazz.parsec.data.ParserFactory;
 
 final class LazyParser extends Parser{
 	private static final ObjectCache<LazyParser> _instanceCache = new ObjectCache<>(100);
-	public static String factoryIdentity(Object o) {
-		final Class<?> clazz = o.getClass();
+	public static String factoryIdentity(ParserFactory factory) {
+		final Class<?> clazz = factory.getClass();
 		final String clazzName = clazz.getName();
+		
+		// ファクトリーが合成型である場合はクラス名をそのままIDとする
+		// ※この実装は「ファクトリーが合成型である」＝「ファクトリーがラムダ式もしくはメソッド参照で指定されたものである」という前提に基づく。
+		// 同一コンテキスト（同一クラス、同一インスタンス、同一メソッド そして 同一呼び出し箇所）において、
+		// ラムダ式もしくはメソッド参照で指定されたファクトリーの factory.getClass().getName() は、一意の名前を返す。
+		// この性質を前提として利用して合成型の場合は型名をそのままキャッシュのキーとして利用する。
 		if (clazz.isSynthetic()) return clazzName;
 		
-		final int idHash = System.identityHashCode(o);
+		// それ以外の場合は型名＋IDハッシュをキーとして利用する。
+		final int idHash = System.identityHashCode(factory);
 		return String.format("%s@%s", clazzName, idHash);
 	}
 	/**
