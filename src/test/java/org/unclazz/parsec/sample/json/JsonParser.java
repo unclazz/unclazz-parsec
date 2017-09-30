@@ -46,7 +46,7 @@ final class JsonParser extends ValParser<Json> {
 	private ValParser<JsonProperty> pair() {
 		return space().then(_string).then(space())
 				.then(exact(':'))
-				.then(this::jsonExp)
+				.then(lazy(this::jsonExp))
 				.map(a -> JsonProperty.of(a.item1().stringValue(), a.item2()));
 	}
 	

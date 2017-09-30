@@ -48,16 +48,16 @@ final class MathParser extends ValParser<Integer>{
 	private final ValParser<Integer> number = charBetween('0', '9').repMin(1).map(Mappers::digits);
 	
 	private ValParser<Integer> parens() {
-		return exact('(').cut().then(this::addSub).then(exact(')'));
+		return exact('(').cut().then(lazy(this::addSub)).then(exact(')'));
 	}
 	private ValParser<Integer> factor() {
-		return number.or(this::parens);
+		return number.or(lazy(this::parens));
 	}
 	private ValParser<Integer> mulDiv() {
-		return factor().then((charIn("*/").val().then(this::factor)).rep()).map(this::mulDivAddSub_mapper);
+		return factor().then((charIn("*/").val().then(lazy(this::factor))).rep()).map(this::mulDivAddSub_mapper);
 	}
 	private ValParser<Integer> addSub() {
-		return mulDiv().then((charIn("+-").val().then(this::mulDiv)).rep()).map(this::mulDivAddSub_mapper);
+		return mulDiv().then((charIn("+-").val().then(lazy(this::mulDiv))).rep()).map(this::mulDivAddSub_mapper);
 	}
 	private ValParser<Integer> expr() {
 		return addSub().then(eof());

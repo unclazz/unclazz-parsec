@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.unclazz.parsec.util.ParserFactory;
 import org.unclazz.parsec.util.Tuple2;
-import org.unclazz.parsec.util.ValParserFactory;
 
 /**
  * パーサーを表す抽象クラスです。
@@ -133,27 +131,11 @@ public abstract class ValParser<T> extends ParserSupport {
 	}
 	/**
 	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
-	 * @param func
-	 * @return
-	 */
-	public ValParser<T> or(ValParserFactory<T> func){
-		return or(lazy(func));
-	}
-	/**
-	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
 	 * @param other
 	 * @return
 	 */
 	public ValParser<Optional<T>> or(Parser other){
 		return new OptOrParser<>(this, other);
-	}
-	/**
-	 * このパーサーのパースが成功すればその結果を、さもなくば引数のパーサーの結果を返します。
-	 * @param func
-	 * @return
-	 */
-	public ValParser<Optional<T>> or(ParserFactory func){
-		return or(lazy(func));
 	}
 	/**
 	 * キャプチャ結果に関数を適用するパーサーを返します。
@@ -200,29 +182,12 @@ public abstract class ValParser<T> extends ParserSupport {
 	}
 	/**
 	 * シーケンスを読み取るパーサーを返します。
-	 * @param func 次のトークンを読み取るパーサーのファクトリー
-	 * @return
-	 */
-	public ValParser<T> then(ParserFactory func){
-		return new ThenTakeLeftParser<>(this, lazy(func));
-	}
-	/**
-	 * シーケンスを読み取るパーサーを返します。
 	 * @param other 次のトークンを読み取るパーサー
 	 * @param<U> 
 	 * @return
 	 */
 	public<U> ValParser<Tuple2<T, U>> then(ValParser<U> other){
 		return new Tuple2Parser<>(this, other);
-	}
-	/**
-	 * シーケンスを読み取るパーサーを返します。
-	 * @param func 次のトークンを読み取るパーサーのファクトリー
-	 * @param<U> 
-	 * @return
-	 */
-	public<U> ValParser<Tuple2<T, U>> then(ValParserFactory<U> func){
-		return new Tuple2Parser<>(this, lazy(func));
 	}
 	/**
 	 * パターンの0回以上上限なしの繰返しにマッチするパーサーを返します。
