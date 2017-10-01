@@ -39,30 +39,30 @@ public final class Context {
 		return _skipTarget;
 	}
 	/**
-	 * データソースです。
-	 * @return 
+	 * 入力データソースとなるリーダーです。
+	 * @return リーダー
 	 */
 	public TextReader source() {
 		return _source;
 	}
 	/**
 	 * 自動スキップが有効かどうかを示します。
-	 * @return
+	 * @return 自動スキップが有効な場合{@code true}
 	 */
 	public boolean autoSkip() {
 		return _autoSkip;
 	}
 	/**
 	 * ログ出力が有効かどうかを示します。
-	 * @return
+	 * @return ログ出力が有効な場合{@code true}
 	 */
 	public boolean logging() {
 		return _logging;
 	}
 	/**
 	 * コンテキストの構成変更を行います。
-	 * @param action
-	 * @return
+	 * @param action アクション
+	 * @return 構成変更された新しいコンテキスト
 	 */
 	public Context configure(Consumer<ContextConfigurer> action) {
 		final ContextConfigurer config = new ContextConfigurer(this);
@@ -71,15 +71,15 @@ public final class Context {
 	}
 	/**
 	 * デバッグログを出力します。
-	 * @param message
+	 * @param message ログメッセージ
 	 */
 	public void log(String message) {
 		if (_logging) _logAppender.accept(message);
 	}
 	/**
 	 * デバッグログを出力します。
-	 * @param format
-	 * @param args
+	 * @param format ログメッセージのフォーマット文字列
+	 * @param args ログメッセージのフォーマット引数
 	 */
 	public void log(String format, Object... args) {
 		if (_logging) log(makeLabel(' ').append(String.format(format, args)).toString());
