@@ -33,27 +33,27 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	private CharPosition _position = CharPosition.ofBof();
 	
 	/**
-	 * データソースの参照を返します。
-	 * @return
+	 * 自動クローズの対象となるオブジェクトへ参照を返します。
+	 * @return 自動クローズ対象オブジェクト
 	 */
 	protected abstract Closeable closable();
 	/**
 	 * データソースから1文字を読み取り文字位置を前進させます。
 	 * <p>このメソッドは{@link Reader#read()}の規約に準拠します。</p>
-	 * @return 
+	 * @return 読み取られた文字のコードポイント（EOF到達済みの場合は{@code -1}）
 	 * @throws IOException 読み取り中に例外がスローされた場合
 	 */
 	protected abstract int readOne() throws IOException;
 	/**
-	 * 現在の文字位置が指す文字を返します。
+	 * 現在の文字位置が指す文字を返しますが読み取り位置を前進させません。
 	 * <p>このメソッドを呼び出す前にすでにデータソースの終端（EOF）の到達している場合は{@code -1}を返します。</p>
-	 * @return
+	 * @return 読み取られた文字のコードポイント（EOF到達済みの場合は{@code -1}）
 	 */
 	public abstract int peek();
 	
 	/**
 	 * 新しい文字位置を設定します。
-	 * @param position
+	 * @param position 文字位置
 	 */
 	protected final void position(CharPosition position) {
 		ParsecUtility.mustNotBeNull("position", position);
@@ -61,7 +61,7 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	}
 	/**
 	 * 現在の文字位置を返します。
-	 * @return
+	 * @return 文字位置
 	 */
 	public final CharPosition position() {
 		return _position;
@@ -117,7 +117,7 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	 * <p>行末はCRもしくはLF、CRLFにより判別されます。
 	 * このメソッドが返す文字列は現在の文字位置からこれらの終端を示す文字の直前までの文字のシーケンスです。
 	 * メソッドを呼び出す前にすでにデータソースのEOFまで到達している場合は{@code null}を返します。</p>
-	 * @return 
+	 * @return 現在の文字位置から行末までの文字列
 	 * @throws IOException 文字の読み取り中に例外がスローされた場合
 	 */
 	public final String readLine() throws IOException {
@@ -133,7 +133,7 @@ abstract class AbstractReader extends java.io.Reader implements Closeable, AutoC
 	/**
 	 * 現在の文字位置からEOFまでの文字列を読み取ります。
 	 * <p>このメソッドを呼び出す前にすでにデータソースのEOFまで到達している場合は{@code null}を返します。</p>
-	 * @return
+	 * @return 現在の文字位置からEOFまでの文字列
 	 * @throws IOException 文字の読み取り中に例外がスローされた場合
 	 */
 	public final String readToEnd() throws IOException {

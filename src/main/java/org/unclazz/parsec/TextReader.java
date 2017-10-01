@@ -17,6 +17,8 @@ import java.util.function.Consumer;
 public final class TextReader extends ResetReader {
 	/**
 	 * 別のリーダーをラップした新しいインスタンスを返します。
+	 * @param reader 別のリーダー
+	 * @return 新しいリーダー
 	 */
 	public static TextReader from(Reader reader) {
 		if (reader instanceof TextReader) return (TextReader) reader;
@@ -24,8 +26,8 @@ public final class TextReader extends ResetReader {
 	}
 	/**
 	 * 文字列からリーダーを生成して返します。
-	 * @param text
-	 * @return
+	 * @param text テキスト
+	 * @return 新しいリーダー
 	 */
 	public static TextReader from(String text) {
 		return from(new StringReader(text));
@@ -34,7 +36,7 @@ public final class TextReader extends ResetReader {
 	 * ファイルからリーダーを生成して返します。
 	 * @param file ファイル
 	 * @param charset キャラクターセット
-	 * @return
+	 * @return 新しいリーダー
 	 * @throws FileNotFoundException ファイルが存在しない場合
 	 */
 	public static TextReader from(File file, Charset charset) throws FileNotFoundException {
@@ -44,7 +46,7 @@ public final class TextReader extends ResetReader {
 	 * 入力ストリームからリーダーを生成して返します。
 	 * @param stream ストリーム
 	 * @param charset キャラクターセット
-	 * @return
+	 * @return 新しいリーダー
 	 */
 	public static TextReader from(InputStream stream, Charset charset) {
 		return from(new BufferedReader(new InputStreamReader(stream, charset)));
@@ -56,7 +58,7 @@ public final class TextReader extends ResetReader {
 	
 	/**
 	 * コンテキストを初期化して返します。
-	 * @return
+	 * @return 新しいコンテキスト
 	 */
 	public Context toContext() {
 		return new Context(this);
@@ -64,7 +66,7 @@ public final class TextReader extends ResetReader {
 	/**
 	 * コンテキストを初期化して返します。
 	 * @param config コンテキストの構成を変更するアクション
-	 * @return
+	 * @return 新しいコンテキスト
 	 */
 	public Context toContext(Consumer<ContextConfigurer> config) {
 		return toContext().configure(config);
