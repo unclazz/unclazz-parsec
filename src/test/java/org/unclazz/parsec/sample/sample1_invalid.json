@@ -1,0 +1,10 @@
+
+{
+	"foo": 123,
+	"bar": [ false null, "", {}, [] ],
+	"baz": {
+		"baz/foo": "123",
+		"baz/bar" : "[ false, null, true ]",
+		"baz/baz" : true
+	}
+}
