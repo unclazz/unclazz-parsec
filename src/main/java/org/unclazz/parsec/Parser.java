@@ -41,7 +41,7 @@ public abstract class Parser extends ParserSupport {
 	 * throwsステートメントで宣言されている{@link IOException}は、
 	 * 文字通りデータソースからの文字の読み取り中にデータソースから例外が当該の例外がスローされた場合を示すものです。</p>
 	 * @param ctx コンテキスト
-	 * @return パース結果（{@code null}ではない）
+	 * @return パース結果オブジェクト
 	 * @throws IOException データソースから例外がスローされた場合
 	 */
 	protected abstract ResultCore doParse(Context ctx) throws IOException;
