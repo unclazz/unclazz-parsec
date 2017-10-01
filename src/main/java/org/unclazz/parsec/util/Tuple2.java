@@ -17,14 +17,14 @@ public final class Tuple2<T1,T2> implements Tuple {
 	
 	/**
 	 * タプルの要素1です。
-	 * @return
+	 * @return タプル要素
 	 */
 	public T1 item1() {
 		return _item1;
 	}
 	/**
 	 * タプルの要素2です。
-	 * @return
+	 * @return タプル要素
 	 */
 	public T2 item2() {
 		return _item2;

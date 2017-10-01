@@ -20,21 +20,21 @@ public final class Tuple3<T1,T2, T3> implements Tuple {
 	
 	/**
 	 * タプルの要素1です。
-	 * @return
+	 * @return タプル要素
 	 */
 	public T1 item1() {
 		return _item1;
 	}
 	/**
 	 * タプルの要素2です。
-	 * @return
+	 * @return タプル要素
 	 */
 	public T2 item2() {
 		return _item2;
 	}
 	/**
 	 * タプルの要素3です。
-	 * @return
+	 * @return タプル要素
 	 */
 	public T3 item3() {
 		return _item3;
