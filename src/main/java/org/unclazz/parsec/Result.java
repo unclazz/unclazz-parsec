@@ -36,6 +36,7 @@ public final class Result extends ResultCore {
 	 * 値を紐付け{@link ValParser}のパース結果を表すオブジェクトに変換します。
 	 * @param value 任意の値
 	 * @return 値を持つパース結果オブジェクト
+	 * @param <T> 読み取り結果型
 	 */
 	public<T> ValResult<T> attachValue(T value) {
 		return new ValResult<>(isSuccessful(), value, message(), canBacktrack(), _start, _end);
@@ -43,6 +44,7 @@ public final class Result extends ResultCore {
 	/**
 	 * 型情報だけを紐付け{@link ValParser}のパース結果を表すオブジェクトに変換します。
 	 * @return 値を持つパース結果オブジェクト
+	 * @param <T> 読み取り結果型
 	 */
 	public<T> ValResult<T> attachValue() {
 		return new ValResult<>(isSuccessful(), null, message(), canBacktrack(), _start, _end);
