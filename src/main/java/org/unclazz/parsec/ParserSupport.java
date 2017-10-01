@@ -98,7 +98,7 @@ abstract class ParserSupport{
 	}
 	/**
 	 * 引数で指定した文字クラスにマッチするパーサーを返します。
-	 * @param chs 文字クラス
+	 * @param clazz 文字クラス
 	 * @return
 	 */
 	protected Parser charIn(CharClass clazz){

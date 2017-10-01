@@ -67,7 +67,7 @@ public final class Mappers {
 	}
 	/**
 	 * タプルの平坦化を行います。
-	 * @param value
+	 * @param tuple
 	 * @return
 	 */
 	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(Tuple2<Tuple2<T1, T2>, T3> tuple) {

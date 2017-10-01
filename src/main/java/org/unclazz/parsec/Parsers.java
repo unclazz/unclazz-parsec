@@ -59,7 +59,7 @@ public final class Parsers {
 	}
 	/**
 	 * 引数で指定した文字クラスにマッチするパーサーを返します。
-	 * @param chs 文字クラス
+	 * @param clazz 文字クラス
 	 * @return
 	 */
 	public static  Parser charIn(CharClass clazz){
