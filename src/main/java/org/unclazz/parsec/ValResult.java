@@ -18,15 +18,15 @@ public final class ValResult<T> extends ValResultCore<T> {
 	}
 	
 	/**
-	 * パース開始時の文字位置です。
-	 * @return
+	 * パース開始時の文字位置（パースしたシーケンスの最初の文字の文字位置）です。
+	 * @return 文字位置
 	 */
 	public CharPosition start() {
 		return _start;
 	}
 	/**
-	 * パース終了時の文字位置です。
-	 * @return
+	 * パース終了時の文字位置（パースしたシーケンスの最後の文字の次の文字位置）です。
+	 * @return 文字位置
 	 */
 	public CharPosition end() {
 		return _end;
@@ -42,7 +42,7 @@ public final class ValResult<T> extends ValResultCore<T> {
 	}
 	/**
 	 * 値との紐付けを解除して{@link Parser}のパース結果を表すオブジェクトに変換します。
-	 * @return
+	 * @return 値を持たないパース結果オブジェクト
 	 */
 	public Result detachValue(){
 		return new Result(isSuccessful(), message(), canBacktrack(), _start, _end);

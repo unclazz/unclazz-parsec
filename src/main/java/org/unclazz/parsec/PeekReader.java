@@ -21,16 +21,16 @@ final class PeekReader implements Closeable, AutoCloseable{
 			throw new RuntimeException(e);
 		}
 	}
-	public int peek() {
+	public final int peek() {
 		return _cache;
 	}
-	public int read() throws IOException {
+	public final int read() throws IOException {
 		final int tmp = _cache;
 		_cache = _inner.read();
 		return tmp;
 	}
 	@Override
-	public void close() throws IOException {
+	public final void close() throws IOException {
 		_inner.close();
 	}
 }

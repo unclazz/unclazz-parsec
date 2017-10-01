@@ -1,11 +1,17 @@
 package org.unclazz.parsec.sample.json;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.unclazz.parsec.TextReader;
 import org.unclazz.parsec.ValResult;
 import org.unclazz.parsec.util.ReadOnlyList;
 
@@ -21,6 +27,30 @@ public abstract class Json {
 	
 	public static Json parse(String jsonText) {
 		final ValResult<Json> r =  _parser.parse(jsonText);
+		if (r.isSuccessful()) {
+			return r.value();
+		} else {
+			throw new RuntimeException(r.message());
+		}
+	}
+	public static Json parse(Reader jsonReader) throws IOException {
+		final ValResult<Json> r =  _parser.parse(TextReader.from(jsonReader));
+		if (r.isSuccessful()) {
+			return r.value();
+		} else {
+			throw new RuntimeException(r.message());
+		}
+	}
+	public static Json parse(InputStream jsonStream, Charset charset) throws IOException {
+		final ValResult<Json> r =  _parser.parse(TextReader.from(jsonStream, charset));
+		if (r.isSuccessful()) {
+			return r.value();
+		} else {
+			throw new RuntimeException(r.message());
+		}
+	}
+	public static Json parse(File jsonFile, Charset charset) throws IOException {
+		final ValResult<Json> r =  _parser.parse(TextReader.from(jsonFile, charset));
 		if (r.isSuccessful()) {
 			return r.value();
 		} else {
@@ -85,13 +115,25 @@ public abstract class Json {
 		throw new IllegalStateException("not istance of Array.");
 	}
 	public List<Json> arrayElements(List<Json> orElse) {
-		return orElse;
+		return isArray() ? arrayElements() : orElse;
+	}
+	public final Json arrayElement(int i) {
+		return arrayElements().get(i);
+	}
+	public final Json arrayElement(int i, Json orElse) {
+		return isArray() ? arrayElements().get(i) : orElse;
 	}
 	public Map<String, Json> objectProperties() {
 		throw new IllegalStateException("not istance of Object.");
 	}
 	public final Map<String, Json> objectProperties(Map<String, Json> orElse) {
 		return isObject() ? objectProperties() : orElse;
+	}
+	public final Json objectPropery(String name) {
+		return objectProperties().get(name);
+	}
+	public final Json objectPropery(String name, Json orElse) {
+		return isObject() ? objectProperties().get(name) : orElse;
 	}
 	public boolean isNumber() {
 		return false;

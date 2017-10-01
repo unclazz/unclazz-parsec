@@ -9,7 +9,7 @@ import org.unclazz.parsec.Parser;
 public interface ParserFactory {
 	/**
 	 * パーサーを返します。
-	 * @return
+	 * @return パーサー
 	 */
 	Parser create();
 }

@@ -16,59 +16,60 @@ public final class Mappers {
 	private static final JsonStringUnescaper _jsonString = new JsonStringUnescaper();
 	
 	/**
-	 * Java言語の文字列としてエスケープが行われたシーケンスを
-	 * それが意味することろの本当の文字列に変換します（unescapeします）。
-	 * @param value
-	 * @return
+	 * Java言語の文字列としてエスケープされているシーケンスを逆エスケープ（unescape）します。
+	 * @param value 文字列
+	 * @return 逆エスケープ後の文字列
 	 */
 	public static String javaString(String value) {
 		return _javaString.unescape(value);
 	}
 	/**
-	 * JSONの文字列としてエスケープが行われたシーケンスを
-	 * それが意味することろの本当の文字列に変換します（unescapeします）。
-	 * @param value
-	 * @return
+	 * JSONの文字列としてエスケープされているシーケンスを逆エスケープ（unescape）します。
+	 * @param value 文字列
+	 * @return 逆エスケープ後の文字列
 	 */
 	public static String jsonString(String value) {
 		return _jsonString.unescape(value);
 	}
 	/**
 	 * 文字列を整数値に変換します。
-	 * @param value
-	 * @return
+	 * @param value 文字列
+	 * @return 変換後の整数値
 	 */
 	public static Integer digits(String value) {
 		return Integer.parseInt(value);
 	}
 	/**
 	 * 文字列を8進数表記と見なして整数値に変換します。
-	 * @param value
-	 * @return
+	 * @param value 文字列
+	 * @return 変換後の整数値
 	 */
 	public static Integer octalDigits(String value) {
 		return Integer.parseInt(value, 8);
 	}
 	/**
 	 * 文字列を16進数表記と見なして整数値に変換します。
-	 * @param value
-	 * @return
+	 * @param value 文字列
+	 * @return 変換後の整数値
 	 */
 	public static Integer hexDigits(String value) {
 		return Integer.parseInt(value, 16);
 	}
 	/**
 	 * 文字列を浮動小数点数に変換します。
-	 * @param value
-	 * @return
+	 * @param value 文字列
+	 * @return 変換後の浮動小数点数値
 	 */
 	public static Double floatingPoint(String value) {
 		return Double.parseDouble(value);
 	}
 	/**
 	 * タプルの平坦化を行います。
-	 * @param value
-	 * @return
+	 * @param tuple 入れ子になったタプル
+	 * @return 平坦化されたタプル
+	 * @param <T1> 入れ子のタプルの第1要素型
+	 * @param <T2> 入れ子のタプルの第2要素型
+	 * @param <T3> タプルの第2要素型
 	 */
 	public static<T1, T2, T3> Tuple3<T1, T2, T3> flatten(Tuple2<Tuple2<T1, T2>, T3> tuple) {
 		return Tuple.of(tuple.item1().item1(), tuple.item1().item2(), tuple.item2());

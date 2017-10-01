@@ -32,6 +32,7 @@ abstract class ParserSupport{
 	 * このコンストラクタの引数で指定した文字列を返します。
 	 * この文字列はデバッグのためのログ出力のときなどに利用されます。
 	 * </p>
+	 * @param name パーサーの名前
 	 */
 	protected ParserSupport(final String name) {
 		if (name == null) {
@@ -43,7 +44,7 @@ abstract class ParserSupport{
 	
 	/**
 	 * パーサーの名前です。
-	 * @return
+	 * @return パーサーの名前
 	 */
 	protected String name() {
 		return _name;
@@ -52,14 +53,14 @@ abstract class ParserSupport{
 	/* ---------- 以下、ファクトリーメソッド ---------- */
 	/**
 	 * EOFにマッチするパーサーを返します。
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser eof() {
 		return new EofParser();
 	}
 	/**
 	 * BOFにマッチするパーサーを返します。
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser bof() {
 		return new BofParser();
@@ -67,7 +68,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字にマッチするパーサーを返します。
 	 * @param ch 文字
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser exact(char ch){
 		return new ExactCharParser(ch);
@@ -75,7 +76,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字以外にマッチするパーサーを返します。
 	 * @param ch 文字
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser except(char ch){
 		return charIn(CharClass.not(CharClass.exact(ch)));
@@ -83,7 +84,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charIn(String chs){
 		return charIn(chs.toCharArray());
@@ -91,15 +92,15 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charIn(char...chs){
 		return new CharClassParser(CharClass.anyOf(chs));
 	}
 	/**
 	 * 引数で指定した文字クラスにマッチするパーサーを返します。
-	 * @param chs 文字クラス
-	 * @return
+	 * @param clazz 文字クラス
+	 * @return パーサー
 	 */
 	protected Parser charIn(CharClass clazz){
 		return new CharClassParser(clazz);
@@ -107,7 +108,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charNotIn(String chs){
 		return charNotIn(chs.toCharArray());
@@ -115,7 +116,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字集合の補集合にマッチするパーサーを返します。
 	 * @param chs 文字集合
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charNotIn(char...chs){
 		return new CharClassParser(CharClass.not(CharClass.anyOf(chs)));
@@ -123,7 +124,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定した文字クラスの補集合にマッチするパーサーを返します。
 	 * @param clazz 文字集合
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charNotIn(CharClass clazz){
 		return new CharClassParser(CharClass.not(clazz));
@@ -132,7 +133,7 @@ abstract class ParserSupport{
 	 * 引数で指定した文字の範囲にマッチするパーサーを返します。
 	 * @param start 範囲の開始
 	 * @param end 範囲の終了
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charBetween(char start, char end){
 		return new CharClassParser(CharClass.between(start, end));
@@ -141,75 +142,75 @@ abstract class ParserSupport{
 	 * 引数で指定した文字の範囲の外側にマッチするパーサーを返します。
 	 * @param start 範囲の開始
 	 * @param end 範囲の終了
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser charNotBetween(char start, char end){
 		return new CharClassParser(CharClass.not(CharClass.between(start, end)));
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param chs
-	 * @return
+	 * @param chs 文字集合
+	 * @return パーサー
 	 */
 	protected Parser charsWhileIn(String chs) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param chs
-	 * @param min
-	 * @return
+	 * @param chs 文字集合
+	 * @param min 繰返しの最小回数
+	 * @return パーサー
 	 */
 	protected Parser charsWhileIn(String chs, int min) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), min);
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param clazz
-	 * @return
+	 * @param clazz 文字クラス
+	 * @return パーサー
 	 */
 	protected Parser charsWhileIn(CharClass clazz) {
 		return new CharsWhileInParser(clazz, 0);
 	}
 	/**
 	 * 文字集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param clazz
-	 * @param min
-	 * @return
+	 * @param clazz 文字クラス
+	 * @param min 繰返しの最小回数
+	 * @return パーサー
 	 */
 	protected Parser charsWhileIn(CharClass clazz, int min) {
 		return new CharsWhileInParser(clazz, min);
 	}
 	/**
 	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param chs
-	 * @return
+	 * @param chs 文字集合
+	 * @return パーサー
 	 */
 	protected Parser charsWhileNotIn(String chs) {
 		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), 0);
 	}
 	/**
 	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param chs
-	 * @param min
-	 * @return
+	 * @param chs 文字集合
+	 * @param min 繰返しの最小回数
+	 * @return パーサー
 	 */
 	protected Parser charsWhileNotIn(String chs, int min) {
 		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), min);
 	}
 	/**
 	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param clazz
-	 * @return
+	 * @param clazz 文字クラス
+	 * @return パーサー
 	 */
 	protected Parser charsWhileNotIn(CharClass clazz) {
 		return new CharsWhileInParser(CharClass.not(clazz), 0);
 	}
 	/**
 	 * 文字集合の補集合に属する文字が続く間パースを続けるパーサーを返します。
-	 * @param clazz
-	 * @param min
-	 * @return
+	 * @param clazz 文字クラス
+	 * @param min 繰返しの最小回数
+	 * @return パーサー
 	 */
 	protected Parser charsWhileNotIn(CharClass clazz, int min) {
 		return new CharsWhileInParser(CharClass.not(clazz), min);
@@ -217,7 +218,7 @@ abstract class ParserSupport{
 	/**
 	 * 引数で指定したキーワードにマッチするパーサーを返します。
 	 * @param keyword キーワード
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser keyword(String keyword) {
 		return new KeywordParser(keyword);
@@ -226,31 +227,33 @@ abstract class ParserSupport{
 	 * 引数で指定したキーワードにマッチするパーサーを返します。
 	 * @param keyword キーワード
 	 * @param cutIndex この添字より前までパース成功したら以降バックトラックは無効
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser keyword(String keyword, int cutIndex) {
 		return new KeywordParser(keyword, cutIndex);
 	}
 	/**
 	 * 引数で指定したキーワードにマッチするパーサーを返します。
-	 * @param keywords
-	 * @return
+	 * @param keywords 複数のキーワード
+	 * @return パーサー
 	 */
 	protected Parser keywordIn(String...keywords) {
 		return new KeywordInParser(keywords);
 	}
 	/**
 	 * 文字位置を変化させず指定した値を産生するパーサーを返します。
-	 * @param value 値
-	 * @return
+	 * @param value 任意の値
+	 * @return パーサー
+	 * @param <T> 任意の値の型
 	 */
 	protected<T> ValParser<T> produce(T value) {
 		return produce(() -> value);
 	}
 	/**
 	 * 文字位置を変化させず指定した値を産生するパーサーを返します。
-	 * @param func ファクトリー
-	 * @return
+	 * @param func 任意の値を供給する関数
+	 * @return パーサー
+	 * @param <T> 関数により供給されるパーサーの読み取り結果型
 	 */
 	protected<T> ValParser<T> produce(Supplier<T> func) {
 		return new ProduceParser<>(func);
@@ -258,8 +261,8 @@ abstract class ParserSupport{
 	/**
 	 * パーサーが実際に必要になったときにこれを生成してパースを行う遅延初期化パーサーを返します。
 	 * <p>同一のファクトリーにより生成されたインスタンスが存在する場合はそのインスタンスが返されます。</p>
-	 * @param func ファクトリー
-	 * @return
+	 * @param func パーサーのファクトリー関数
+	 * @return パーサー
 	 */
 	protected Parser lazy(ParserFactory func) {
 		return LazyParser.getInstance(func);
@@ -267,54 +270,58 @@ abstract class ParserSupport{
 	/**
 	 * パーサーが実際に必要になったときにこれを生成してパースを行う遅延初期化パーサーを返します。
 	 * <p>同一のファクトリーにより生成されたインスタンスが存在する場合はそのインスタンスが返されます。</p>
-	 * @param func ファクトリー
-	 * @return
+	 * @param func パーサーのファクトリー関数
+	 * @return パーサー
+	 * @param <T> ファクトリー関数により生成されるパーサーの読み取り結果型
 	 */
 	protected<T> ValParser<T> lazy(ValParserFactory<T> func) {
 		return LazyValParser.getInstance(func);
 	}
 	/**
 	 * 肯定先読みを行うパーサーを返します。
-	 * @param original
-	 * @return
+	 * @param original 先読みに使用するパーサー
+	 * @return パーサー
 	 */
 	protected Parser lookahead(Parser original) {
 		return new LookaheadParser(original);
 	}
 	/**
 	 * 肯定先読みを行うパーサーを返します。
-	 * @param original
-	 * @return
+	 * @param original 先読みに使用するパーサー
+	 * @return パーサー
+	 * @param <T> 元のパーサーの読み取り結果型
 	 */
 	protected<T> Parser lookahead(ValParser<T> original) {
 		return new LookaheadParser(original.unval());
 	}
 	/**
 	 * パーサーの成否を反転させるパーサーを返します。
-	 * @param original
-	 * @return
-	 */
-	/**
-	 * パーサーの成否を反転させるパーサーを返します。
-	 * @param original
-	 * @return
+	 * @param original 元のパーサー
+	 * @return パーサー
 	 */
 	protected Parser not(Parser original) {
 		return new NotParser(original);
 	}
+	/**
+	 * パーサーの成否を反転させるパーサーを返します。
+	 * @param original 元のパーサー
+	 * @return パーサー
+	 * @param <T> 元のパーサーの読み取り結果型
+	 */
 	protected<T> Parser not(ValParser<T> original) {
 		return new NotParser(original.unval());
 	}
 	/**
 	 * 0個以上の空白にマッチするパーサーを返します。
-	 * @return
+	 * @return パーサー
 	 */
 	protected Parser space() {
 		return new SpaceParser(0);
 	}
 	/**
 	 * {@code min}個以上の空白にマッチするパーサーを返します。
-	 * @return
+	 * @param min 繰返しの最小回数
+	 * @return パーサー
 	 */
 	protected Parser space(int min) {
 		return new SpaceParser(min);

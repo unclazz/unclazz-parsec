@@ -15,15 +15,15 @@ public final class Result extends ResultCore {
 	}
 	
 	/**
-	 * パース開始時の文字位置です。
-	 * @return 
+	 * パース開始時の文字位置（パースしたシーケンスの最初の文字の文字位置）です。
+	 * @return 文字位置
 	 */
 	public CharPosition start() {
 		return _start;
 	}
 	/**
-	 * パース終了時の文字位置です。
-	 * @return
+	 * パース終了時の文字位置（パースしたシーケンスの最後の文字の次の文字位置）です。
+	 * @return 文字位置
 	 */
 	public CharPosition end() {
 		return _end;
@@ -34,15 +34,17 @@ public final class Result extends ResultCore {
 	}
 	/**
 	 * 値を紐付け{@link ValParser}のパース結果を表すオブジェクトに変換します。
-	 * @param value 
-	 * @return
+	 * @param value 任意の値
+	 * @return 値を持つパース結果オブジェクト
+	 * @param <T> 読み取り結果型
 	 */
 	public<T> ValResult<T> attachValue(T value) {
 		return new ValResult<>(isSuccessful(), value, message(), canBacktrack(), _start, _end);
 	}
 	/**
 	 * 型情報だけを紐付け{@link ValParser}のパース結果を表すオブジェクトに変換します。
-	 * @return
+	 * @return 値を持つパース結果オブジェクト
+	 * @param <T> 読み取り結果型
 	 */
 	public<T> ValResult<T> attachValue() {
 		return new ValResult<>(isSuccessful(), null, message(), canBacktrack(), _start, _end);

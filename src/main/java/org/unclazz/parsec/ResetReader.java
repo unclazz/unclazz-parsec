@@ -47,7 +47,7 @@ class ResetReader extends PrefixReader {
 	/**
 	 * 直近マークした文字位置から現在の文字位置の1つ前までの文字列をキャプチャします。
 	 * @param unmark マーク解除も同時に行う場合{@code true}
-	 * @return
+	 * @return キャプチャした文字列
 	 */
 	public final String capture(boolean unmark) {
 		if (_marked) {
@@ -67,7 +67,7 @@ class ResetReader extends PrefixReader {
 		return capture(false);
 	}
 	@Override
-	public int readOne() throws IOException {
+	protected final int readOne() throws IOException {
 		final int ch = super.readOne();
 		if (_marked && ch != -1) _backup.push((char) ch);
 		return ch;
@@ -81,7 +81,7 @@ class ResetReader extends PrefixReader {
 	}
 	/**
 	 * 直近マークした位置まで文字位置を戻します。
-	 * @param unmark
+	 * @param unmark マーク解除も同時に行う場合{@code true}
 	 */
 	public final void reset(boolean unmark) {
 		if (_marked) {

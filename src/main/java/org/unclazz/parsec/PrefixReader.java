@@ -26,7 +26,7 @@ class PrefixReader extends AbstractReader {
 		_mainReader = new PeekReader(main);
 	}
 	@Override
-	protected Closeable closable() {
+	protected final Closeable closable() {
 		return _mainReader;
 	}
 	@Override
@@ -34,7 +34,7 @@ class PrefixReader extends AbstractReader {
 		return _prefixReader.noRemaining() ? _mainReader.read() : _prefixReader.read();
 	}
 	@Override
-	public int peek() {
+	public final int peek() {
 		return _prefixReader.noRemaining() ? _mainReader.peek() : _prefixReader.peek();
 	}
 	/**
@@ -42,7 +42,7 @@ class PrefixReader extends AbstractReader {
 	 * @param position 文字位置
 	 * @param prefix データソースの先頭に連結するシーケンス
 	 */
-	protected void reattach(CharPosition position, char[] prefix) {
+	protected final void reattach(CharPosition position, char[] prefix) {
 		position(position);
 		_prefixReader = _prefixReader.prepend(prefix);
 	}
