@@ -67,7 +67,7 @@ class ResetReader extends PrefixReader {
 		return capture(false);
 	}
 	@Override
-	public int readOne() throws IOException {
+	protected final int readOne() throws IOException {
 		final int ch = super.readOne();
 		if (_marked && ch != -1) _backup.push((char) ch);
 		return ch;
