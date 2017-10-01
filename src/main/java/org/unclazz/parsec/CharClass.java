@@ -6,41 +6,41 @@ package org.unclazz.parsec;
 public abstract class CharClass {
 	/**
 	 * 開始位置と終了位置で表される文字クラスを返します。
-	 * @param start
-	 * @param end
-	 * @return
+	 * @param start 開始位置の文字
+	 * @param end 終了位置の文字
+	 * @return 文字クラス
 	 */
 	public static CharClass between(char start, char end) {
 		return new CharRangeCharClass(new CharRange[]{ new CharRange(start, end) });
 	}
 	/**
 	 * まさにその1文字を表す文字クラスを返します。
-	 * @param ch
-	 * @return
+	 * @param ch 任意の1文字
+	 * @return 文字クラス
 	 */
 	public static CharClass exact(char ch) {
 		return new ExactCharCharClass(ch);
 	}
 	/**
 	 * 文字集合からなる文字クラスを返します。
-	 * @param cs
-	 * @return
+	 * @param cs 文字集合
+	 * @return 文字クラス
 	 */
 	public static CharClass anyOf(char...cs) {
 		return new CharRangeCharClass(cs);
 	}
 	/**
 	 * 文字集合からなる文字クラスを返します。
-	 * @param cs
-	 * @return
+	 * @param cs 文字集合
+	 * @return 文字クラス
 	 */
 	public static CharClass anyOf(String cs) {
 		return new CharRangeCharClass(cs.toCharArray());
 	}
 	/**
 	 * 補集合となる文字クラスを返します。
-	 * @param clazz
-	 * @return
+	 * @param clazz 元の文字クラス
+	 * @return 文字クラス
 	 */
 	public static CharClass not(CharClass clazz) {
 		return new ComplementCharClass(clazz);
@@ -56,7 +56,7 @@ public abstract class CharClass {
 	
 	/**
 	 * 改行の文字クラスです。
-	 * @return
+	 * @return 文字クラス
 	 */
 	public static CharClass newline() {
 		if (_newline == null) {
@@ -66,7 +66,7 @@ public abstract class CharClass {
 	}
 	/**
 	 * {@code [A-Za-z]}の文字クラスです。
-	 * @return
+	 * @return 文字クラス
 	 */
 	public static CharClass alphabetic() {
 		if (_alphabetic == null) {
@@ -76,7 +76,7 @@ public abstract class CharClass {
 	}
 	/**
 	 * {@code [0-9]}の文字クラスです。
-	 * @return
+	 * @return 文字クラス
 	 */
 	public static CharClass numeric() {
 		if (_numeric == null) {
@@ -86,7 +86,7 @@ public abstract class CharClass {
 	}
 	/**
 	 * {@code [0-9A-Za-z]}の文字クラスです。
-	 * @return
+	 * @return 文字クラス
 	 */
 	public static CharClass alphanumeric() {
 		if (_alphanumeric == null) {
@@ -96,7 +96,7 @@ public abstract class CharClass {
 	}
 	/**
 	 * {@code [0-9A-Fa-f]}の文字クラスです。
-	 * @return
+	 * @return 文字クラス
 	 */
 	public static CharClass hexDigit() {
 		if (_hexDigit == null) {
@@ -105,8 +105,8 @@ public abstract class CharClass {
 		return _hexDigit;
 	}
 	/**
-	 * 制御文字（コードポイント0から31と127）の文字クラスです。
-	 * @return
+	 * 制御文字（コードポイント{@code 0}から{@code 31}と{@code 127}）の文字クラスです。
+	 * @return 文字クラス
 	 */
 	public static CharClass control() {
 		if (_control == null) {
@@ -115,8 +115,8 @@ public abstract class CharClass {
 		return _control;
 	}
 	/**
-	 * 制御文字と空白文字（コードポイント31）の文字クラスです。
-	 * @return
+	 * 制御文字と空白文字（コードポイント{@code 32}）の文字クラスです。
+	 * @return 文字クラス
 	 */
 	public static CharClass spaceAndControl() {
 		if (_spaceAndControl == null) {
@@ -127,23 +127,23 @@ public abstract class CharClass {
 	
 	/**
 	 * 文字が文字クラスに属しているかどうかを判定します。
-	 * @param ch
-	 * @return
+	 * @param ch 任意の文字
+	 * @return 文字クラス
 	 */
 	public abstract boolean contains(int ch);
 	
 	/**
 	 * 文字クラスを合成します。
-	 * @param other
-	 * @return
+	 * @param other 別の文字クラス
+	 * @return 文字クラス
 	 */
 	public CharClass union(CharClass other) {
 		return new UnionCharClass(this, other);
 	}
 	/**
 	 * 文字クラスにメンバーを追加します。
-	 * @param ch
-	 * @return
+	 * @param ch 任意の1文字
+	 * @return 文字クラス
 	 */
 	public CharClass plus(char ch) {
 		if (contains(ch)) return this;
