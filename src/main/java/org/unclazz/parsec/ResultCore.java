@@ -35,11 +35,11 @@ public class ResultCore extends ResultCoreSupport {
 	 * @param end
 	 * @return
 	 */
-	public Result attachPosition(CharPosition start, CharPosition end) {
+	public final Result attachPosition(CharPosition start, CharPosition end) {
 		return new Result(isSuccessful(), message(), canBacktrack(), start, end);
 	}
 	/**
-	 * 直近の{@link #or(ValResultCore)}を起点とするバックトラックの可否を設定します。
+	 * 直近の{@link Parser#or(Parser)}を起点とするバックトラックの可否を設定します。
 	 * @param yesNo
 	 * @return
 	 */
@@ -50,7 +50,7 @@ public class ResultCore extends ResultCoreSupport {
 	 * このオブジェクトが成功を表すものである場合アクションを実行します。
 	 * @param action
 	 */
-	public void ifSuccessful(Runnable action) {
+	public final void ifSuccessful(Runnable action) {
 		if (isSuccessful()) action.run();
 	}
 	/**
@@ -58,7 +58,7 @@ public class ResultCore extends ResultCoreSupport {
 	 * @param action
 	 * @param orElse
 	 */
-	public void ifSuccessful(Runnable action, Consumer<String> orElse) {
+	public final void ifSuccessful(Runnable action, Consumer<String> orElse) {
 		if (isSuccessful()) action.run();
 		else orElse.accept(message());
 	}
@@ -66,7 +66,7 @@ public class ResultCore extends ResultCoreSupport {
 	 * このオブジェクトが失敗を表すものである場合アクションを実行します。
 	 * @param action
 	 */
-	public void ifFailed(Consumer<String> action) {
+	public final void ifFailed(Consumer<String> action) {
 		if (!isSuccessful()) action.accept(message());
 	}
 }
