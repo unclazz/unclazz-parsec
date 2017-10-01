@@ -38,7 +38,7 @@ public class ValResultCore<T> extends ResultCoreSupport {
 	 * パーサによりキャプチャされた値です。
 	 * @return
 	 */
-	public T value() {
+	public final T value() {
 		return _value;
 	}
 	/**
@@ -56,11 +56,11 @@ public class ValResultCore<T> extends ResultCoreSupport {
 	 * @param end
 	 * @return
 	 */
-	public ValResult<T> attachPosition(CharPosition start, CharPosition end) {
+	public final ValResult<T> attachPosition(CharPosition start, CharPosition end) {
 		return new ValResult<>(isSuccessful(), _value, message(), canBacktrack(), start, end);
 	}
 	/**
-	 * 直近の{@link ValParser#or(ValResultCore)}を起点とするバックトラックの可否を設定します。
+	 * 直近の{@link ValParser#or(ValParser)}を起点とするバックトラックの可否を設定します。
 	 * @param yesNo
 	 * @return
 	 */
@@ -87,7 +87,7 @@ public class ValResultCore<T> extends ResultCoreSupport {
 	 * このオブジェクトが失敗を表すものである場合アクションを実行します。
 	 * @param action
 	 */
-	public void ifFailed(Consumer<String> action) {
+	public final void ifFailed(Consumer<String> action) {
 		if (!isSuccessful()) action.accept(message());
 	}
 	/**
