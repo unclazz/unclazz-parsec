@@ -19,6 +19,7 @@ public final class TextReader extends ResetReader {
 	 * 別のリーダーをラップした新しいインスタンスを返します。
 	 */
 	public static TextReader from(Reader reader) {
+		if (reader instanceof TextReader) return (TextReader) reader;
 		return new TextReader(reader);
 	}
 	/**
