@@ -21,8 +21,9 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 指定された要素を内容とするリストを返します。
-	 * @param items
-	 * @return
+	 * @param items リストの要素
+	 * @return リスト
+	 * @param <T> リストの要素型
 	 */
 	@SuppressWarnings("unchecked")
 	@SafeVarargs
@@ -33,8 +34,9 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 指定された要素を内容とするリストを返します。
-	 * @param items
-	 * @return
+	 * @param items リストの要素
+	 * @return リスト
+	 * @param <T> リストの要素型
 	 */
 	@SuppressWarnings("unchecked")
 	public static<T> ReadOnlyList<T> of(Collection<? extends T> items){
@@ -59,8 +61,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 末尾に要素を加えた新しいリストを返します。
-	 * @param item
-	 * @return
+	 * @param item 新しい要素
+	 * @return 新しいリスト
 	 */
 	public ReadOnlyList<T> append(T item){
 		if (size() == 0) return of(item);
@@ -70,8 +72,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 先頭に要素を加えた新しいリストを返します。
-	 * @param item
-	 * @return
+	 * @param item 新しい要素
+	 * @return 新しいリスト
 	 */
 	public ReadOnlyList<T> prepend(T item){
 		if (size() == 0) return of(item);
@@ -83,8 +85,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 末尾に要素を加えた新しいリストを返します。
-	 * @param items
-	 * @return
+	 * @param items 新しい要素
+	 * @return 新しいリスト
 	 */
 	public ReadOnlyList<T> appendAll(@SuppressWarnings("unchecked") T...items){
 		if (size() == 0) return new ReadOnlyList<>(items);
@@ -97,8 +99,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 末尾に要素を加えた新しいリストを返します。
-	 * @param items
-	 * @return
+	 * @param items 新しい要素
+	 * @return 新しいリスト
 	 */
 	@SuppressWarnings("unchecked")
 	public ReadOnlyList<T> appendAll(Collection<? extends T> items){
@@ -106,8 +108,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 先頭に要素を加えた新しいリストを返します。
-	 * @param items
-	 * @return
+	 * @param items 新しい要素
+	 * @return 新しいリスト
 	 */
 	public ReadOnlyList<T> prependAll(@SuppressWarnings("unchecked") T...items){
 		if (size() == 0) return new ReadOnlyList<>(items);
@@ -120,8 +122,8 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	}
 	/**
 	 * 先頭に要素を加えた新しいリストを返します。
-	 * @param items
-	 * @return
+	 * @param items 新しい要素
+	 * @return 新しいリスト
 	 */
 	@SuppressWarnings("unchecked")
 	public ReadOnlyList<T> prependAll(Collection<? extends T> items){
