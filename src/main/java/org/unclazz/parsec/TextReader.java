@@ -21,6 +21,7 @@ public final class TextReader extends ResetReader {
 	 * @return 新しいリーダー
 	 */
 	public static TextReader from(Reader reader) {
+		ParsecUtility.mustNotBeNull("reader", reader);
 		if (reader instanceof TextReader) return (TextReader) reader;
 		return new TextReader(reader);
 	}
@@ -30,6 +31,7 @@ public final class TextReader extends ResetReader {
 	 * @return 新しいリーダー
 	 */
 	public static TextReader from(String text) {
+		ParsecUtility.mustNotBeNull("text", text);
 		return from(new StringReader(text));
 	}
 	/**
@@ -40,6 +42,8 @@ public final class TextReader extends ResetReader {
 	 * @throws FileNotFoundException ファイルが存在しない場合
 	 */
 	public static TextReader from(File file, Charset charset) throws FileNotFoundException {
+		ParsecUtility.mustNotBeNull("file", file);
+		ParsecUtility.mustNotBeNull("charset", charset);
 		return from(new FileInputStream(file), charset);
 	}
 	/**
@@ -49,6 +53,8 @@ public final class TextReader extends ResetReader {
 	 * @return 新しいリーダー
 	 */
 	public static TextReader from(InputStream stream, Charset charset) {
+		ParsecUtility.mustNotBeNull("stream", stream);
+		ParsecUtility.mustNotBeNull("charset", charset);
 		return from(new BufferedReader(new InputStreamReader(stream, charset)));
 	}
 	
