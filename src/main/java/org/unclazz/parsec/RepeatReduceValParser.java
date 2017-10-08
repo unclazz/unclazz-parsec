@@ -34,15 +34,20 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 		
         // 予め指定された回数のパースを試みる
 		for (int i = 1; i <= _repConf.maximum; i++) {
+			if (src.noRemaining() && i <= _repConf.minimal) {
+				return failure("EOF has been reached.");
+			}
+			
             // min ＜ ループ回数 ならリセットのための準備
-            if (_repConf.breakable && _repConf.minimal < i) src.mark();
+			final boolean marked = _repConf.breakable && _repConf.minimal < i;
+            if (marked) src.mark();
 			
             // ループが2回目 かつ セパレーターのパーサーが指定されている場合
             if (1 < i && _repConf.separator != null) {
                 // セパレーターのトークンのパース
                 final Result sepResult = _repConf.separator.parse(ctx);
                 if (!sepResult.isSuccessful()) {
-                    if (_repConf.breakable && _repConf.minimal < i) {
+                    if (marked) {
                         // min ＜ ループ回数 なら失敗とせずリセットしてループを抜ける
                         src.reset(true);
                         break;
@@ -53,7 +58,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
 
             final ValResult<T> mainResult = _original.parse(ctx);
             if (!mainResult.isSuccessful()) {
-                if (_repConf.breakable && _repConf.minimal < i) {
+                if (marked) {
                     // min ＜ ループ回数 なら失敗とせずリセットしてループを抜ける
                     src.reset(true);
                     break;
@@ -65,7 +70,7 @@ class RepeatReduceValParser<T,U,V> extends ValParser<V> {
             acc = _redConf.accumulator.apply(acc, mainResult.value());
 
             // min ＜ ループ回数 ならリセットのための準備を解除
-            if (_repConf.breakable && _repConf.minimal < i) src.unmark();
+            if (marked) src.unmark();
 		}
 		
 		return success(_redConf.resultSelector.apply(acc));
