@@ -13,11 +13,11 @@ final class CsvParser extends ValParser<Csv> {
 		final Parser quote = exact('"');
 		final Parser crlf = keyword("\r\n").or(exact('\n')).or(exact('\r'));
 		final Parser escape = quote.then(quote);
-		final ValParser<Cell> cellValue = except('"').or(escape).repMin(1).map(a -> Cell.of(a, true));
-		final ValParser<Cell> cellNoQuote = charNotIn('"', ',', '\r', '\n').repMin(1).map(a -> Cell.of(a));
+		final ValParser<Cell> cellValue = except('"').or(escape).rep().map(a -> Cell.of(a, true));
+		final ValParser<Cell> cellNoQuote = charNotIn('"', ',', '\r', '\n').rep().map(a -> Cell.of(a));
 		final ValParser<Cell> cell = (quote.cut().then(cellValue).then(quote)).or(cellNoQuote);
 		final ValParser<Row> row = cell.repMin(1, exact(',')).map(a -> Row.of(a),true);
-		final ValParser<Csv> rows = row.repMin(1, crlf).reduce(Csv::builder, (a, b) -> a.append(b), a -> a.build());
+		final ValParser<Csv> rows = row.rep(crlf).reduce(Csv::builder, (a, b) -> a.append(b), a -> a.build());
 		_csvContent = rows.then(space()).then(eof());
 	}
 	
