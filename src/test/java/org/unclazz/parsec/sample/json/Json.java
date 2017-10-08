@@ -72,6 +72,9 @@ public abstract class Json {
 	public static Json of(Json...values) {
 		return values.length == 0 ? _emptyArrayInstance : new JsonArray(values);
 	}
+	public static Json ofEmptyArray() {
+		return _emptyArrayInstance;
+	}
 	public static Json of(Collection<? extends Json> values) {
 		return values.isEmpty() ? _emptyArrayInstance : new JsonArray(values);
 	}
@@ -121,7 +124,7 @@ public abstract class Json {
 		return arrayElements().get(i);
 	}
 	public final Json arrayElement(int i, Json orElse) {
-		return isArray() ? arrayElements().get(i) : orElse;
+		return isArray() && i < arrayElements().size() ? arrayElements().get(i) : orElse;
 	}
 	public Map<String, Json> objectProperties() {
 		throw new IllegalStateException("not istance of Object.");
@@ -133,7 +136,7 @@ public abstract class Json {
 		return objectProperties().get(name);
 	}
 	public final Json objectPropery(String name, Json orElse) {
-		return isObject() ? objectProperties().get(name) : orElse;
+		return isObject() && objectProperties().containsKey(name) ? objectProperties().get(name) : orElse;
 	}
 	public boolean isNumber() {
 		return false;
