@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.unclazz.parsec.sample.json.Json;
 
@@ -131,6 +133,97 @@ public class JsonParserTest {
 		mustThrow(() -> j0.objectProperties(), IllegalStateException.class);
 		mustNotThrow(() -> j0.objectProperties(Collections.emptyMap()), IllegalStateException.class);
 		mustThrow(() -> j0.objectPropery("foo"), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectPropery("foo", Json.of(3)), IllegalStateException.class);
+		mustThrow(() -> j0.stringValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.stringValue("bar"), IllegalStateException.class);
+	}
+	
+	@Test
+	public void testOfJsonArray() {
+		final Json j0 = Json.of(Json.ofNull(), Json.of(false));
+		assertThat(j0.arrayElements().size(), is(2));
+		assertThat(j0.arrayElement(0).isNull(), is(true));
+		assertThat(j0.arrayElement(1).booleanValue(), is(false));
+		assertThat(j0.arrayElement(2, Json.of(1)).numberValue(), is(1.0));
+		
+		assertThat(j0.isArray(), is(true));
+		assertThat(j0.isBoolean(), is(false));
+		assertThat(j0.isNull(), is(false));
+		assertThat(j0.isNumber(), is(false));
+		assertThat(j0.isObject(), is(false));
+		assertThat(j0.isString(), is(false));
+		
+		mustNotThrow(() -> j0.arrayElement(0), IllegalStateException.class);
+		mustNotThrow(() -> j0.arrayElement(0, Json.of(1)), IllegalStateException.class);
+		mustThrow(() -> j0.arrayElements(), IllegalStateException.class);
+		mustThrow(() -> j0.booleanValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.booleanValue(false), IllegalStateException.class);
+		mustThrow(() -> j0.numberValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.numberValue(2), IllegalStateException.class);
+		mustThrow(() -> j0.objectProperties(), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectProperties(Collections.emptyMap()), IllegalStateException.class);
+		mustThrow(() -> j0.objectPropery("foo"), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectPropery("foo", Json.of(3)), IllegalStateException.class);
+		mustThrow(() -> j0.stringValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.stringValue("bar"), IllegalStateException.class);
+	}
+	
+	@Test
+	public void testOfEmptyArray() {
+		final Json j0 = Json.ofEmptyArray();
+		assertThat(j0.arrayElements().size(), is(0));
+		assertThat(j0.arrayElement(2, Json.of(1)).numberValue(), is(1.0));
+		
+		assertThat(j0.isArray(), is(true));
+		assertThat(j0.isBoolean(), is(false));
+		assertThat(j0.isNull(), is(false));
+		assertThat(j0.isNumber(), is(false));
+		assertThat(j0.isObject(), is(false));
+		assertThat(j0.isString(), is(false));
+		
+		mustNotThrow(() -> j0.arrayElement(0), IllegalStateException.class);
+		mustNotThrow(() -> j0.arrayElement(0, Json.of(1)), IllegalStateException.class);
+		mustThrow(() -> j0.arrayElements(), IllegalStateException.class);
+		mustThrow(() -> j0.booleanValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.booleanValue(false), IllegalStateException.class);
+		mustThrow(() -> j0.numberValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.numberValue(2), IllegalStateException.class);
+		mustThrow(() -> j0.objectProperties(), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectProperties(Collections.emptyMap()), IllegalStateException.class);
+		mustThrow(() -> j0.objectPropery("foo"), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectPropery("foo", Json.of(3)), IllegalStateException.class);
+		mustThrow(() -> j0.stringValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.stringValue("bar"), IllegalStateException.class);
+	}
+	
+	@Test
+	public void testOfMap() {
+		final Map<String,Json> props = new HashMap<>();
+		props.put("foo", Json.of(1.0));
+		props.put("bar", Json.of("baz"));
+		final Json j0 = Json.of(props);
+		assertThat(j0.objectProperties().size(), is(2));
+		assertThat(j0.objectPropery("foo").numberValue(), is(1.0));
+		assertThat(j0.objectPropery("bar").stringValue(), is("baz"));
+		assertThat(j0.objectPropery("baz", Json.of(false)).booleanValue(), is(false));
+		
+		assertThat(j0.isArray(), is(false));
+		assertThat(j0.isBoolean(), is(false));
+		assertThat(j0.isNull(), is(false));
+		assertThat(j0.isNumber(), is(false));
+		assertThat(j0.isObject(), is(true));
+		assertThat(j0.isString(), is(false));
+		
+		mustThrow(() -> j0.arrayElement(0), IllegalStateException.class);
+		mustNotThrow(() -> j0.arrayElement(0, Json.of(1)), IllegalStateException.class);
+		mustThrow(() -> j0.arrayElements(), IllegalStateException.class);
+		mustThrow(() -> j0.booleanValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.booleanValue(false), IllegalStateException.class);
+		mustThrow(() -> j0.numberValue(), IllegalStateException.class);
+		mustNotThrow(() -> j0.numberValue(2), IllegalStateException.class);
+		mustThrow(() -> j0.objectProperties(), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectProperties(Collections.emptyMap()), IllegalStateException.class);
+		mustNotThrow(() -> j0.objectPropery("foo"), IllegalStateException.class);
 		mustNotThrow(() -> j0.objectPropery("foo", Json.of(3)), IllegalStateException.class);
 		mustThrow(() -> j0.stringValue(), IllegalStateException.class);
 		mustNotThrow(() -> j0.stringValue("bar"), IllegalStateException.class);
