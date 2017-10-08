@@ -9,7 +9,7 @@ import java.io.Reader;
  */
 class PrefixReader extends AbstractReader {
 
-	private CharArrayReader _prefixReader;
+	private CharArrayReader _prefixCharArray;
 	private final PeekReader _mainReader;
 	
 	PrefixReader(CharPosition p, char[] prefix, Reader main){
@@ -17,12 +17,12 @@ class PrefixReader extends AbstractReader {
 		ParsecUtility.mustNotBeNull("prefix", prefix);
 		ParsecUtility.mustNotBeNull("main", main);
 		position(p);
-		_prefixReader = CharArrayReader.from(prefix);
+		_prefixCharArray = CharArrayReader.from(prefix);
 		_mainReader = new PeekReader(main);
 	}
 	PrefixReader(Reader main){
 		ParsecUtility.mustNotBeNull("main", main);
-		_prefixReader = CharArrayReader.from(new char[0]);
+		_prefixCharArray = CharArrayReader.from(new char[0]);
 		_mainReader = new PeekReader(main);
 	}
 	@Override
@@ -31,11 +31,11 @@ class PrefixReader extends AbstractReader {
 	}
 	@Override
 	protected int readOne() throws IOException {
-		return _prefixReader.noRemaining() ? _mainReader.read() : _prefixReader.read();
+		return _prefixCharArray.noRemaining() ? _mainReader.read() : _prefixCharArray.read();
 	}
 	@Override
 	public final int peek() {
-		return _prefixReader.noRemaining() ? _mainReader.peek() : _prefixReader.peek();
+		return _prefixCharArray.noRemaining() ? _mainReader.peek() : _prefixCharArray.peek();
 	}
 	/**
 	 * 文字位置を設定し直し、データソースの先頭にシーケンスを連結します。
@@ -44,6 +44,6 @@ class PrefixReader extends AbstractReader {
 	 */
 	protected final void reattach(CharPosition position, char[] prefix) {
 		position(position);
-		_prefixReader = _prefixReader.prepend(prefix);
+		_prefixCharArray = _prefixCharArray.prepend(prefix);
 	}
 }
