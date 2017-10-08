@@ -97,4 +97,13 @@ final class CharArrayReader {
 		System.arraycopy(_items, _index, arr, 0, restLength);
 		return arr;
 	}
+	@Override
+	public String toString() {
+		final StringBuilder buf = new StringBuilder().append('[');
+		for (int i = _index; i < _items.length; i ++) {
+			if (i > _index) buf.append(',').append(' ');
+			buf.append(ParsecUtility.charToString(_items[i]));
+		}
+		return buf.append(']').toString();
+	}
 }
