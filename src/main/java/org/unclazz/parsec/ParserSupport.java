@@ -46,7 +46,7 @@ abstract class ParserSupport{
 	 * パーサーの名前です。
 	 * @return パーサーの名前
 	 */
-	protected String name() {
+	protected final String name() {
 		return _name;
 	}
 	
@@ -55,14 +55,14 @@ abstract class ParserSupport{
 	 * EOFにマッチするパーサーを返します。
 	 * @return パーサー
 	 */
-	protected Parser eof() {
+	protected final Parser eof() {
 		return new EofParser();
 	}
 	/**
 	 * BOFにマッチするパーサーを返します。
 	 * @return パーサー
 	 */
-	protected Parser bof() {
+	protected final Parser bof() {
 		return new BofParser();
 	}
 	/**
@@ -70,7 +70,7 @@ abstract class ParserSupport{
 	 * @param ch 文字
 	 * @return パーサー
 	 */
-	protected Parser exact(char ch){
+	protected final Parser exact(char ch){
 		return new ExactCharParser(ch);
 	}
 	/**
@@ -78,7 +78,7 @@ abstract class ParserSupport{
 	 * @param ch 文字
 	 * @return パーサー
 	 */
-	protected Parser except(char ch){
+	protected final Parser except(char ch){
 		return charIn(CharClass.not(CharClass.exact(ch)));
 	}
 	/**
@@ -86,7 +86,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charIn(String chs){
+	protected final Parser charIn(String chs){
 		return charIn(chs.toCharArray());
 	}
 	/**
@@ -94,7 +94,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charIn(char...chs){
+	protected final Parser charIn(char...chs){
 		return new CharClassParser(CharClass.anyOf(chs));
 	}
 	/**
@@ -102,7 +102,7 @@ abstract class ParserSupport{
 	 * @param clazz 文字クラス
 	 * @return パーサー
 	 */
-	protected Parser charIn(CharClass clazz){
+	protected final Parser charIn(CharClass clazz){
 		return new CharClassParser(clazz);
 	}
 	/**
@@ -110,7 +110,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charNotIn(String chs){
+	protected final Parser charNotIn(String chs){
 		return charNotIn(chs.toCharArray());
 	}
 	/**
@@ -118,7 +118,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charNotIn(char...chs){
+	protected final Parser charNotIn(char...chs){
 		return new CharClassParser(CharClass.not(CharClass.anyOf(chs)));
 	}
 	/**
@@ -126,7 +126,7 @@ abstract class ParserSupport{
 	 * @param clazz 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charNotIn(CharClass clazz){
+	protected final Parser charNotIn(CharClass clazz){
 		return new CharClassParser(CharClass.not(clazz));
 	}
 	/**
@@ -135,7 +135,7 @@ abstract class ParserSupport{
 	 * @param end 範囲の終了
 	 * @return パーサー
 	 */
-	protected Parser charBetween(char start, char end){
+	protected final Parser charBetween(char start, char end){
 		return new CharClassParser(CharClass.between(start, end));
 	}
 	/**
@@ -144,7 +144,7 @@ abstract class ParserSupport{
 	 * @param end 範囲の終了
 	 * @return パーサー
 	 */
-	protected Parser charNotBetween(char start, char end){
+	protected final Parser charNotBetween(char start, char end){
 		return new CharClassParser(CharClass.not(CharClass.between(start, end)));
 	}
 	/**
@@ -152,7 +152,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charsWhileIn(String chs) {
+	protected final Parser charsWhileIn(String chs) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), 0);
 	}
 	/**
@@ -161,7 +161,7 @@ abstract class ParserSupport{
 	 * @param min 繰返しの最小回数
 	 * @return パーサー
 	 */
-	protected Parser charsWhileIn(String chs, int min) {
+	protected final Parser charsWhileIn(String chs, int min) {
 		return new CharsWhileInParser(CharClass.anyOf(chs.toCharArray()), min);
 	}
 	/**
@@ -169,7 +169,7 @@ abstract class ParserSupport{
 	 * @param clazz 文字クラス
 	 * @return パーサー
 	 */
-	protected Parser charsWhileIn(CharClass clazz) {
+	protected final Parser charsWhileIn(CharClass clazz) {
 		return new CharsWhileInParser(clazz, 0);
 	}
 	/**
@@ -178,7 +178,7 @@ abstract class ParserSupport{
 	 * @param min 繰返しの最小回数
 	 * @return パーサー
 	 */
-	protected Parser charsWhileIn(CharClass clazz, int min) {
+	protected final Parser charsWhileIn(CharClass clazz, int min) {
 		return new CharsWhileInParser(clazz, min);
 	}
 	/**
@@ -186,7 +186,7 @@ abstract class ParserSupport{
 	 * @param chs 文字集合
 	 * @return パーサー
 	 */
-	protected Parser charsWhileNotIn(String chs) {
+	protected final Parser charsWhileNotIn(String chs) {
 		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), 0);
 	}
 	/**
@@ -195,7 +195,7 @@ abstract class ParserSupport{
 	 * @param min 繰返しの最小回数
 	 * @return パーサー
 	 */
-	protected Parser charsWhileNotIn(String chs, int min) {
+	protected final Parser charsWhileNotIn(String chs, int min) {
 		return new CharsWhileInParser(CharClass.not(CharClass.anyOf(chs.toCharArray())), min);
 	}
 	/**
@@ -203,7 +203,7 @@ abstract class ParserSupport{
 	 * @param clazz 文字クラス
 	 * @return パーサー
 	 */
-	protected Parser charsWhileNotIn(CharClass clazz) {
+	protected final Parser charsWhileNotIn(CharClass clazz) {
 		return new CharsWhileInParser(CharClass.not(clazz), 0);
 	}
 	/**
@@ -212,7 +212,7 @@ abstract class ParserSupport{
 	 * @param min 繰返しの最小回数
 	 * @return パーサー
 	 */
-	protected Parser charsWhileNotIn(CharClass clazz, int min) {
+	protected final Parser charsWhileNotIn(CharClass clazz, int min) {
 		return new CharsWhileInParser(CharClass.not(clazz), min);
 	}
 	/**
@@ -220,7 +220,7 @@ abstract class ParserSupport{
 	 * @param keyword キーワード
 	 * @return パーサー
 	 */
-	protected Parser keyword(String keyword) {
+	protected final Parser keyword(String keyword) {
 		return new KeywordParser(keyword);
 	}
 	/**
@@ -229,7 +229,7 @@ abstract class ParserSupport{
 	 * @param cutIndex この添字より前までパース成功したら以降バックトラックは無効
 	 * @return パーサー
 	 */
-	protected Parser keyword(String keyword, int cutIndex) {
+	protected final Parser keyword(String keyword, int cutIndex) {
 		return new KeywordParser(keyword, cutIndex);
 	}
 	/**
@@ -237,7 +237,7 @@ abstract class ParserSupport{
 	 * @param keywords 複数のキーワード
 	 * @return パーサー
 	 */
-	protected Parser keywordIn(String...keywords) {
+	protected final Parser keywordIn(String...keywords) {
 		return new KeywordInParser(keywords);
 	}
 	/**
@@ -246,7 +246,7 @@ abstract class ParserSupport{
 	 * @return パーサー
 	 * @param <T> 任意の値の型
 	 */
-	protected<T> ValParser<T> produce(T value) {
+	protected final <T> ValParser<T> produce(T value) {
 		return produce(() -> value);
 	}
 	/**
@@ -255,7 +255,7 @@ abstract class ParserSupport{
 	 * @return パーサー
 	 * @param <T> 関数により供給されるパーサーの読み取り結果型
 	 */
-	protected<T> ValParser<T> produce(Supplier<T> func) {
+	protected final <T> ValParser<T> produce(Supplier<T> func) {
 		return new ProduceParser<>(func);
 	}
 	/**
@@ -264,7 +264,7 @@ abstract class ParserSupport{
 	 * @param func パーサーのファクトリー関数
 	 * @return パーサー
 	 */
-	protected Parser lazy(ParserFactory func) {
+	protected final Parser lazy(ParserFactory func) {
 		return LazyParser.getInstance(func);
 	}
 	/**
@@ -274,7 +274,7 @@ abstract class ParserSupport{
 	 * @return パーサー
 	 * @param <T> ファクトリー関数により生成されるパーサーの読み取り結果型
 	 */
-	protected<T> ValParser<T> lazy(ValParserFactory<T> func) {
+	protected final <T> ValParser<T> lazy(ValParserFactory<T> func) {
 		return LazyValParser.getInstance(func);
 	}
 	/**
@@ -282,7 +282,7 @@ abstract class ParserSupport{
 	 * @param original 先読みに使用するパーサー
 	 * @return パーサー
 	 */
-	protected Parser lookahead(Parser original) {
+	protected final Parser lookahead(Parser original) {
 		return new LookaheadParser(original);
 	}
 	/**
@@ -291,7 +291,7 @@ abstract class ParserSupport{
 	 * @return パーサー
 	 * @param <T> 元のパーサーの読み取り結果型
 	 */
-	protected<T> Parser lookahead(ValParser<T> original) {
+	protected final <T> Parser lookahead(ValParser<T> original) {
 		return new LookaheadParser(original.unval());
 	}
 	/**
@@ -299,7 +299,7 @@ abstract class ParserSupport{
 	 * @param original 元のパーサー
 	 * @return パーサー
 	 */
-	protected Parser not(Parser original) {
+	protected final Parser not(Parser original) {
 		return new NotParser(original);
 	}
 	/**
@@ -308,14 +308,14 @@ abstract class ParserSupport{
 	 * @return パーサー
 	 * @param <T> 元のパーサーの読み取り結果型
 	 */
-	protected<T> Parser not(ValParser<T> original) {
+	protected final <T> Parser not(ValParser<T> original) {
 		return new NotParser(original.unval());
 	}
 	/**
 	 * 0個以上の空白にマッチするパーサーを返します。
 	 * @return パーサー
 	 */
-	protected Parser space() {
+	protected final Parser space() {
 		return new SpaceParser(0);
 	}
 	/**
@@ -323,7 +323,7 @@ abstract class ParserSupport{
 	 * @param min 繰返しの最小回数
 	 * @return パーサー
 	 */
-	protected Parser space(int min) {
+	protected final Parser space(int min) {
 		return new SpaceParser(min);
 	}
 	/* ---------- 以上、ファクトリーメソッド ---------- */
