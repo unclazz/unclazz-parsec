@@ -9,9 +9,13 @@ final class ExactCharParser extends Parser {
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
-		final int ch = ctx.source().read();
-		return ch == _ch ? success() 
-				: failure("%s expected but %s found.", 
+		final TextReader src = ctx.source();
+		final int ch = src.peek();
+		if (ch == _ch) {
+			src.read();
+			return success();
+		}
+		return failure("%s expected but %s found.", 
 						ParsecUtility.charToString(_ch),
 						ParsecUtility.charToString(ch));
 	}

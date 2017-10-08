@@ -11,9 +11,13 @@ final class CharClassParser extends Parser {
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
-		final int ch = ctx.source().read();
-		return _clazz.contains(ch) ? success()
-				: failure("a member of class (%s) expected but %s found.",
+		final TextReader src = ctx.source();
+		final int ch = src.peek();
+		if (_clazz.contains(ch)) {
+			src.read();
+			return success();
+		}
+		return failure("a member of class (%s) expected but %s found.",
 						_clazz, ParsecUtility.charToString(ch));
 	}
 }
