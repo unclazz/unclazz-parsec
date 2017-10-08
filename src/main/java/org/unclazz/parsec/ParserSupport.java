@@ -72,6 +72,7 @@ abstract class ParserSupport{
 	 */
 	protected final void param(String key, Object value) {
 		if (_params == null) _params = new HashMap<>();
+		_paramsStringCache = null;
 		_params.put(key, value);
 	}
 	
