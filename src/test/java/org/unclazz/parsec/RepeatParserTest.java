@@ -59,42 +59,42 @@ public class RepeatParserTest {
 	@Test
 	public void testParseTextReader_repInt() throws IOException {
 		// Arrange
-		final Parser p_a_rep2 = Parsers.exact('a').rep(3);
+		final Parser p_a_rep3 = Parsers.exact('a').rep(3);
 		
 		// Act
-		final Result r_a_rep2_vs_abbccc = p_a_rep2.parse("abbccc");
-		final Result r_a_rep2_vs_aabccc = p_a_rep2.parse("aabccc");
-		final Result r_a_rep2_vs_aaaccc = p_a_rep2.parse("aaaccc");
-		final Result r_a_rep2_vs_aaaacc = p_a_rep2.parse("aaaacc");
+		final Result r_a_rep3_vs_abbccc = p_a_rep3.parse("abbccc");
+		final Result r_a_rep3_vs_aabccc = p_a_rep3.parse("aabccc");
+		final Result r_a_rep3_vs_aaaccc = p_a_rep3.parse("aaaccc");
+		final Result r_a_rep3_vs_aaaacc = p_a_rep3.parse("aaaacc");
 		
 		// Assert
-		assertThat(r_a_rep2_vs_abbccc.isSuccessful(), is(false));
-		assertThat(r_a_rep2_vs_abbccc.end().index(), is(2));
+		assertThat(r_a_rep3_vs_abbccc.isSuccessful(), is(false));
+		assertThat(r_a_rep3_vs_abbccc.end().index(), is(1));
 		
-		assertThat(r_a_rep2_vs_aabccc.isSuccessful(), is(false));
-		assertThat(r_a_rep2_vs_aabccc.end().index(), is(3));
+		assertThat(r_a_rep3_vs_aabccc.isSuccessful(), is(false));
+		assertThat(r_a_rep3_vs_aabccc.end().index(), is(2));
 		
-		assertThat(r_a_rep2_vs_aaaccc.isSuccessful(), is(true));
-		assertThat(r_a_rep2_vs_aaaccc.end().index(), is(3));
+		assertThat(r_a_rep3_vs_aaaccc.isSuccessful(), is(true));
+		assertThat(r_a_rep3_vs_aaaccc.end().index(), is(3));
 		
-		assertThat(r_a_rep2_vs_aaaacc.isSuccessful(), is(true));
-		assertThat(r_a_rep2_vs_aaaacc.end().index(), is(3));
+		assertThat(r_a_rep3_vs_aaaacc.isSuccessful(), is(true));
+		assertThat(r_a_rep3_vs_aaaacc.end().index(), is(3));
 	}
 
 	@Test
 	public void testParseTextReader_repIntInt() throws IOException {
 		// Arrange
-		final Parser p_a_rep2 = Parsers.exact('a').rep(2, 3);
+		final Parser p_a_rep23 = Parsers.exact('a').rep(2, 3);
 		
 		// Act
-		final Result r_a_rep23_vs_abbccc = p_a_rep2.parse("abbccc");
-		final Result r_a_rep23_vs_aabccc = p_a_rep2.parse("aabccc");
-		final Result r_a_rep23_vs_aaaccc = p_a_rep2.parse("aaaccc");
-		final Result r_a_rep23_vs_aaaacc = p_a_rep2.parse("aaaacc");
+		final Result r_a_rep23_vs_abbccc = p_a_rep23.parse("abbccc");
+		final Result r_a_rep23_vs_aabccc = p_a_rep23.parse("aabccc");
+		final Result r_a_rep23_vs_aaaccc = p_a_rep23.parse("aaaccc");
+		final Result r_a_rep23_vs_aaaacc = p_a_rep23.parse("aaaacc");
 		
 		// Assert
 		assertThat(r_a_rep23_vs_abbccc.isSuccessful(), is(false));
-		assertThat(r_a_rep23_vs_abbccc.end().index(), is(2));
+		assertThat(r_a_rep23_vs_abbccc.end().index(), is(1));
 		
 		assertThat(r_a_rep23_vs_aabccc.isSuccessful(), is(true));
 		assertThat(r_a_rep23_vs_aabccc.end().index(), is(2));
@@ -109,17 +109,17 @@ public class RepeatParserTest {
 	@Test
 	public void testParseTextReader_repIntIntParser() throws IOException {
 		// Arrange
-		final Parser p_a_rep2 = Parsers.exact('a').rep(2, 3, Parsers.exact(','));
+		final Parser p_a_rep23 = Parsers.exact('a').rep(2, 3, Parsers.exact(','));
 		
 		// Act
-		final Result r_a_rep23_vs_abbccc = p_a_rep2.parse("a,b,b,ccc");
-		final Result r_a_rep23_vs_aabccc = p_a_rep2.parse("a,a,b,ccc");
-		final Result r_a_rep23_vs_aaaccc = p_a_rep2.parse("a,a,a,ccc");
-		final Result r_a_rep23_vs_aaaacc = p_a_rep2.parse("a,a,a,acc");
+		final Result r_a_rep23_vs_abbccc = p_a_rep23.parse("a,b,b,ccc");
+		final Result r_a_rep23_vs_aabccc = p_a_rep23.parse("a,a,b,ccc");
+		final Result r_a_rep23_vs_aaaccc = p_a_rep23.parse("a,a,a,ccc");
+		final Result r_a_rep23_vs_aaaacc = p_a_rep23.parse("a,a,a,acc");
 		
 		// Assert
 		assertThat(r_a_rep23_vs_abbccc.isSuccessful(), is(false));
-		assertThat(r_a_rep23_vs_abbccc.end().index(), is(3));
+		assertThat(r_a_rep23_vs_abbccc.end().index(), is(2));
 		
 		assertThat(r_a_rep23_vs_aabccc.isSuccessful(), is(true));
 		assertThat(r_a_rep23_vs_aabccc.end().index(), is(3));
@@ -137,23 +137,23 @@ public class RepeatParserTest {
 		final Parser p_a_rep2 = Parsers.exact('a').repMin(2);
 		
 		// Act
-		final Result r_a_rep23_vs_abbccc = p_a_rep2.parse("abbccc");
-		final Result r_a_rep23_vs_aabccc = p_a_rep2.parse("aabccc");
-		final Result r_a_rep23_vs_aaaccc = p_a_rep2.parse("aaaccc");
-		final Result r_a_rep23_vs_aaaacc = p_a_rep2.parse("aaaacc");
+		final Result r_a_rep2_vs_abbccc = p_a_rep2.parse("abbccc");
+		final Result r_a_rep2_vs_aabccc = p_a_rep2.parse("aabccc");
+		final Result r_a_rep2_vs_aaaccc = p_a_rep2.parse("aaaccc");
+		final Result r_a_rep2_vs_aaaacc = p_a_rep2.parse("aaaacc");
 		
 		// Assert
-		assertThat(r_a_rep23_vs_abbccc.isSuccessful(), is(false));
-		assertThat(r_a_rep23_vs_abbccc.end().index(), is(2));
+		assertThat(r_a_rep2_vs_abbccc.isSuccessful(), is(false));
+		assertThat(r_a_rep2_vs_abbccc.end().index(), is(1));
 		
-		assertThat(r_a_rep23_vs_aabccc.isSuccessful(), is(true));
-		assertThat(r_a_rep23_vs_aabccc.end().index(), is(2));
+		assertThat(r_a_rep2_vs_aabccc.isSuccessful(), is(true));
+		assertThat(r_a_rep2_vs_aabccc.end().index(), is(2));
 		
-		assertThat(r_a_rep23_vs_aaaccc.isSuccessful(), is(true));
-		assertThat(r_a_rep23_vs_aaaccc.end().index(), is(3));
+		assertThat(r_a_rep2_vs_aaaccc.isSuccessful(), is(true));
+		assertThat(r_a_rep2_vs_aaaccc.end().index(), is(3));
 		
-		assertThat(r_a_rep23_vs_aaaacc.isSuccessful(), is(true));
-		assertThat(r_a_rep23_vs_aaaacc.end().index(), is(4));
+		assertThat(r_a_rep2_vs_aaaacc.isSuccessful(), is(true));
+		assertThat(r_a_rep2_vs_aaaacc.end().index(), is(4));
 	}
 
 }

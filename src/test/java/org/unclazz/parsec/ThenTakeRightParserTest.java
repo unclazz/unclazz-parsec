@@ -30,12 +30,12 @@ public class ThenTakeRightParserTest {
 		
 		assertThat(p_0_1_r_X12.isSuccessful(), is(false));
 		assertThat(p_0_1_r_X12.canBacktrack(), is(true));
-		assertThat(p_0_1_r_X12.end().index(), is(1));
+		assertThat(p_0_1_r_X12.end().index(), is(0));
 		assertThat(p_0_1_r_X12.value(), is(nullValue()));
 		
 		assertThat(p_0_cut_1_r_X12.isSuccessful(), is(false));
 		assertThat(p_0_cut_1_r_X12.canBacktrack(), is(true));
-		assertThat(p_0_cut_1_r_X12.end().index(), is(1));
+		assertThat(p_0_cut_1_r_X12.end().index(), is(0));
 		assertThat(p_0_cut_1_r_X12.value(), is(nullValue()));
 		
 		final ValResult<String> p_0_1_r_0X2 = p_0_1.parse("0X2");
@@ -43,12 +43,12 @@ public class ThenTakeRightParserTest {
 		
 		assertThat(p_0_1_r_0X2.isSuccessful(), is(false));
 		assertThat(p_0_1_r_0X2.canBacktrack(), is(true));
-		assertThat(p_0_1_r_0X2.end().index(), is(2));
+		assertThat(p_0_1_r_0X2.end().index(), is(1));
 		assertThat(p_0_1_r_0X2.value(), is(nullValue()));
 
 		assertThat(p_0_cut_1_r_0X2.isSuccessful(), is(false));
 		assertThat(p_0_cut_1_r_0X2.canBacktrack(), is(false));
-		assertThat(p_0_cut_1_r_0X2.end().index(), is(2));
+		assertThat(p_0_cut_1_r_0X2.end().index(), is(1));
 		assertThat(p_0_cut_1_r_0X2.value(), is(nullValue()));
 	}
 

@@ -37,7 +37,7 @@ public class OrParserTest {
 		
 		assertThat(p_0cut1_or_02_r02.isSuccessful(), is(false));
 		assertThat(p_0cut1_or_02_r02.canBacktrack(), is(true));
-		assertThat(p_0cut1_or_02_r02.end().index(), is(2));
+		assertThat(p_0cut1_or_02_r02.end().index(), is(1));
 		assertThat(p_0cut1_or_02_r02.message(), is("'1'(49) expected but '2'(50) found."));
 		
 		final Parser p_bool = Parsers.keyword("true", 1).or(Parsers.keyword("false"));
