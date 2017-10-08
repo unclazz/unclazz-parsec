@@ -243,8 +243,9 @@ public final class ReadOnlyList<T> implements Iterable<T>, List<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <U> U[] toArray(U[] a) {
-		if (a.length < _items.length) return (U[]) Arrays.copyOf(_items, _items.length); 
+		if (a.length < _items.length) return (U[]) Arrays.copyOf(_items, _items.length, a.getClass());
 		System.arraycopy(_items, 0, a, 0, _items.length);
+		if (a.length > _items.length) a[_items.length] = null;
 		return a;
 	}
 	/* ---------- 以上、List<T>インターフェースを実装するためのメンバー ---------- */
