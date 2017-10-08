@@ -1,5 +1,7 @@
 package org.unclazz.parsec;
 
+import java.util.Collection;
+
 final class ParsecUtility {
     private static final String[] code0to31 = new String[]
     {
@@ -14,6 +16,24 @@ final class ParsecUtility {
 		if (ch == -1) return "EOF";
 		if (0 <= ch && ch <= 31) return code0to31[ch];
 		return String.format("'%s'(%s)", (char) ch, ch);
+	}
+	public static String collectionToString(Collection<?> col) {
+		StringBuilder buf = null;
+		for (final Object o : col) {
+			if (buf == null) buf = new StringBuilder().append('[');
+			else buf.append(',').append(' ');
+			buf.append(o);
+		}
+		return buf == null ? "[]" : buf.append(']').toString();
+	}
+	public static String arrayToString(Object[] col) {
+		StringBuilder buf = null;
+		for (final Object o : col) {
+			if (buf == null) buf = new StringBuilder().append('[');
+			else buf.append(',').append(' ');
+			buf.append(o);
+		}
+		return buf == null ? "[]" : buf.append(']').toString();
 	}
 	public static String escapeIfControl(char ch) {
 		if (ch <= 31) return String.format("<%s>", code0to31[ch]);

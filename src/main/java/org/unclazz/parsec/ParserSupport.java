@@ -1,5 +1,10 @@
 package org.unclazz.parsec;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
@@ -13,6 +18,8 @@ import org.unclazz.parsec.util.ValParserFactory;
 abstract class ParserSupport{
 	private static final Pattern _classSuffix = Pattern.compile("Parser$");
 	private final String _name;
+	private Map<String, Object> _params;
+	private String _paramsStringCache;
 	
 	/**
 	 * 引数なしのコンストラクタです。
@@ -43,11 +50,60 @@ abstract class ParserSupport{
 	}
 	
 	/**
-	 * パーサーの名前です。
+	 * パーサーの名前です。デバッグログに使用されます。
 	 * @return パーサーの名前
 	 */
 	protected final String name() {
 		return _name;
+	}
+	
+	/**
+	 * パーサーのパラメータのマップです。デバッグログに使用されます。
+	 * @return パーサーのパラメータのマップ
+	 */
+	protected final Map<String, Object> params() {
+		if (_params == null) return Collections.emptyMap();
+		return Collections.unmodifiableMap(_params);
+	}
+	/**
+	 * パーサーのパラメータのエントリーを登録します。登録された情報はデバッグログに使用されます。
+	 * @param key キー
+	 * @param value 値
+	 */
+	protected final void param(String key, Object value) {
+		if (_params == null) _params = new HashMap<>();
+		_params.put(key, value);
+	}
+	
+	final String paramsString() {
+		if (_paramsStringCache == null) {
+			if (_params == null || _params.isEmpty()) {
+				_paramsStringCache = "";
+			} else {
+				final StringBuilder buf = new StringBuilder().append('{');
+				for (final Entry<String, Object> e : _params.entrySet()) {
+					if (buf.length() > 1) buf.append(',').append(' ');
+					buf.append(e.getKey()).append(':').append(' ')
+					.append(paramsString_toString(e.getValue()));
+				}
+				_paramsStringCache = buf.append('}').toString();
+			}
+		}
+		return _paramsStringCache;
+	}
+	
+	private String paramsString_toString(Object o) {
+		if (o == null) {
+			return "null";
+		} else if (o.getClass().isArray()) {
+			return ParsecUtility.arrayToString((Object[]) o);
+		} else if (o instanceof Collection) {
+			return ParsecUtility.collectionToString((Collection<?>) o);
+		} else if (o instanceof ParserSupport) {
+			return ((ParserSupport) o).name();
+		} else {
+			return o.toString();
+		}
 	}
 	
 	/* ---------- 以下、ファクトリーメソッド ---------- */

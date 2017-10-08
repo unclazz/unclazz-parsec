@@ -13,9 +13,12 @@ public final class RepeatParser extends Parser {
 	RepeatParser(Parser original, int min, int max, int exactly, Parser sep) {
 		ParsecUtility.mustNotBeNull("original", original);
 		_original = original;
-		_repConf = exactly == -1 
-				? RepeatConfig.range(min, max, sep)
-				: RepeatConfig.exactly(exactly, sep);
+		_repConf = exactly == -1 ? RepeatConfig.range(min, max, sep) : RepeatConfig.exactly(exactly, sep);
+				
+		param("min", min);
+		param("max", max);
+		param("exactly", exactly);
+		param("sep", sep);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ final class CharClassParser extends Parser {
 		super("CharClass");
 		ParsecUtility.mustNotBeNull("clazz", clazz);
 		_clazz = clazz;
+		param("class", clazz);
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {

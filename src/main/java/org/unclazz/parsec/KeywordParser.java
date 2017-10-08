@@ -6,15 +6,16 @@ final class KeywordParser extends Parser {
 	private final String _keyword;
 	private final int _cutIndex;
 	KeywordParser(String keyword) {
-		ParsecUtility.mustNotBeEmpty("keyword", keyword);
-		_keyword = keyword;
-		_cutIndex = -1;
+		this(keyword, -1);
 	}
 	KeywordParser(String keyword, int cutIndex) {
 		ParsecUtility.mustNotBeEmpty("keyword", keyword);
 		ParsecUtility.mustBeGreaterThanOrEqual("keyword", cutIndex, -1);
 		_keyword = keyword;
 		_cutIndex = cutIndex;
+		
+		param("keyword", keyword);
+		param("cutIndex", cutIndex);
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {

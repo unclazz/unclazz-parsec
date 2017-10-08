@@ -76,7 +76,7 @@ public abstract class Parser extends ParserSupport {
 	public Result parse(Context ctx) throws IOException{
 		final TextReader src = ctx.source();
 		final CharPosition startedOn = src.position();
-		ctx.preParse(name());
+		ctx.preParse(name(), paramsString());
 		final ResultCore core = doParse(ctx);
 		ctx.postParse(core);
 		if (core instanceof Result) return (Result) core;

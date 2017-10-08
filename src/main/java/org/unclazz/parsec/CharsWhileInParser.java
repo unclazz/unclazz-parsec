@@ -10,6 +10,8 @@ final class CharsWhileInParser extends Parser {
 		ParsecUtility.mustBeGreaterThanOrEqual("min", min, 0);
 		_clazz = clazz;
 		_min = min;
+		param("class", clazz);
+		param("min", min);
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {

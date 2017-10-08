@@ -6,7 +6,7 @@ package org.unclazz.parsec;
 final class ExactCharCharClass extends CharClass{
 	private char _ch;
 	private String _contentCache;
-	public ExactCharCharClass(char ch) {
+	ExactCharCharClass(char ch) {
 		_ch = ch;
 	}
 	@Override

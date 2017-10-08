@@ -76,7 +76,7 @@ public abstract class ValParser<T> extends ParserSupport {
 	public ValResult<T> parse(Context ctx) throws IOException{
 		final TextReader src = ctx.source();
 		final CharPosition startedOn = src.position();
-		ctx.preParse(name());
+		ctx.preParse(name(), paramsString());
 		final ValResultCore<T> core = doParse(ctx);
 		ctx.postParse(core);
 		if (core instanceof ValResult) return (ValResult<T>) core;

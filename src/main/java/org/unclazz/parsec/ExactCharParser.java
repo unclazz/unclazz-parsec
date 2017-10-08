@@ -6,6 +6,7 @@ final class ExactCharParser extends Parser {
 	private final char _ch;
 	ExactCharParser(char ch) {
 		_ch = ch;
+		param("char", ParsecUtility.charToString(ch));
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {

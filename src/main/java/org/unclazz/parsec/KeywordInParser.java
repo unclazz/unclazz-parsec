@@ -19,6 +19,8 @@ final class KeywordInParser extends Parser {
 		
 		// キーワードチェックに用いるエントリーのリストを作成
 		_entries = makeEntries(uniqAndSorteds);
+		
+		param("keywords", uniqAndSorteds);
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {

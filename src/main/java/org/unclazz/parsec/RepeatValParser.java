@@ -21,6 +21,11 @@ public final class RepeatValParser<T> extends ValParser<List<T>> {
 				? RepeatConfig.range(min, max, sep)
 				: RepeatConfig.exactly(exactly, sep);
 		_inner = new ListParser<T>(original, repConf);
+		
+		param("min", min);
+		param("max", max);
+		param("exactly", exactly);
+		param("sep", sep);
 	}
 
 	@Override

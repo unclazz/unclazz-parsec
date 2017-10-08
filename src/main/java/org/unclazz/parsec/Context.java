@@ -84,11 +84,11 @@ public final class Context {
 	public void log(String format, Object... args) {
 		if (_logging) log(makeLabel(' ').append(String.format(format, args)).toString());
 	}
-	void preParse(String parserName) throws IOException {
+	void preParse(String parserName, String paramsString) throws IOException {
 		preParse_doSkip();
 		if (!_logging) return;
 		_stack.push(parserName);
-		_logAppender.accept(makeLabel('+').toString());
+		_logAppender.accept(makeLabel('+').append(paramsString).toString());
 	}
 	private void preParse_doSkip() throws IOException {
 		if (!_autoSkip) return;
