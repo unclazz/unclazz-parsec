@@ -18,15 +18,17 @@ final class KeywordParser extends Parser {
 	}
 	@Override
 	protected ResultCore doParse(Context ctx) throws IOException {
+		final TextReader src = ctx.source();
 		for (int i = 0; i < _keyword.length(); i ++) {
 			final char expected = _keyword.charAt(i);
-			final int actual = ctx.source().read();
+			final int actual = src.peek();
 			if (expected != actual) {
 				final ResultCore rc = failure("%s expected but %s found.", 
 						ParsecUtility.charToString(expected),
 						ParsecUtility.charToString(actual));
 				return _cutIndex == -1 || i < _cutIndex ? rc : rc.allowBacktrack(false);
 			}
+			src.read();
 		}
 		return success();
 	}

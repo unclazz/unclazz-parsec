@@ -18,7 +18,7 @@ public class NotParserTest {
 		assertTrue(r_012.end().index() == 3);
 		
 		assertTrue(r_01X.isSuccessful());
-		assertTrue(r_01X.end().index() == 3);
+		assertTrue(r_01X.end().index() == 2);
 		
 		final Result r_val_012 = p_val_not.parse("012_");
 		final Result r_val_01X = p_val_not.parse("01X_");
@@ -27,7 +27,7 @@ public class NotParserTest {
 		assertTrue(r_val_012.end().index() == 3);
 		
 		assertTrue(r_val_01X.isSuccessful());
-		assertTrue(r_val_01X.end().index() == 3);
+		assertTrue(r_val_01X.end().index() == 2);
 	}
 
 }
