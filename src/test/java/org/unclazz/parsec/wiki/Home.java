@@ -342,4 +342,21 @@ public class Home {
 		}
 		assertTrue(new AssertParser().parse("check!").isSuccessful());
 	}
+	
+	@Test
+	public void list11_meansMethod() {
+		class AssertParser extends Parser {
+			@Override
+			protected ResultCore doParse(Context ctx) throws IOException {
+				ValResult<String> r = keyword("true").means("false").parse("true__");
+				
+				assertThat(r.isSuccessful(), is(true));
+				assertThat(r.value(), is("false"));//キャプチャ値はあくまでも引数で指定された値
+				assertThat(r.end().index(), is(4));//文字位置はあくまでも元のパース結果に基づく
+				
+				return success();
+			}
+		}
+		assertTrue(new AssertParser().parse("check!").isSuccessful());
+	}
 }
