@@ -300,4 +300,46 @@ public class Home {
 		}
 		assertTrue(new AssertParser().parse("check!").isSuccessful());
 	}
+	
+	@Test
+	public void list10_cutMethod() {
+		class AssertParser extends Parser {
+			@Override
+			protected ResultCore doParse(Context ctx) throws IOException {
+				// ケース1： もっともプリミティブなOR演算
+				// → バックトラックが効いてしまい、事実ではあるが不親切なエラーメッセージになってしまう。
+				Parser _true1 = keyword("true");
+				Parser _false = keyword("false");
+				Parser _trueOrFalse1 = _true1.or(_false);
+				assertThat(_trueOrFalse1.parse("troo").message(), 
+						is("'f'(102) expected but 't'(116) found."));//事実だが不親切なメッセージ
+				
+				// ケース2： 明示的にcut()を使用してOR演算
+				// → 所定の位置までパース成功すると以後バックトラックが無効化されるので、より親切なエラーメッセージになる。
+				Parser _true2 = exact('t').cut().then(keyword("rue"));
+				Parser _trueOrFalse2 = _true2.or(_false);
+				assertThat(_trueOrFalse2.parse("troo").message(), 
+						is("'u'(117) expected but 'o'(111) found."));//より親切なメッセージ
+				
+				// ケース3： keyword(...)の第2引数でcutIndexを指定してOR演算
+				// → keyword(...)パーサーの場合だけ使用できるショートカット。ケース2と同じ効果。
+				Parser _true3 = keyword("true", 1); // cutIndexを引数で指定
+				Parser _trueOrFalse3 = _true3.or(_false);
+				assertThat(_trueOrFalse3.parse("troo").message(), 
+						is("'u'(117) expected but 'o'(111) found."));
+
+				// ケース4： keywordIn(...)は自動的にcutIndexを算出する
+				// → この例の場合1文字目（'t'もしくは'f'）がパース成功となった時点で他の候補に有効なものがなくなる。
+				//    このため1文字目のパース成功とともに、自動的にバックトラックが無効化される。
+				Parser _trueOrFalse4 = keywordIn("true", "false");
+				assertThat(_trueOrFalse4.parse("troo").message(), 
+						is("'u'(117) expected but 'o'(111) found."));
+				assertThat(_trueOrFalse4.parse("folse").message(), 
+						is("'a'(97) expected but 'o'(111) found."));
+				
+				return success();
+			}
+		}
+		assertTrue(new AssertParser().parse("check!").isSuccessful());
+	}
 }
