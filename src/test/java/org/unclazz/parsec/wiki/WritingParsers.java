@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.Optional;
 
-public class Home {
+public class WritingParsers {
 	@Test
 	public void list1_intro() {
 		
@@ -355,6 +355,27 @@ public class Home {
 				assertThat(r.end().index(), is(4));//文字位置はあくまでも元のパース結果に基づく
 				
 				return success();
+			}
+		}
+		assertTrue(new AssertParser().parse("check!").isSuccessful());
+	}
+	
+	@Test
+	public void list12_lazyFactory() {
+		class AssertParser extends Parser {
+			@Override
+			protected ResultCore doParse(Context ctx) throws IOException {
+				Parser p = lazy(this::createHello);
+				Result r1 = p.parse("hello ");
+				Result r2 = p.parse("hallo ");
+				
+				assertTrue(r1.isSuccessful());
+				assertFalse(r2.isSuccessful());
+				
+				return success();
+			}
+			Parser createHello() {
+				return keyword("hello");
 			}
 		}
 		assertTrue(new AssertParser().parse("check!").isSuccessful());
