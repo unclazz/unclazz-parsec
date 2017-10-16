@@ -286,5 +286,21 @@ public final class Parsers {
 	public static Parser space(int min) {
 		return new SpaceParser(min);
 	}
-
+	/**
+	 * 引数で指定したトークンのパーサーが成功するまで入力データソースを読み進めます。
+	 * @param token 読み進めるのをやめる条件となるトークンを読み取るパーサー
+	 * @return パーサー
+	 */
+	public static Parser skipTo(Parser token) {
+		return new SkipToParser(token);
+	}
+	/**
+	 * 引数で指定したトークンのパーサーが成功するまで入力データソースを読み進めます。
+	 * @param token 読み進めるのをやめる条件となるトークンを読み取るパーサー
+	 * @param <T> 任意の型
+	 * @return パーサー
+	 */
+	public static <T> ValParser<T> skipTo(ValParser<T> token) {
+		return new SkipToValParser<>(token);
+	}
 }
